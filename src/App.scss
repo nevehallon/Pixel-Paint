@@ -2,37 +2,46 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.fa-paint-brush {
+  font-size: 30px;
+  background: gold; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(
+    left,
+    cyan,
+    blue,
+    violet,
+    orange,
+    yellow,
+    green
+  ); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(
+    right,
+    cyan,
+    blue,
+    violet,
+    orange,
+    yellow,
+    green
+  ); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(
+    right,
+    cyan,
+    blue,
+    violet,
+    orange,
+    yellow,
+    green
+  ); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(
+    to right,
+    cyan,
+    blue,
+    violet,
+    orange,
+    yellow,
+    green
+  ); /* Standard syntax (must be last) */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 2px #333);
 }

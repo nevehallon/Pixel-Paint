@@ -1,13 +1,22 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
-
 import './index.scss';
+import { BrowserRouter } from 'react-router-dom';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import 'bootstrap/dist/css/bootstrap.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+import 'jquery/dist/jquery';
+import 'popper.js/dist/popper';
+import 'bootstrap/dist/js/bootstrap';
+
 render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StrictMode>,
   document.getElementById('root')
 );
