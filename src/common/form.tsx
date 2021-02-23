@@ -16,8 +16,19 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   };
 
   validateProperty = (name: string, value: string): string | null => {
-    const schema = this.schema!;
+    const schema = Joi.object({ [name]: this.schema[name] })!;
+
     const obj = { [name]: value };
+
+    /*
+    schema = Joi.object({
+    email: Joi.string()
+      .required()
+      .email({ tlds: { allow: false } })
+      .min(5),
+    password: Joi.string().required().min(6),
+    name: Joi.string().required().min(2),
+  }); */
 
     const { error } = schema.validate(obj, {
       abortEarly: false,
