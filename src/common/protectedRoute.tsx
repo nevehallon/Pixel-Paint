@@ -24,7 +24,7 @@ const ProtectedRoute = ({
             </p>,
             {
               position: 'top-center',
-              autoClose: 3500,
+              autoClose: 4000,
             }
           );
           return (

@@ -37,7 +37,7 @@ class Signup extends Form {
     name: Joi.string().required().min(2),
   };
 
-  async doSubmit(): Promise<void> {
+  doSubmit = async (): Promise<void> => {
     // eslint-disable-next-line prefer-const
     let { errors, formData } = this.state;
     const body = { ...formData, painter: false };
@@ -61,7 +61,7 @@ class Signup extends Form {
         this.setState({ errors, formData });
       }
     }
-  }
+  };
 
   render(): React.ReactNode {
     if (getCurrentUser()) {

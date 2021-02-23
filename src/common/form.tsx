@@ -7,12 +7,16 @@ import { Input } from '.';
 class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   schema!: { [key: string]: Joi.StringSchema };
 
+  doSubmit!: () => Promise<void>;
+
   handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     const errors = this.validate();
 
     this.setState({ errors: errors || {} });
+
+    if (!errors) this.doSubmit();
   };
 
   validateProperty = (name: string, value: string): string | null => {
@@ -90,6 +94,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
         <button
           className="btn btn-block btn-primary"
           disabled={this.validate()}
+          type="submit"
         >
           {label}
         </button>

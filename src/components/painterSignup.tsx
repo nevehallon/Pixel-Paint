@@ -34,7 +34,7 @@ class PainterSignup extends Form {
     name: Joi.string().required().min(2),
   };
 
-  async doSubmit(): Promise<void> {
+  doSubmit = async (): Promise<void> => {
     // eslint-disable-next-line prefer-const
     let { errors, formData } = this.state;
     const body = { ...formData, painter: true };
@@ -65,7 +65,7 @@ class PainterSignup extends Form {
         this.setState({ errors, formData });
       }
     }
-  }
+  };
 
   render(): React.ReactNode {
     if (getCurrentUser()) {
