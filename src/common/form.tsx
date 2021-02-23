@@ -5,7 +5,7 @@ import Joi from 'joi';
 import { Input } from '.';
 
 class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
-  schema: Joi.ObjectSchema<any> | any;
+  schema!: { [key: string]: Joi.StringSchema };
 
   handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -20,16 +20,6 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
 
     const obj = { [name]: value };
 
-    /*
-    schema = Joi.object({
-    email: Joi.string()
-      .required()
-      .email({ tlds: { allow: false } })
-      .min(5),
-    password: Joi.string().required().min(6),
-    name: Joi.string().required().min(2),
-  }); */
-
     const { error } = schema.validate(obj, {
       abortEarly: false,
     });
@@ -42,7 +32,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
       schema,
     } = this;
 
-    const { error } = schema!.validate(formData, {
+    const { error } = Joi.object(schema)!.validate(formData, {
       abortEarly: false,
     });
 

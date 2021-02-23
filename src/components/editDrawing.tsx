@@ -21,12 +21,12 @@ class EditDrawing extends Form {
     errors: {},
   };
 
-  schema = Joi.object({
+  schema = {
     _id: Joi.string(),
     drawingName: Joi.string().min(2).max(255).required().label('drawingName'),
     description: Joi.string().min(2).max(1024).required().label('description'),
     // TODO:
-  });
+  };
 
   async componentDidMount(): Promise<void> {
     try {

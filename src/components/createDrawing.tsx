@@ -17,11 +17,11 @@ class CreateDrawing extends Form {
     errors: {},
   };
 
-  schema = Joi.object({
+  schema = {
     drawingName: Joi.string().min(2).max(255).required().label('drawingName'),
     description: Joi.string().min(2).max(1024).required().label('description'),
     // TODO:
-  });
+  };
 
   doSubmit = async (): Promise<void> => {
     const { ...data } = this.state.formData;

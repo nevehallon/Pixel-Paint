@@ -23,14 +23,14 @@ class Signin extends Form {
     errors: {},
   };
 
-  schema = Joi.object({
+  schema = {
     email: Joi.string()
       .required()
       .email({ tlds: { allow: false } })
       .min(5)
       .label('Email'),
     password: Joi.string().required().min(6).label('Password'),
-  });
+  };
 
   componentDidMount(): void {
     if (getCurrentUser()) return;
