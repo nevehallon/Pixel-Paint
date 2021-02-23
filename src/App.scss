@@ -45,3 +45,18 @@
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 2px #333);
 }
+
+.Toastify__progress-bar {
+  background: linear-gradient(
+    to right,
+    #4cd964,
+    #5ac8fa,
+    #007aff,
+    #34aadc,
+    #5856d6,
+    #ff2d55,
+    violet,
+    orange,
+    yellow
+  );
+}
