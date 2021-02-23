@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 
 import Joi from 'joi';
 
-import { Form, PageHeader } from '../common';
-import { createDrawing } from '../services/drawingsService';
+import { Form, PageHeader } from '../../common';
+import { createDrawing } from '../../services/drawingsService';
 
 class CreateDrawing extends Form {
   state = {

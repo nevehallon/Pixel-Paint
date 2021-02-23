@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Drawing from '../common/drawing';
-import PageHeader from '../common/pageHeader';
-import { deleteDrawing, getMyDrawings } from '../services/drawingsService';
+import Drawing from '../../common/drawing';
+import PageHeader from '../../common/pageHeader';
+import { deleteDrawing, getMyDrawings } from '../../services/drawingsService';
 
 interface MyDrawingsProps {
   drawings: any[];

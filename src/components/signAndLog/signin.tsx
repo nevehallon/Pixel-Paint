@@ -3,8 +3,8 @@ import { toast } from 'react-toastify';
 
 import Joi from 'joi';
 
-import { Form, PageHeader } from '../common';
-import { getCurrentUser, login } from '../services/userService';
+import { Form, PageHeader } from '../../common';
+import { getCurrentUser, login } from '../../services/userService';
 
 interface SigninState {
   formData: {

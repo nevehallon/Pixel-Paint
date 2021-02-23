@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 
 import Joi from 'joi';
 
-import { Form, PageHeader } from '../common';
-import { Drawing } from '../interfaces/Drawing';
-import { editDrawing, getDrawing } from '../services/drawingsService';
+import { Form, PageHeader } from '../../common';
+import { Drawing } from '../../interfaces/Drawing';
+import { editDrawing, getDrawing } from '../../services/drawingsService';
 
 class EditDrawing extends Form {
   state = {

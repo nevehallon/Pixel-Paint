@@ -1,10 +1,10 @@
 import React from 'react';
 
-import PageHeader from '../common/pageHeader';
+import PageHeader from '../../common/pageHeader';
 
-const About = (): any => (
-  <div className="container">
-    <PageHeader titleText="About PixelPaint App" />
+const Home = (): any => (
+  <div className="container text-center">
+    <PageHeader titleText="PixelPaint App Home Page" />
     {/*           ${(<i className="fas fa-paint-brush"></i>)}  */}
     <div className="row">
       <div className="col-12">
@@ -19,4 +19,4 @@ const About = (): any => (
   </div>
 );
 
-export default About;
+export default Home;

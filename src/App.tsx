@@ -4,17 +4,17 @@ import './App.scss';
 import { ToastContainer } from 'react-toastify';
 
 import ProtectedRoute from './common/protectedRoute';
-import About from './components/about';
-import CreateDrawing from './components/createDrawing';
-import EditDrawing from './components/editDrawing';
-import Footer from './components/footer';
-import Home from './components/home';
-import Logout from './components/logout';
-import MyDrawings from './components/myDrawings';
-import Navbar from './components/navbar';
-import PainterSignup from './components/painterSignup';
-import Signin from './components/signin';
-import Signup from './components/signup';
+import CreateDrawing from './components/drawingActions/createDrawing';
+import EditDrawing from './components/drawingActions/editDrawing';
+import MyDrawings from './components/galleries/myDrawings';
+import Footer from './components/layout/footer';
+import Navbar from './components/layout/navbar';
+import About from './components/pages/about';
+import Home from './components/pages/home';
+import Logout from './components/signAndLog/logout';
+import PainterSignup from './components/signAndLog/painterSignup';
+import Signin from './components/signAndLog/signin';
+import Signup from './components/signAndLog/signup';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCurrentUser } from './services/userService';
 

@@ -4,10 +4,10 @@ import { toast } from 'react-toastify';
 
 import Joi from 'joi';
 
-import { Form, PageHeader } from '../common';
-import { apiUrl } from '../config.json';
-import httpService from '../services/httpService';
-import { getCurrentUser } from '../services/userService';
+import { Form, PageHeader } from '../../common';
+import { apiUrl } from '../../config.json';
+import httpService from '../../services/httpService';
+import { getCurrentUser } from '../../services/userService';
 
 interface SignupState {
   formData: {
