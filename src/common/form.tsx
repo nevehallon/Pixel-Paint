@@ -90,7 +90,6 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
         <button
           className="btn btn-block btn-primary"
           disabled={this.validate()}
-          type="button"
         >
           {label}
         </button>
