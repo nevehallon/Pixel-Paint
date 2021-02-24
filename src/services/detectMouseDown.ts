@@ -7,13 +7,10 @@ class Detector {
   isMouseDown = false;
 
   handleMouseDown = (): void => {
-    console.log('MouseDown');
-
     this.isMouseDown = true;
   };
 
   handleMouseUp = (): void => {
-    console.log('MouseUp');
     this.isMouseDown = false;
   };
 }

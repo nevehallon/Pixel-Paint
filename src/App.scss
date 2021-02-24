@@ -78,7 +78,8 @@
     cursor: url('./cursor.svg'), auto;
     &:focus {
       outline: none;
-      box-shadow: none;
+      //TODO: hightlight focused square
+      pointer-events: none;
     }
   }
 }

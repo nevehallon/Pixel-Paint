@@ -12,6 +12,15 @@ export interface CanvasProps {
 
 function PaintCanvas({ fillAction, dimensions, grid }: CanvasProps): any {
   /* range 15x15 - 35x35 */
+
+  const emitFill = (i: number, e: any | Event): any => {
+    if (e.type === 'keydown' && e.keyCode !== 13) return;
+
+    fillAction(i, e);
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <div
       className="paintGrid"
@@ -25,13 +34,13 @@ function PaintCanvas({ fillAction, dimensions, grid }: CanvasProps): any {
       }}
     >
       {grid.map((x, i, arr) => (
+        // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
         <div
           aria-label="fill square"
           className="square"
           key={getCoords(i, arr.length)}
-          onFocus={(e) => fillAction(i, e)}
-          onKeyDown={(e) => fillAction(i, e)}
-          onMouseOver={(e) => fillAction(i, e)}
+          onKeyDown={(e) => emitFill(i, e)}
+          onMouseOver={(e) => emitFill(i, e)}
           role="button"
           style={{ backgroundColor: grid[i] }}
           tabIndex={i}

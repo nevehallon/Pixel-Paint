@@ -39,7 +39,9 @@ class CreateDrawing extends Form {
   currentColor = '#000';
 
   handleFill = (index: number, e: any | Event): void => {
-    if (e.type === 'mouseover' && !Detector.isMouseDown) return;
+    if (e.type === 'mouseover' && !Detector.isMouseDown) {
+      return;
+    }
 
     const { formData } = this.state;
 
