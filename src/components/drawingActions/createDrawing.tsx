@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Joi from 'joi';
 
 import { Form, PageHeader } from '../../common';
+import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
 class CreateDrawing extends Form {
@@ -42,6 +43,7 @@ class CreateDrawing extends Form {
           <div className="col-12">
             <p>Lets make a new drawing!</p>
           </div>
+          <PaintCanvas />
         </div>
         <div className="row">
           <div className="col-lg-6 m-auto">

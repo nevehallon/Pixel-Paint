@@ -61,3 +61,16 @@
   );
   filter: drop-shadow(0 0 -2px #333);
 }
+
+.paintGrid {
+  width: 100vmin;
+  height: 100vmin;
+  max-height: 75vh;
+  max-width: 75vh;
+  min-height: 42vh;
+  min-width: 42vh;
+  margin: 0 auto;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
