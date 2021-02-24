@@ -73,4 +73,12 @@
   display: grid;
   justify-content: center;
   align-content: center;
+
+  .square {
+    cursor: url('./cursor.svg'), auto;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
 }

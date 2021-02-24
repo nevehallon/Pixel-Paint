@@ -1,28 +1,42 @@
 function getCoords(index: number, length: number): string {
-  return `${Math.floor(index / Math.sqrt(length))},${
+  return `${Math.floor(index / Math.sqrt(length))},${Math.floor(
     index % Math.sqrt(length)
-  }`;
+  )}`;
 }
 
-function PaintCanvas(): any {
+export interface CanvasProps {
+  fillAction: (index: number, e: any) => void;
+  dimensions: number;
+  grid: string[];
+}
+
+function PaintCanvas({ fillAction, dimensions, grid }: CanvasProps): any {
+  /* range 15x15 - 35x35 */
   return (
     <div
       className="paintGrid"
       style={{
-        gridTemplateColumns: `repeat(${Math.sqrt(25)}, minmax(25px, 1fr))`,
-        gridTemplateRows: `repeat(${Math.sqrt(25)}, minmax(25px, 1fr))`,
+        gridTemplateColumns: `repeat(${Math.sqrt(
+          dimensions ** 2
+        )}, minmax(1px, 1fr))`,
+        gridTemplateRows: `repeat(${Math.sqrt(
+          dimensions ** 2
+        )}, minmax(1px, 1fr))`,
       }}
     >
-      {Array(25)
-        .fill({ color: '', coordinates: '' })
-        .map((x, i, arr) => (
-          <div
-            className="square"
-            data-coordinates={getCoords(i, arr.length)}
-            key={getCoords(i, arr.length)}
-            style={{ backgroundColor: i % 2 === 0 ? 'black' : 'white' }}
-          />
-        ))}
+      {grid.map((x, i, arr) => (
+        <div
+          aria-label="fill square"
+          className="square"
+          key={getCoords(i, arr.length)}
+          onFocus={(e) => fillAction(i, e)}
+          onKeyDown={(e) => fillAction(i, e)}
+          onMouseOver={(e) => fillAction(i, e)}
+          role="button"
+          style={{ backgroundColor: grid[i] }}
+          tabIndex={i}
+        />
+      ))}
     </div>
   );
 }
