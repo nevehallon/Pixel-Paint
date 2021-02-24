@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Drawing from '../../common/drawing';
+import DrawingCard from '../../common/drawingCard';
 import PageHeader from '../../common/pageHeader';
 import { deleteDrawing, getMyDrawings } from '../../services/drawingsService';
 
@@ -56,7 +56,7 @@ class MyDrawings extends Component {
             <div className="row">
               {drawings.length ? (
                 drawings.map((drawing) => (
-                  <Drawing
+                  <DrawingCard
                     drawing={drawing}
                     key={drawing._id}
                     onDelete={() => this.handleDeleteDrawing(drawing._id)}

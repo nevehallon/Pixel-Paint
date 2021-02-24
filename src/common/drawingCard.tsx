@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { DrawingProps } from '../interfaces/DrawingProps';
 
-const Drawing = ({
+const DrawingCard = ({
   drawing: { _id, drawingName, description },
   onDelete,
 }: DrawingProps): any => (
@@ -23,4 +23,4 @@ const Drawing = ({
   </div>
 );
 
-export default Drawing;
+export default DrawingCard;
