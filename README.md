@@ -6,6 +6,8 @@ This app allows users to sign up, sign in, and create their very own pixel art.
 
 To run this project locally:
 
+<!-- TODO: add instructions for running back end with mongodb -->
+
 #### 1. Change the current working directory to the location where you want the cloned directory.
 
 ```
