@@ -1,10 +1,10 @@
 /* eslint-disable newline-per-chained-call */
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 
 import Joi from 'joi';
 
-import { Form, PageHeader } from '../../common';
+import { Form, Input, PageHeader } from '../../common';
 import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
@@ -56,6 +56,12 @@ class CreateDrawing extends Form {
     (this.props as any).history.replace('/my-drawings');
   };
 
+  handleChangeColor = (e: ChangeEvent): void => {
+    this.currentColor = (e.target as any).value;
+    // TODO: debounce change event
+    this.setState({ ...this.state });
+  };
+
   render(): React.ReactNode {
     return (
       <div>
@@ -69,6 +75,16 @@ class CreateDrawing extends Form {
             currentColor={this.currentColor}
             fillAction={(grid: string[]): any => this.handleFill(grid)}
             grid={this.state.formData.grid}
+          />
+        </div>
+        <div className="tools w-25 m-auto text-center">
+          <Input
+            error={false}
+            label="Current Color"
+            name="color"
+            onChange={(e: ChangeEvent) => this.handleChangeColor(e)}
+            type="color"
+            value="#010000"
           />
         </div>
         <div className="container">
