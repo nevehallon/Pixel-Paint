@@ -38,8 +38,6 @@ class CreateDrawing extends Form {
   currentColor = '#000';
 
   handleFill = (grid: string[]): void => {
-    console.log('state');
-
     const { formData } = this.state;
 
     formData.grid = grid;

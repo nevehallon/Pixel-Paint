@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable no-nested-ternary */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+import { createRef, useEffect, useRef, useState } from 'react';
 
 import Detector from '../services/detectMouseDown';
 
@@ -16,7 +18,14 @@ export interface CanvasProps {
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const [gridCopy, setGridCopy] = useState([...grid]);
+  const squareRefs = useRef([]);
 
+  if (squareRefs.current.length !== grid.length) {
+    squareRefs.current = Array(grid.length)
+      .fill('')
+      .map((_, i) => squareRefs.current[i] || createRef());
+    squareRefs.current = squareRefs.current.map(({ current }) => current);
+  }
   /* range 15x15 - 35x35 */
   const sqrt = Math.sqrt(grid.length);
 
@@ -44,6 +53,18 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
   // prettier-ignore
   const handleFill = (i: number, e: any | Event): any => {
+    if(e.type === 'keydown') {
+      // allow user to navigate the grid with arrow keys
+      e.keyCode === 37
+      ? (squareRefs.current[i - 1 >= 0 ? i - 1 : i] as any)?.focus()
+      : e.keyCode === 38
+      ? (squareRefs.current[i - sqrt >= 0 ? i - sqrt : i] as any)?.focus()
+      : e.keyCode === 39
+      ? (squareRefs.current[i + 1 >= 0 ? i + 1 : i] as any)?.focus()
+      : e.keyCode === 40
+      ? (squareRefs.current[i + sqrt >= 0 ? i + sqrt : i] as any)?.focus() : undefined;
+      e.preventDefault();
+    }
     if (
       (e.type === 'mouseover' && !Detector.isMouseDown)
     || (e.type === 'keydown' && e.keyCode !== 13)
@@ -80,6 +101,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           onKeyDown={(e) => handleFill(i, e)}
           onMouseDown={(e) => handleFill(i, e)}
           onMouseOver={(e) => handleFill(i, e)}
+          ref={squareRefs.current[i]}
           role="button"
           style={{ backgroundColor: x }}
           tabIndex={0}
