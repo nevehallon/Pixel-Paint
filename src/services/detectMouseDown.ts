@@ -4,6 +4,8 @@ class Detector {
     window.addEventListener('mouseup', this.handleMouseUp);
   }
 
+  callback = () => {};
+
   isMouseDown = false;
 
   handleMouseDown = (): void => {
@@ -12,6 +14,8 @@ class Detector {
 
   handleMouseUp = (): void => {
     this.isMouseDown = false;
+
+    this.callback();
   };
 }
 

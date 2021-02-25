@@ -1,15 +1,7 @@
 import { createRef, useEffect, useRef, useState } from 'react';
 
-import { fromEvent } from 'rxjs';
-import {
-  bufferTime,
-  debounceTime,
-  delay,
-  last,
-  publishLast,
-  take,
-  takeLast,
-} from 'rxjs/operators/';
+import { fromEvent, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators/';
 
 import Detector from '../services/detectMouseDown';
 
@@ -28,18 +20,14 @@ export interface CanvasProps {
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const [gridCopy, setGridCopy] = useState([...grid]);
   const squareRefs = useRef([]);
+  const frameRef: any = createRef();
+  // let mouseLeave: Subscription;
 
   if (squareRefs.current.length !== grid.length) {
     squareRefs.current = Array(grid.length)
       .fill('')
       .map((_, i) => squareRefs.current[i] || createRef());
   }
-  // prettier-ignore
-  useEffect(() => {
-    const sqrRefs = squareRefs.current.map(({ current }) => current);
-
-     fromEvent(sqrRefs, 'mouseleave').pipe(debounceTime(1000), take(1)).subscribe(() => fillAction(gridCopy));
-  }, [fillAction, gridCopy]);
 
   /* range 15x15 - 35x35 */
   const sqrt = Math.sqrt(grid.length);
@@ -48,15 +36,37 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     if (e.type === 'keyup' && e.keyCode !== 13) {
       return;
     }
-    if (!Detector.isMouseDown) {
+    if (!Detector.isMouseDown || e.type === 'mouseup') {
       // update parent state
       fillAction(gridCopy);
+      // return;
     }
+    // const sqrRefs = squareRefs.current.map(({ current }) => current);
+
+    // mouseLeave = fromEvent(sqrRefs, 'mouseleave')
+    //   .pipe(take(1))
+    //   .subscribe(() => fillAction(gridCopy));
   };
 
   // prettier-ignore
+  useEffect(() => {
+    Detector.callback = () => {
+      emitState();
+    };
+
+    return () => {
+      Detector.callback = () => {};
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // prettier-ignore
   const handleFill = (i: number, e: any | Event): any => {
-    if ((e.type === 'mouseover' && !Detector.isMouseDown) || (e.type === 'keydown' && e.keyCode !== 13)) {
+    if (
+      (e.type === 'mouseover' && !Detector.isMouseDown)
+    || (e.type === 'keydown' && e.keyCode !== 13)
+    || (gridCopy[i] === currentColor)
+    ) {
       return;
     }
 
@@ -66,13 +76,16 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       return newGrid;
     });
 
+    if(e.type === 'keydown') emitState();
+
     e.preventDefault();
-    e.stopPropagation();
+    // e.stopPropagation();
   };
 
   return (
     <div
       className="paintGrid"
+      ref={frameRef}
       style={{
         gridTemplateColumns: `repeat(${sqrt}, minmax(1px, 1fr))`,
         gridTemplateRows: `repeat(${sqrt}, minmax(1px, 1fr))`,
@@ -85,10 +98,9 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           className="square"
           key={getCoords(i, arr.length)}
           onKeyDown={(e) => handleFill(i, e)}
-          onKeyUp={(e) => emitState(e)}
-          // onMouseLeave={() => emitState()}
+          onMouseDown={(e) => handleFill(i, e)}
           onMouseOver={(e) => handleFill(i, e)}
-          onMouseUp={() => emitState()}
+          // onMouseUp={() => emitState()}
           ref={squareRefs.current[i]}
           role="button"
           style={{ backgroundColor: x }}
