@@ -1,7 +1,4 @@
-import { createRef, useEffect, useRef, useState } from 'react';
-
-import { fromEvent, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators/';
+import { useEffect, useState } from 'react';
 
 import Detector from '../services/detectMouseDown';
 
@@ -19,15 +16,6 @@ export interface CanvasProps {
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const [gridCopy, setGridCopy] = useState([...grid]);
-  const squareRefs = useRef([]);
-  const frameRef: any = createRef();
-  // let mouseLeave: Subscription;
-
-  if (squareRefs.current.length !== grid.length) {
-    squareRefs.current = Array(grid.length)
-      .fill('')
-      .map((_, i) => squareRefs.current[i] || createRef());
-  }
 
   /* range 15x15 - 35x35 */
   const sqrt = Math.sqrt(grid.length);
@@ -36,16 +24,10 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     if (e.type === 'keyup' && e.keyCode !== 13) {
       return;
     }
-    if (!Detector.isMouseDown || e.type === 'mouseup') {
+    if (!Detector.isMouseDown) {
       // update parent state
       fillAction(gridCopy);
-      // return;
     }
-    // const sqrRefs = squareRefs.current.map(({ current }) => current);
-
-    // mouseLeave = fromEvent(sqrRefs, 'mouseleave')
-    //   .pipe(take(1))
-    //   .subscribe(() => fillAction(gridCopy));
   };
 
   // prettier-ignore
@@ -79,13 +61,11 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     if(e.type === 'keydown') emitState();
 
     e.preventDefault();
-    // e.stopPropagation();
   };
 
   return (
     <div
       className="paintGrid"
-      ref={frameRef}
       style={{
         gridTemplateColumns: `repeat(${sqrt}, minmax(1px, 1fr))`,
         gridTemplateRows: `repeat(${sqrt}, minmax(1px, 1fr))`,
@@ -100,8 +80,6 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           onKeyDown={(e) => handleFill(i, e)}
           onMouseDown={(e) => handleFill(i, e)}
           onMouseOver={(e) => handleFill(i, e)}
-          // onMouseUp={() => emitState()}
-          ref={squareRefs.current[i]}
           role="button"
           style={{ backgroundColor: x }}
           tabIndex={0}
