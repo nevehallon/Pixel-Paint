@@ -5,7 +5,6 @@ import {
   bufferTime,
   debounceTime,
   delay,
-  first,
   last,
   publishLast,
   take,
@@ -39,7 +38,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   useEffect(() => {
     const sqrRefs = squareRefs.current.map(({ current }) => current);
 
-     fromEvent(sqrRefs, 'mouseleave').pipe(debounceTime(1000), first()).subscribe(() => fillAction(gridCopy));
+     fromEvent(sqrRefs, 'mouseleave').pipe(debounceTime(1000), take(1)).subscribe(() => fillAction(gridCopy));
   }, [fillAction, gridCopy]);
 
   /* range 15x15 - 35x35 */
