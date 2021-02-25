@@ -6,7 +6,6 @@ import Joi from 'joi';
 
 import { Form, PageHeader } from '../../common';
 import PaintCanvas from '../../common/paintCanvas';
-import Detector from '../../services/detectMouseDown';
 import { createDrawing } from '../../services/drawingsService';
 
 export interface createDrawingState {
@@ -38,14 +37,10 @@ class CreateDrawing extends Form {
 
   currentColor = '#000';
 
-  handleFill = (index: number, e: any | Event): void => {
-    if (e.type === 'mouseover' && !Detector.isMouseDown) {
-      return;
-    }
-
+  handleFill = (grid: string[]): void => {
     const { formData } = this.state;
 
-    formData.grid[index] = this.currentColor;
+    formData.grid = grid;
 
     this.setState({ ...this.state, formData });
   };
@@ -70,9 +65,9 @@ class CreateDrawing extends Form {
             <p>Lets make a new drawing!</p>
           </div>
           <PaintCanvas
-            dimensions={35}
             // prettier-ignore
-            fillAction={(index: number, e: any): any => this.handleFill(index, e)}
+            currentColor={this.currentColor}
+            fillAction={(grid: string[]): any => this.handleFill(grid)}
             grid={this.state.formData.grid}
           />
         </div>

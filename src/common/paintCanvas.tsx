@@ -1,3 +1,7 @@
+import { useEffect, useState } from 'react';
+
+import Detector from '../services/detectMouseDown';
+
 function getCoords(index: number, length: number): string {
   return `${Math.floor(index / Math.sqrt(length))},${Math.floor(
     index % Math.sqrt(length)
@@ -5,18 +9,33 @@ function getCoords(index: number, length: number): string {
 }
 
 export interface CanvasProps {
-  fillAction: (index: number, e: any) => void;
-  dimensions: number;
+  fillAction: (grid: string[]) => void;
   grid: string[];
+  currentColor: string;
 }
 
-function PaintCanvas({ fillAction, dimensions, grid }: CanvasProps): any {
+function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
+  const [gridCopy, setGridCopy] = useState([...grid]);
+
   /* range 15x15 - 35x35 */
+  const sqrt = Math.sqrt(grid.length);
 
-  const emitFill = (i: number, e: any | Event): any => {
-    if (e.type === 'keydown' && e.keyCode !== 13) return;
+  // prettier-ignore
+  const handleFill = (i: number, e: any | Event): any => {
+    if (!Detector.isMouseDown) {
+      // update parent state
+      fillAction(gridCopy);
+    }
+    if ((e.type === 'mouseover' && !Detector.isMouseDown) || (e.type === 'keydown' && e.keyCode !== 13)) {
+      return;
+    }
 
-    fillAction(i, e);
+    setGridCopy((gridC) => {
+    const newGrid = [...gridC];
+      newGrid[i] = currentColor;
+      return newGrid;
+    });
+
     e.preventDefault();
     e.stopPropagation();
   };
@@ -25,25 +44,21 @@ function PaintCanvas({ fillAction, dimensions, grid }: CanvasProps): any {
     <div
       className="paintGrid"
       style={{
-        gridTemplateColumns: `repeat(${Math.sqrt(
-          dimensions ** 2
-        )}, minmax(1px, 1fr))`,
-        gridTemplateRows: `repeat(${Math.sqrt(
-          dimensions ** 2
-        )}, minmax(1px, 1fr))`,
+        gridTemplateColumns: `repeat(${sqrt}, minmax(1px, 1fr))`,
+        gridTemplateRows: `repeat(${sqrt}, minmax(1px, 1fr))`,
       }}
     >
-      {grid.map((x, i, arr) => (
+      {gridCopy.map((x, i, arr) => (
         // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
         <div
           aria-label="fill square"
           className="square"
           key={getCoords(i, arr.length)}
-          onKeyDown={(e) => emitFill(i, e)}
-          onMouseOver={(e) => emitFill(i, e)}
+          onKeyDown={(e) => handleFill(i, e)}
+          onMouseOver={(e) => handleFill(i, e)}
           role="button"
-          style={{ backgroundColor: grid[i] }}
-          tabIndex={i}
+          style={{ backgroundColor: x }}
+          tabIndex={0}
         />
       ))}
     </div>
