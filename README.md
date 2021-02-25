@@ -20,13 +20,19 @@ $ cd ../lorem
 $ git clone https://github.com/nevehallon/Pixel-Paint.git
 ```
 
-#### 3. Install npm dependencies:
+#### 3. Change the current working directory to the cloned directory.
+
+```
+$ cd Pixel-Paint
+```
+
+#### 4. Install npm dependencies:
 
 ```
 $ npm install
 ```
 
-#### 4. Inside the newly cloned project, you can run some built-in commands:
+#### 5. Inside the newly cloned project, you can run some built-in commands:
 
 ```
 npm start
