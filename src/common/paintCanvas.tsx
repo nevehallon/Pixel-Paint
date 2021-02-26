@@ -18,14 +18,13 @@ export interface CanvasProps {
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const [gridCopy, setGridCopy] = useState([...grid]);
-  const squareRefs = useRef([]);
+  const [squareRefs, setSquareRefs] = useState([]);
 
-  if (squareRefs.current.length !== grid.length) {
-    squareRefs.current = Array(grid.length)
-      .fill('')
-      .map((_, i) => squareRefs.current[i] || createRef());
-    squareRefs.current = squareRefs.current.map(({ current }) => current);
-  }
+  useEffect(() => {
+    // prettier-ignore
+    setSquareRefs((sqrRefs) => Array(grid.length).fill('').map((_, i) => sqrRefs[i] || createRef()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [grid.length]);
   /* range 15x15 - 35x35 */
   const sqrt = Math.sqrt(grid.length);
 
@@ -55,15 +54,17 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const handleFill = (i: number, e: any | Event): any => {
     if(e.type === 'keydown') {
       // allow user to navigate the grid with arrow keys
-      e.keyCode === 37
-      ? (squareRefs.current[i - 1 >= 0 ? i - 1 : i] as any)?.focus()
-      : e.keyCode === 38
-      ? (squareRefs.current[i - sqrt >= 0 ? i - sqrt : i] as any)?.focus()
-      : e.keyCode === 39
-      ? (squareRefs.current[i + 1 >= 0 ? i + 1 : i] as any)?.focus()
-      : e.keyCode === 40
-      ? (squareRefs.current[i + sqrt >= 0 ? i + sqrt : i] as any)?.focus() : undefined;
-      e.preventDefault();
+      if(e.keyCode > 36 && e.keyCode < 41) {
+          e.keyCode === 37
+          ? (squareRefs[i - 1 >= 0 ? i - 1 : i] as any).current?.focus()
+              : e.keyCode === 38
+              ? (squareRefs[i - sqrt >= 0 ? i - sqrt : i] as any).current?.focus()
+              : e.keyCode === 39
+              ? (squareRefs[i + 1 >= 0 ? i + 1 : i] as any).current?.focus()
+              : e.keyCode === 40
+              ? (squareRefs[i + sqrt >= 0 ? i + sqrt : i] as any).current?.focus() : undefined;
+              e.preventDefault();
+      }
     }
     if (
       (e.type === 'mouseover' && !Detector.isMouseDown)
@@ -101,7 +102,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           onKeyDown={(e) => handleFill(i, e)}
           onMouseDown={(e) => handleFill(i, e)}
           onMouseOver={(e) => handleFill(i, e)}
-          ref={squareRefs.current[i]}
+          ref={squareRefs[i]}
           role="button"
           style={{ backgroundColor: x }}
           tabIndex={0}
