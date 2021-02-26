@@ -1,9 +1,9 @@
 /* eslint-disable newline-per-chained-call */
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { CirclePicker } from 'react-color';
 import { toast } from 'react-toastify';
 
-import { TextField } from '@material-ui/core';
+import { InputLabel, TextField } from '@material-ui/core';
 import Joi from 'joi';
 
 import { Form, PageHeader } from '../../common';
@@ -14,9 +14,9 @@ export interface createDrawingState {
   formData: {
     drawingName: string;
     description: string;
-    grid: string[];
   };
   errors: { [key: string]: any };
+  grid: string[];
   currentColor: string;
 }
 class CreateDrawing extends Form {
@@ -24,12 +24,12 @@ class CreateDrawing extends Form {
     formData: {
       drawingName: '',
       description: '',
-      grid: Array(35 ** 2)
-        .fill('')
-        .map((x, i) => (i % 2 === 0 ? 'lightgrey' : 'white')),
       // TODO:
     },
     errors: {},
+    grid: Array(35 ** 2)
+      .fill('')
+      .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white')),
     currentColor: '#000',
   };
 
@@ -39,12 +39,10 @@ class CreateDrawing extends Form {
     // TODO:
   };
 
-  handleFill = (grid: string[]): void => {
-    const { formData } = this.state;
+  handleFill = (newGrid: string[]): void => {
+    this.state.grid = newGrid;
 
-    formData.grid = grid;
-
-    this.setState({ ...this.state, formData });
+    this.setState({ ...this.state });
   };
 
   doSubmit = async (): Promise<void> => {
@@ -62,8 +60,25 @@ class CreateDrawing extends Form {
     this.setState({ currentColor: color.hex });
   };
 
+  handleNumberChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const newGrid = Array((+e.target.value) ** 2)
+      .fill('')
+      .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
+    // prettier-ignore
+    this.setState({ grid: newGrid }/* , () => console.log(this.state) */);
+  };
+
   render(): React.ReactNode {
-    const { currentColor } = this.state;
+    const { grid, currentColor } = this.state;
+    const inputProps = {
+      step: 2,
+      min: 15,
+      max: 35,
+      value: Math.sqrt(grid.length),
+    };
+
+    console.log(grid.length);
+
     return (
       <div>
         <PageHeader titleText="Create pixel art" />
@@ -71,12 +86,11 @@ class CreateDrawing extends Form {
           <div className="col-12">
             <p>Lets make a new drawing!</p>
           </div>
-
           <PaintCanvas
             // prettier-ignore
             currentColor={currentColor}
-            fillAction={(grid: string[]): any => this.handleFill(grid)}
-            grid={this.state.formData.grid}
+            fillAction={(newGrid: string[]): any => this.handleFill(newGrid)}
+            grid={this.state.grid}
           />
         </div>
         <span>Current Color:</span>
@@ -91,9 +105,14 @@ class CreateDrawing extends Form {
           <div className="row">
             <div className="col-lg-6 m-auto">
               <form noValidate onSubmit={this.handleSubmit}>
+                {/* range 15x15 - 35x35 */}
+                {/* <label htmlFor="gridSize" /> */}
+                <InputLabel htmlFor="gridSize">Grid size</InputLabel>
                 <TextField
-                  id="standard-basic"
-                  label="grid size"
+                  id="gridSize"
+                  inputProps={inputProps}
+                  label="15x15 - 35x35"
+                  onChange={this.handleNumberChange}
                   type="number"
                 />
                 {this.renderInput('drawingName', 'Name')}
