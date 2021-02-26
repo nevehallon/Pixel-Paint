@@ -17,6 +17,7 @@ import Signin from './components/signAndLog/signin';
 import Signup from './components/signAndLog/signup';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCurrentUser } from './services/userService';
+import 'fontsource-roboto';
 
 class App extends Component {
   state = { user: null };

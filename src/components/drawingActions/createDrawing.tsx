@@ -1,10 +1,12 @@
 /* eslint-disable newline-per-chained-call */
-import React, { ChangeEvent } from 'react';
+import React from 'react';
+import { CirclePicker } from 'react-color';
 import { toast } from 'react-toastify';
 
+import { TextField } from '@material-ui/core';
 import Joi from 'joi';
 
-import { Form, Input, PageHeader } from '../../common';
+import { Form, PageHeader } from '../../common';
 import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
@@ -15,6 +17,7 @@ export interface createDrawingState {
     grid: string[];
   };
   errors: { [key: string]: any };
+  currentColor: string;
 }
 class CreateDrawing extends Form {
   state: createDrawingState = {
@@ -27,6 +30,7 @@ class CreateDrawing extends Form {
       // TODO:
     },
     errors: {},
+    currentColor: '#000',
   };
 
   schema = {
@@ -34,8 +38,6 @@ class CreateDrawing extends Form {
     description: Joi.string().min(2).max(1024).required().label('description'),
     // TODO:
   };
-
-  currentColor = '#000';
 
   handleFill = (grid: string[]): void => {
     const { formData } = this.state;
@@ -56,13 +58,12 @@ class CreateDrawing extends Form {
     (this.props as any).history.replace('/my-drawings');
   };
 
-  handleChangeColor = (e: ChangeEvent): void => {
-    this.currentColor = (e.target as any).value;
-    // TODO: debounce change event
-    this.setState({ ...this.state });
+  handleChangeComplete = (color: { hex: any }): void => {
+    this.setState({ currentColor: color.hex });
   };
 
   render(): React.ReactNode {
+    const { currentColor } = this.state;
     return (
       <div>
         <PageHeader titleText="Create pixel art" />
@@ -70,27 +71,31 @@ class CreateDrawing extends Form {
           <div className="col-12">
             <p>Lets make a new drawing!</p>
           </div>
+
           <PaintCanvas
             // prettier-ignore
-            currentColor={this.currentColor}
+            currentColor={currentColor}
             fillAction={(grid: string[]): any => this.handleFill(grid)}
             grid={this.state.formData.grid}
           />
         </div>
-        <div className="tools w-25 m-auto text-center">
-          <Input
-            error={false}
-            label="Current Color"
-            name="color"
-            onChange={(e: ChangeEvent) => this.handleChangeColor(e)}
-            type="color"
-            value="#010000"
-          />
-        </div>
+        <span>Current Color:</span>
+        <CirclePicker
+          circleSize={22}
+          className="d-flex justify-content-center m-2"
+          color={currentColor}
+          onChangeComplete={this.handleChangeComplete}
+          width="100%"
+        />
         <div className="container">
           <div className="row">
             <div className="col-lg-6 m-auto">
               <form noValidate onSubmit={this.handleSubmit}>
+                <TextField
+                  id="standard-basic"
+                  label="grid size"
+                  type="number"
+                />
                 {this.renderInput('drawingName', 'Name')}
                 {this.renderInput('description', 'description')}
                 {this.renderButton('Create Drawing')}
