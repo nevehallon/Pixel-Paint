@@ -59,7 +59,9 @@ class CreateDrawing extends Form {
   };
 
   handleNumberChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newGrid = Array((+e.target.value) ** 2)
+    const newNumber = +e.target.value;
+    if (newNumber < 15 || newNumber > 35) return;
+    const newGrid = Array(newNumber ** 2)
       .fill('')
       .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
     // prettier-ignore
@@ -105,6 +107,7 @@ class CreateDrawing extends Form {
                 {/* <label htmlFor="gridSize" /> */}
                 <InputLabel htmlFor="gridSize">Grid size</InputLabel>
                 <TextField
+                  className="form-control mb-4"
                   id="gridSize"
                   inputProps={inputProps}
                   label="15x15 - 35x35"
