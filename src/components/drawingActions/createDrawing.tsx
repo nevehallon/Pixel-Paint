@@ -66,7 +66,7 @@ class CreateDrawing extends Form {
       .fill('')
       .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
     // prettier-ignore
-    this.setState({ grid: newGrid }/* , () => console.log(this.state) */);
+    this.setState({ grid: newGrid });
   };
 
   render(): React.ReactNode {
@@ -92,17 +92,17 @@ class CreateDrawing extends Form {
             grid={this.state.grid}
           />
         </div>
-        <span>Current Color:</span>
-        <ColorPicker
-          currentColor={this.state.currentColor}
-          emitChangeComplete={this.handleChangeComplete}
-        />
+        <div className="tools container">
+          <span>Current Color:</span>
+          <ColorPicker
+            currentColor={this.state.currentColor}
+            emitChangeComplete={this.handleChangeComplete}
+          />
+        </div>
         <div className="container">
           <div className="row">
             <div className="col-lg-6 m-auto">
               <form noValidate onSubmit={this.handleSubmit}>
-                {/* range 15x15 - 35x35 */}
-                {/* <label htmlFor="gridSize" /> */}
                 <InputLabel htmlFor="gridSize">Grid size</InputLabel>
                 <TextField
                   className="form-control mb-4"
