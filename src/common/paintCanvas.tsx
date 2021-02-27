@@ -20,7 +20,10 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const sqrt = Math.sqrt(grid.length);
   const [gridCopy, setGridCopy] = useState([...grid]);
   const [squareRefs, setSquareRefs] = useState([]);
-  const emitState = (e: any | Event = { type: '', keycode: 0 }): any => {
+  const emitState = (
+    newGrid: string[],
+    e: any | Event = { type: '', keycode: 0 }
+  ): any => {
     Detector.canCallBack = false;
 
     if (e.type === 'keyup' && e.keyCode !== 13) {
@@ -28,7 +31,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     }
     if (!Detector.isMouseDown) {
       // update parent state
-      fillAction(gridCopy);
+      fillAction(newGrid);
     }
   };
 
@@ -36,7 +39,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   useEffect(() => {
     Detector.callback = () => {
       if (Detector.canCallBack) {
-        emitState();
+        emitState(gridCopy);
       }
     };
 
@@ -47,9 +50,14 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   }, []);
 
   useEffect(() => {
+    setGridCopy([...grid]);
+    // TODO: update with the newGrid data
+  }, [grid]);
+
+  useEffect(() => {
     // prettier-ignore
     setSquareRefs((sqrRefs) => Array(grid.length).fill('').map((_, i) => sqrRefs[i] || createRef()));
-  }, [grid.length]);
+  }, [grid.length, fillAction]);
 
   // prettier-ignore
   const handleFill = (i: number, e: any | Event): any => {
@@ -80,9 +88,10 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       newGrid[i] = currentColor;
       return newGrid;
     });
+    // console.log({ gridCopy, grid });
 
     if (e.type === 'mouseover') Detector.canCallBack = true;
-    if(e.type === 'keydown') emitState();
+    if(e.type === 'keydown') emitState(gridCopy);
 
     e.preventDefault();
   };

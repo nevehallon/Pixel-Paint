@@ -69,8 +69,6 @@ class CreateDrawing extends Form {
   };
 
   render(): React.ReactNode {
-    console.log('update');
-
     const { grid, currentColor } = this.state;
     const inputProps = {
       step: 2,
