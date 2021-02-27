@@ -21,6 +21,8 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const [gridCopy, setGridCopy] = useState([...grid]);
   const [squareRefs, setSquareRefs] = useState([]);
   const emitState = (e: any | Event = { type: '', keycode: 0 }): any => {
+    Detector.canCallBack = false;
+
     if (e.type === 'keyup' && e.keyCode !== 13) {
       return;
     }
@@ -33,8 +35,9 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   // prettier-ignore
   useEffect(() => {
     Detector.callback = () => {
-      // TODO: only mousedown within the frame should trigger this
-      emitState();
+      if (Detector.canCallBack) {
+        emitState();
+      }
     };
 
     return () => {
@@ -78,6 +81,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       return newGrid;
     });
 
+    if (e.type === 'mouseover') Detector.canCallBack = true;
     if(e.type === 'keydown') emitState();
 
     e.preventDefault();
