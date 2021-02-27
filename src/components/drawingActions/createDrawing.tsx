@@ -77,8 +77,6 @@ class CreateDrawing extends Form {
       value: Math.sqrt(grid.length),
     };
 
-    console.log(grid.length);
-
     return (
       <div>
         <PageHeader titleText="Create pixel art" />
