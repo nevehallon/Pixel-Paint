@@ -40,9 +40,7 @@ class CreateDrawing extends Form {
   };
 
   handleFill = (newGrid: string[]): void => {
-    this.state.grid = newGrid;
-
-    this.setState({ ...this.state });
+    this.setState({ grid: newGrid });
   };
 
   doSubmit = async (): Promise<void> => {

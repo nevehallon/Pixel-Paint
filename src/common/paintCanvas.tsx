@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { createRef, useEffect, useState } from 'react';
 
-import Detector from '../services/detectMouseDown';
+import Detector from '../services/paintHelperService';
 
 function getCoords(index: number, length: number): string {
   return `${Math.floor(index / Math.sqrt(length))},${Math.floor(
@@ -37,9 +37,10 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
   // prettier-ignore
   useEffect(() => {
+    Detector.newGrid = gridCopy;
     Detector.callback = () => {
       if (Detector.canCallBack) {
-        emitState(gridCopy);
+        emitState(Detector.newGrid);
       }
     };
 
@@ -86,6 +87,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     setGridCopy((gridC) => {
       const newGrid = [...gridC];
       newGrid[i] = currentColor;
+      Detector.newGrid = newGrid;
       return newGrid;
     });
     // console.log({ gridCopy, grid });

@@ -4,6 +4,8 @@ class Detector {
     window.addEventListener('mouseup', this.handleMouseUp);
   }
 
+  newGrid!: string[];
+
   canCallBack = false;
 
   callback = () => {};
