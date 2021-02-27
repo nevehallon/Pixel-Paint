@@ -1,12 +1,13 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable newline-per-chained-call */
 import React, { ChangeEvent } from 'react';
-import { CirclePicker } from 'react-color';
 import { toast } from 'react-toastify';
 
 import { InputLabel, TextField } from '@material-ui/core';
 import Joi from 'joi';
 
 import { Form, PageHeader } from '../../common';
+import ColorPicker from '../../common/colorPicker';
 import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
@@ -30,7 +31,7 @@ class CreateDrawing extends Form {
     grid: Array(35 ** 2)
       .fill('')
       .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white')),
-    currentColor: '#000',
+    currentColor: '#3f51b5',
   };
 
   schema = {
@@ -92,12 +93,9 @@ class CreateDrawing extends Form {
           />
         </div>
         <span>Current Color:</span>
-        <CirclePicker
-          circleSize={22}
-          className="d-flex justify-content-center m-2"
-          color={currentColor}
-          onChangeComplete={this.handleChangeComplete}
-          width="100%"
+        <ColorPicker
+          currentColor={this.state.currentColor}
+          emitChangeComplete={this.handleChangeComplete}
         />
         <div className="container">
           <div className="row">
