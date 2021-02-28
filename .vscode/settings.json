@@ -9,7 +9,7 @@
       "source.fixAll": true
     }
   },
-  "prettier.requireConfig": true,
   "prettier.printWidth": 140,
-  "prettier.configPath": ".prettierrc"
+  "editor.wordWrapColumn": 120,
+  "prettier.requireConfig": true
 }

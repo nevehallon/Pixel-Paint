@@ -92,11 +92,13 @@ class CreateDrawing extends Form {
           />
         </div>
         <div className="tools container">
-          <span>Current Color:</span>
-          <ColorPicker
-            currentColor={this.state.currentColor}
-            emitChangeComplete={this.handleChangeComplete}
-          />
+          <div className="colorPickerContainer">
+            <span>Current Color:</span>
+            <ColorPicker
+              currentColor={this.state.currentColor}
+              emitChangeComplete={this.handleChangeComplete}
+                  />
+          </div>
         </div>
         <hr />
         <div className="container">
