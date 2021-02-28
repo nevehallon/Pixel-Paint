@@ -54,8 +54,8 @@ class Signin extends Form {
         });
         errors = { name: '', password: '', email: '' };
 
-        // prettier-ignore
-        (errors as any)[error.response.data.split('"')[1]] = error.response.data;
+        (errors as any)[error.response.data.split('"')[1]] =
+          error.response.data;
 
         this.setState({ errors, formData });
       }

@@ -1,13 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { InputProps } from '../interfaces/InputProps';
 
-// prettier-ignore
-const Input = ({
-  name,
-  label,
-  error,
-  ...rest
-}: InputProps): any => (
+const Input = ({ name, label, error, ...rest }: InputProps): any => (
   <div className="form-group">
     <label htmlFor={name}>{label}</label>
     <input

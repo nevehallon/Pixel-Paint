@@ -65,7 +65,7 @@ class CreateDrawing extends Form {
     const newGrid = Array(newNumber ** 2)
       .fill('')
       .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
-    // prettier-ignore
+
     this.setState({ grid: newGrid });
   };
 
@@ -86,7 +86,6 @@ class CreateDrawing extends Form {
             <p>Lets make a new drawing!</p>
           </div>
           <PaintCanvas
-            // prettier-ignore
             currentColor={currentColor}
             fillAction={(newGrid: string[]): any => this.handleFill(newGrid)}
             grid={this.state.grid}

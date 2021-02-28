@@ -35,7 +35,6 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     }
   };
 
-  // prettier-ignore
   useEffect(() => {
     Detector.newGrid = gridCopy;
     Detector.callback = () => {
@@ -47,7 +46,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     return () => {
       Detector.callback = () => {};
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -56,30 +55,33 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   }, [grid]);
 
   useEffect(() => {
-    // prettier-ignore
-    setSquareRefs((sqrRefs) => Array(grid.length).fill('').map((_, i) => sqrRefs[i] || createRef()));
+    setSquareRefs((sqrRefs) =>
+      Array(grid.length)
+        .fill('')
+        .map((_, i) => sqrRefs[i] || createRef())
+    );
   }, [grid.length, fillAction]);
 
-  // prettier-ignore
   const handleFill = (i: number, e: any | Event): any => {
-    if(e.type === 'keydown') {
+    if (e.type === 'keydown') {
       // allow user to navigate the grid with arrow keys
-      if(e.keyCode > 36 && e.keyCode < 41) {
-          e.keyCode === 37
+      if (e.keyCode > 36 && e.keyCode < 41) {
+        e.keyCode === 37
           ? (squareRefs[i - 1 >= 0 ? i - 1 : i] as any)?.current?.focus()
-              : e.keyCode === 38
-              ? (squareRefs[i - sqrt >= 0 ? i - sqrt : i] as any)?.current?.focus()
-              : e.keyCode === 39
-              ? (squareRefs[i + 1 >= 0 ? i + 1 : i] as any)?.current?.focus()
-              : e.keyCode === 40
-              ? (squareRefs[i + sqrt >= 0 ? i + sqrt : i] as any)?.current?.focus() : undefined;
-              e.preventDefault();
+          : e.keyCode === 38
+          ? (squareRefs[i - sqrt >= 0 ? i - sqrt : i] as any)?.current?.focus()
+          : e.keyCode === 39
+          ? (squareRefs[i + 1 >= 0 ? i + 1 : i] as any)?.current?.focus()
+          : e.keyCode === 40
+          ? (squareRefs[i + sqrt >= 0 ? i + sqrt : i] as any)?.current?.focus()
+          : undefined;
+        e.preventDefault();
       }
     }
     if (
-      (e.type === 'mouseover' && !Detector.isMouseDown)
-    || (e.type === 'keydown' && e.keyCode !== 13)
-    || (gridCopy[i] === currentColor)
+      (e.type === 'mouseover' && !Detector.isMouseDown) ||
+      (e.type === 'keydown' && e.keyCode !== 13) ||
+      gridCopy[i] === currentColor
     ) {
       return;
     }
@@ -93,7 +95,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     // console.log({ gridCopy, grid });
 
     if (e.type === 'mouseover') Detector.canCallBack = true;
-    if(e.type === 'keydown') emitState(gridCopy);
+    if (e.type === 'keydown') emitState(gridCopy);
 
     e.preventDefault();
   };

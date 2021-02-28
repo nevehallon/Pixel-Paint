@@ -72,9 +72,7 @@ function ColorPicker({
         <div style={(styles as any).popover}>
           <div
             onClick={handleClose}
-            /* prettier-ignore */
-            onKeyDown={(e) => (e.key === 'esc' ? handleClose() : false)
-                }
+            onKeyDown={(e) => (e.key === 'esc' ? handleClose() : false)}
             role="button"
             style={(styles as any).cover}
             tabIndex={0}
