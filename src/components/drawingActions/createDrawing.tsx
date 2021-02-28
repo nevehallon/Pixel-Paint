@@ -97,7 +97,7 @@ class CreateDrawing extends Form {
             <ColorPicker
               currentColor={this.state.currentColor}
               emitChangeComplete={this.handleChangeComplete}
-                  />
+            />
           </div>
         </div>
         <hr />
