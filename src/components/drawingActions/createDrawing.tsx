@@ -98,6 +98,7 @@ class CreateDrawing extends Form {
             emitChangeComplete={this.handleChangeComplete}
           />
         </div>
+        <hr />
         <div className="container">
           <div className="row">
             <div className="col-lg-6 m-auto">

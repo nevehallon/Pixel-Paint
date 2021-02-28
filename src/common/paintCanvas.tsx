@@ -55,11 +55,9 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   }, [grid]);
 
   useEffect(() => {
-    setSquareRefs((sqrRefs) =>
-      Array(grid.length)
+    setSquareRefs((sqrRefs) => Array(grid.length)
         .fill('')
-        .map((_, i) => sqrRefs[i] || createRef())
-    );
+        .map((_, i) => sqrRefs[i] || createRef()));
   }, [grid.length, fillAction]);
 
   const handleFill = (i: number, e: any | Event): any => {
@@ -79,9 +77,9 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       }
     }
     if (
-      (e.type === 'mouseover' && !Detector.isMouseDown) ||
-      (e.type === 'keydown' && e.keyCode !== 13) ||
-      gridCopy[i] === currentColor
+      (e.type === 'mouseover' && !Detector.isMouseDown)
+      || (e.type === 'keydown' && e.keyCode !== 13)
+      || gridCopy[i] === currentColor
     ) {
       return;
     }

@@ -8,5 +8,8 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": true
     }
-  }
+  },
+  "prettier.requireConfig": true,
+  "prettier.printWidth": 140,
+  "prettier.configPath": ".prettierrc"
 }
