@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import './App.scss';
 import { ToastContainer } from 'react-toastify';
 
 import ProtectedRoute from './common/protectedRoute';
@@ -17,7 +16,6 @@ import Signin from './components/signAndLog/signin';
 import Signup from './components/signAndLog/signup';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCurrentUser } from './services/userService';
-import 'fontsource-roboto';
 
 class App extends Component {
   state = { user: null };
