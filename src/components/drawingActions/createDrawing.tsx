@@ -3,7 +3,9 @@
 import React, { ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 
-import { InputLabel, TextField } from '@material-ui/core';
+import { IconButton, InputLabel, TextField } from '@material-ui/core';
+import RedoIcon from '@material-ui/icons/Redo';
+import UndoIcon from '@material-ui/icons/Undo';
 import Joi from 'joi';
 
 import { Form, PageHeader } from '../../common';
@@ -12,6 +14,8 @@ import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
 export interface createDrawingState {
+  stateTimeline: createDrawingState[];
+  currentStateIndex: number;
   formData: {
     drawingName: string;
     description: string;
@@ -22,6 +26,8 @@ export interface createDrawingState {
 }
 class CreateDrawing extends Form {
   state: createDrawingState = {
+    stateTimeline: [],
+    currentStateIndex: 0,
     formData: {
       drawingName: '',
       description: '',
@@ -40,8 +46,19 @@ class CreateDrawing extends Form {
     // TODO:
   };
 
+  getNewState(): {
+    stateTimeline: createDrawingState[];
+    currentStateIndex: number;
+  } {
+    const { stateTimeline } = this.state;
+    const newStateTimeline = [...stateTimeline, { ...this.state }];
+    const newIndex = stateTimeline.length + 1;
+
+    return { stateTimeline: newStateTimeline, currentStateIndex: newIndex };
+  }
+
   handleFill = (newGrid: string[]): void => {
-    this.setState({ grid: newGrid });
+    this.setState({ grid: newGrid, ...this.getNewState() });
   };
 
   doSubmit = async (): Promise<void> => {
@@ -56,7 +73,7 @@ class CreateDrawing extends Form {
   };
 
   handleChangeComplete = (color: { hex: any }): void => {
-    this.setState({ currentColor: color.hex });
+    this.setState({ currentColor: color.hex, ...this.getNewState() });
   };
 
   handleNumberChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -66,7 +83,40 @@ class CreateDrawing extends Form {
       .fill('')
       .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
 
-    this.setState({ grid: newGrid });
+    this.setState({ grid: newGrid, ...this.getNewState() });
+  };
+
+  handleUndo = (): void => {
+    const { stateTimeline, currentStateIndex } = this.state;
+    // console.log({ stateTimeline, currentStateIndex });
+    if (currentStateIndex < 1) return;
+    const newIdex = currentStateIndex - 1;
+
+    // if (newIdex < 1) {
+    //   this.setState(
+    //     {
+    //       ...stateTimeline[newIdex],
+    //     },
+    //     () => console.log(this.state)
+    //   );
+    //   return;
+    // }
+
+    this.setState(
+      {
+        ...stateTimeline[newIdex],
+        // stateTimeline: [...stateTimeline],
+      },
+      () => console.log(this.state)
+    );
+  };
+
+  handleRedo = (): void => {
+    const { stateTimeline, currentStateIndex } = this.state;
+    // prettier-ignore
+    if (currentStateIndex < 1 || currentStateIndex === stateTimeline.length - 1) return;
+    const newIdex = currentStateIndex + 1;
+    this.setState({ ...stateTimeline[newIdex] });
   };
 
   render(): React.ReactNode {
@@ -91,7 +141,7 @@ class CreateDrawing extends Form {
             grid={this.state.grid}
           />
         </div>
-        <div className="tools container">
+        <div className="tools container d-flex justify-content-around">
           <div className="colorPickerContainer">
             <span>Current Color:</span>
             <ColorPicker
@@ -99,6 +149,12 @@ class CreateDrawing extends Form {
               emitChangeComplete={this.handleChangeComplete}
             />
           </div>
+          <IconButton aria-label="undo" onClick={this.handleUndo}>
+            <UndoIcon />
+          </IconButton>
+          <IconButton aria-label="redo" onClick={this.handleRedo}>
+            <RedoIcon />
+          </IconButton>
         </div>
         <hr />
         <div className="container">
