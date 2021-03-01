@@ -50,15 +50,38 @@ class CreateDrawing extends Form {
     stateTimeline: createDrawingState[];
     currentStateIndex: number;
   } {
-    const { stateTimeline } = this.state;
-    const newStateTimeline = [...stateTimeline, { ...this.state }];
-    const newIndex = stateTimeline.length + 1;
+    const { currentStateIndex } = this.state;
+    const newStateTimeline = [{ ...this.state }];
+    const newIndex = currentStateIndex + 1;
 
     return { stateTimeline: newStateTimeline, currentStateIndex: newIndex };
   }
 
   handleFill = (newGrid: string[]): void => {
-    this.setState({ grid: newGrid, ...this.getNewState() });
+    const { currentStateIndex } = this.state;
+    this.setState(
+      (prevState) => ({
+        grid: newGrid,
+        currentStateIndex: currentStateIndex + 1,
+        stateTimeline: [
+          ...prevState.stateTimeline,
+          {
+            ...prevState,
+            grid: newGrid,
+            currentStateIndex: currentStateIndex + 1,
+            stateTimeline: [
+              ...prevState.stateTimeline,
+              {
+                ...prevState,
+                grid: newGrid,
+                currentStateIndex,
+              },
+            ],
+          },
+        ],
+      }),
+      () => console.log(this.state)
+    );
   };
 
   doSubmit = async (): Promise<void> => {
@@ -92,20 +115,11 @@ class CreateDrawing extends Form {
     if (currentStateIndex < 1) return;
     const newIdex = currentStateIndex - 1;
 
-    // if (newIdex < 1) {
-    //   this.setState(
-    //     {
-    //       ...stateTimeline[newIdex],
-    //     },
-    //     () => console.log(this.state)
-    //   );
-    //   return;
-    // }
-
     this.setState(
       {
         ...stateTimeline[newIdex],
-        // stateTimeline: [...stateTimeline],
+        stateTimeline: [...stateTimeline],
+        currentStateIndex: newIdex,
       },
       () => console.log(this.state)
     );
@@ -114,9 +128,16 @@ class CreateDrawing extends Form {
   handleRedo = (): void => {
     const { stateTimeline, currentStateIndex } = this.state;
     // prettier-ignore
-    if (currentStateIndex < 1 || currentStateIndex === stateTimeline.length - 1) return;
+    if (!currentStateIndex || currentStateIndex === stateTimeline.length - 1) return;
     const newIdex = currentStateIndex + 1;
-    this.setState({ ...stateTimeline[newIdex] });
+    this.setState(
+      {
+        ...stateTimeline[newIdex + 1],
+        stateTimeline: [...stateTimeline],
+        currentStateIndex: newIdex,
+      },
+      () => console.log(this.state)
+    );
   };
 
   render(): React.ReactNode {
