@@ -17,9 +17,9 @@ export interface CanvasProps {
 }
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
-  const sqrt = Math.sqrt(grid.length);
   const [gridCopy, setGridCopy] = useState([...grid]);
   const [squareRefs, setSquareRefs] = useState<any[]>([]);
+  const sqrt = Math.sqrt(grid.length);
   const emitState = (
     newGrid: string[],
     e: any | Event = { type: '', keycode: 0 }
@@ -44,6 +44,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   }, [grid.length, fillAction]);
 
   useEffect(() => {
+    // ? useLayoutEffect
     // Detector.newGrid = gridCopy;
 
     Detector.callback = () => {
@@ -96,6 +97,9 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
     e.preventDefault();
   };
+
+  console.log('rendered');
+  console.count();
 
   return (
     <div
