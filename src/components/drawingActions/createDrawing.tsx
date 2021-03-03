@@ -13,8 +13,11 @@ import ColorPicker from '../../common/colorPicker';
 import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
+const initialGrid = Array(35 ** 2)
+  .fill('')
+  .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
 export interface createDrawingState {
-  stateTimeline: createDrawingState[];
+  canvasStateTimeline: string[][];
   currentStateIndex: number;
   formData: {
     drawingName: string;
@@ -26,7 +29,7 @@ export interface createDrawingState {
 }
 class CreateDrawing extends Form {
   state: createDrawingState = {
-    stateTimeline: [],
+    canvasStateTimeline: [[...initialGrid]],
     currentStateIndex: 0,
     formData: {
       drawingName: '',
@@ -34,9 +37,7 @@ class CreateDrawing extends Form {
       // TODO:
     },
     errors: {},
-    grid: Array(35 ** 2)
-      .fill('')
-      .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white')),
+    grid: [...initialGrid],
     currentColor: '#3f51b5',
   };
 
@@ -47,41 +48,29 @@ class CreateDrawing extends Form {
   };
 
   getNewState(): {
-    stateTimeline: createDrawingState[];
+    canvasStateTimeline: createDrawingState[];
     currentStateIndex: number;
   } {
     const { currentStateIndex } = this.state;
     const newStateTimeline = [{ ...this.state }];
     const newIndex = currentStateIndex + 1;
 
-    return { stateTimeline: newStateTimeline, currentStateIndex: newIndex };
+    return {
+      canvasStateTimeline: newStateTimeline,
+      currentStateIndex: newIndex,
+    };
   }
 
   handleFill = (newGrid: string[]): void => {
-    const { currentStateIndex } = this.state;
-    this.setState(
-      (prevState) => ({
-        grid: newGrid,
-        currentStateIndex: currentStateIndex + 1,
-        stateTimeline: [
-          ...prevState.stateTimeline,
-          {
-            ...prevState,
-            grid: newGrid,
-            currentStateIndex: currentStateIndex + 1,
-            stateTimeline: [
-              ...prevState.stateTimeline,
-              {
-                ...prevState,
-                grid: newGrid,
-                currentStateIndex,
-              },
-            ],
-          },
-        ],
-      }),
-      () => console.log(this.state)
-    );
+    const { currentStateIndex, canvasStateTimeline } = this.state;
+    this.setState({
+      grid: newGrid,
+      currentStateIndex: currentStateIndex + 1,
+      canvasStateTimeline: [
+        ...canvasStateTimeline.slice(0, currentStateIndex + 1),
+        newGrid,
+      ],
+    });
   };
 
   doSubmit = async (): Promise<void> => {
@@ -96,7 +85,7 @@ class CreateDrawing extends Form {
   };
 
   handleChangeComplete = (color: { hex: any }): void => {
-    this.setState({ currentColor: color.hex, ...this.getNewState() });
+    this.setState({ currentColor: color.hex });
   };
 
   handleNumberChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -106,38 +95,38 @@ class CreateDrawing extends Form {
       .fill('')
       .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
 
-    this.setState({ grid: newGrid, ...this.getNewState() });
+    const resetTimeline = [newGrid];
+
+    this.setState({
+      grid: newGrid,
+      canvasStateTimeline: resetTimeline,
+      currentStateIndex: 0,
+    });
   };
 
   handleUndo = (): void => {
-    const { stateTimeline, currentStateIndex } = this.state;
-    // console.log({ stateTimeline, currentStateIndex });
+    const { canvasStateTimeline, currentStateIndex } = this.state;
+    // console.log({ canvasStateTimeline, currentStateIndex });
     if (currentStateIndex < 1) return;
     const newIdex = currentStateIndex - 1;
 
-    this.setState(
-      {
-        ...stateTimeline[newIdex],
-        stateTimeline: [...stateTimeline],
-        currentStateIndex: newIdex,
-      },
-      () => console.log(this.state)
-    );
+    this.setState({
+      grid: canvasStateTimeline[newIdex],
+      canvasStateTimeline: [...canvasStateTimeline],
+      currentStateIndex: newIdex,
+    });
   };
 
   handleRedo = (): void => {
-    const { stateTimeline, currentStateIndex } = this.state;
+    const { canvasStateTimeline, currentStateIndex } = this.state;
     // prettier-ignore
-    if (!currentStateIndex || currentStateIndex === stateTimeline.length - 1) return;
+    if (currentStateIndex === canvasStateTimeline.length - 1) return;
     const newIdex = currentStateIndex + 1;
-    this.setState(
-      {
-        ...stateTimeline[newIdex + 1],
-        stateTimeline: [...stateTimeline],
-        currentStateIndex: newIdex,
-      },
-      () => console.log(this.state)
-    );
+    this.setState({
+      grid: canvasStateTimeline[newIdex],
+      canvasStateTimeline: [...canvasStateTimeline],
+      currentStateIndex: newIdex,
+    });
   };
 
   render(): React.ReactNode {

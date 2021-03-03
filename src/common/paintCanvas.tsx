@@ -98,8 +98,8 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     e.preventDefault();
   };
 
-  console.log('rendered');
-  console.count();
+  // console.log('rendered');
+  // console.count(); TODO: fix multiple renders
 
   return (
     <div
