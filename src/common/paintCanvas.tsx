@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { useEffect, useRef, useState } from 'react';
+import { createRef, useEffect, useRef, useState } from 'react';
 
 import Detector from '../services/paintHelperService';
 
@@ -40,7 +40,6 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       Detector.newGrid = squareRefs.current.map(
         (x: any) => x.style.backgroundColor
       );
-
       if (Detector.canCallBack) {
         emitState(Detector.newGrid);
       }
@@ -54,7 +53,8 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
   useEffect(() => {
     setGridCopy([...grid]);
-  }, [grid]);
+    squareRefs.current = grid.map((_) => createRef());
+  }, [grid, grid.length, fillAction]);
 
   const handleFill = (i: number, e: any | Event): any => {
     if (e.type === 'keydown') {

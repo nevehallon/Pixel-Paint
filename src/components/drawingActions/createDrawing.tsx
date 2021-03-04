@@ -4,6 +4,7 @@ import React, { ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 
 import { IconButton, InputLabel, TextField } from '@material-ui/core';
+import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
 import Joi from 'joi';
@@ -13,9 +14,6 @@ import ColorPicker from '../../common/colorPicker';
 import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
-const initialGrid = Array(35 ** 2)
-  .fill('')
-  .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
 export interface createDrawingState {
   canvasStateTimeline: string[][];
   currentStateIndex: number;
@@ -27,9 +25,14 @@ export interface createDrawingState {
   grid: string[];
   currentColor: string;
 }
+
+const initialGrid = (size = 35): string[] =>
+  Array(size ** 2)
+    .fill('')
+    .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
 class CreateDrawing extends Form {
   state: createDrawingState = {
-    canvasStateTimeline: [[...initialGrid]],
+    canvasStateTimeline: [[...initialGrid()]],
     currentStateIndex: 0,
     formData: {
       drawingName: '',
@@ -37,7 +40,7 @@ class CreateDrawing extends Form {
       // TODO:
     },
     errors: {},
-    grid: [...initialGrid],
+    grid: [...initialGrid()],
     currentColor: '#3f51b5',
   };
 
@@ -45,32 +48,6 @@ class CreateDrawing extends Form {
     drawingName: Joi.string().min(2).max(255).required().label('drawingName'),
     description: Joi.string().min(2).max(1024).required().label('description'),
     // TODO:
-  };
-
-  getNewState(): {
-    canvasStateTimeline: createDrawingState[];
-    currentStateIndex: number;
-  } {
-    const { currentStateIndex } = this.state;
-    const newStateTimeline = [{ ...this.state }];
-    const newIndex = currentStateIndex + 1;
-
-    return {
-      canvasStateTimeline: newStateTimeline,
-      currentStateIndex: newIndex,
-    };
-  }
-
-  handleFill = (newGrid: string[]): void => {
-    const { currentStateIndex, canvasStateTimeline } = this.state;
-    this.setState({
-      grid: newGrid,
-      currentStateIndex: currentStateIndex + 1,
-      canvasStateTimeline: [
-        ...canvasStateTimeline.slice(0, currentStateIndex + 1),
-        newGrid,
-      ],
-    });
   };
 
   doSubmit = async (): Promise<void> => {
@@ -82,6 +59,18 @@ class CreateDrawing extends Form {
       autoClose: 2500,
     });
     (this.props as any).history.replace('/my-drawings');
+  };
+
+  handleFill = (newGrid: string[]): void => {
+    const { currentStateIndex, canvasStateTimeline } = this.state;
+    this.setState({
+      grid: newGrid,
+      currentStateIndex: currentStateIndex + 1,
+      canvasStateTimeline: [
+        ...canvasStateTimeline.slice(0, currentStateIndex + 1),
+        newGrid,
+      ],
+    });
   };
 
   handleChangeComplete = (color: { hex: any }): void => {
@@ -129,6 +118,19 @@ class CreateDrawing extends Form {
     });
   };
 
+  handleReset = (): void => {
+    const { currentStateIndex, canvasStateTimeline, grid } = this.state;
+    const size = Math.sqrt(grid.length);
+    this.setState({
+      grid: initialGrid(size),
+      currentStateIndex: currentStateIndex + 1,
+      canvasStateTimeline: [
+        ...canvasStateTimeline.slice(0, currentStateIndex + 1),
+        initialGrid(size),
+      ],
+    });
+  };
+
   render(): React.ReactNode {
     const { grid, currentColor } = this.state;
     const inputProps = {
@@ -164,6 +166,9 @@ class CreateDrawing extends Form {
           </IconButton>
           <IconButton aria-label="redo" onClick={this.handleRedo}>
             <RedoIcon />
+          </IconButton>
+          <IconButton aria-label="reset" onClick={this.handleReset}>
+            <GridOnIcon />
           </IconButton>
         </div>
         <hr />
