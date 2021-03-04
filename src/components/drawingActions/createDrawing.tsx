@@ -3,7 +3,7 @@
 import React, { ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 
-import { IconButton, InputLabel, TextField } from '@material-ui/core';
+import { Button, IconButton, InputLabel, TextField } from '@material-ui/core';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
@@ -153,7 +153,7 @@ class CreateDrawing extends Form {
             grid={this.state.grid}
           />
         </div>
-        <div className="tools container d-flex justify-content-around">
+        <div className="tools container d-flex justify-content-around mt-2">
           <div className="colorPickerContainer">
             <span>Current Color:</span>
             <ColorPicker
@@ -167,9 +167,16 @@ class CreateDrawing extends Form {
           <IconButton aria-label="redo" onClick={this.handleRedo}>
             <RedoIcon />
           </IconButton>
-          <IconButton aria-label="reset" onClick={this.handleReset}>
-            <GridOnIcon />
-          </IconButton>
+          <Button
+            aria-label="reset"
+            color="primary"
+            endIcon={<GridOnIcon />}
+            onClick={this.handleReset}
+            size="small"
+            variant="contained"
+          >
+            Clear Canvas
+          </Button>
         </div>
         <hr />
         <div className="container">
