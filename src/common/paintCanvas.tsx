@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { createRef, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Detector from '../services/paintHelperService';
 
@@ -18,7 +18,7 @@ export interface CanvasProps {
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const [gridCopy, setGridCopy] = useState([...grid]);
-  const [squareRefs, setSquareRefs] = useState<any[]>([]);
+  const squareRefs = useRef<any[]>([]);
   const sqrt = Math.sqrt(grid.length);
   const emitState = (
     newGrid: string[],
@@ -36,21 +36,11 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   };
 
   useEffect(() => {
-    setSquareRefs((sqrRefs) =>
-      Array(grid.length)
-        .fill('')
-        .map((_, i) => sqrRefs[i] || createRef())
-    );
-  }, [grid.length, fillAction]);
-
-  useEffect(() => {
-    // ? useLayoutEffect
-    // Detector.newGrid = gridCopy;
-
     Detector.callback = () => {
-      Detector.newGrid = Array.from(document.querySelectorAll('.square'))!.map(
+      Detector.newGrid = squareRefs.current.map(
         (x: any) => x.style.backgroundColor
       );
+
       if (Detector.canCallBack) {
         emitState(Detector.newGrid);
       }
@@ -71,13 +61,13 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       // allow user to navigate the grid with arrow keys
       if (e.keyCode > 36 && e.keyCode < 41) {
         e.keyCode === 37
-          ? squareRefs[i - 1 >= 0 ? i - 1 : i]?.current?.focus()
+          ? squareRefs.current[i - 1 >= 0 ? i - 1 : i]?.focus()
           : e.keyCode === 38
-          ? squareRefs[i - sqrt >= 0 ? i - sqrt : i]?.current?.focus()
+          ? squareRefs.current[i - sqrt >= 0 ? i - sqrt : i]?.focus()
           : e.keyCode === 39
-          ? squareRefs[i + 1 >= 0 ? i + 1 : i]?.current?.focus()
+          ? squareRefs.current[i + 1 >= 0 ? i + 1 : i]?.focus()
           : e.keyCode === 40
-          ? squareRefs[i + sqrt >= 0 ? i + sqrt : i]?.current?.focus()
+          ? squareRefs.current[i + sqrt >= 0 ? i + sqrt : i]?.focus()
           : undefined;
         e.preventDefault();
       }
@@ -90,12 +80,10 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       return;
     }
 
-    squareRefs[i].current.style.backgroundColor = currentColor;
+    squareRefs.current[i].style.backgroundColor = currentColor;
 
     if (e.type === 'mouseenter') Detector.canCallBack = true;
     if (e.type === 'keydown') emitState(gridCopy);
-
-    e.preventDefault();
   };
 
   // console.log('rendered');
@@ -118,7 +106,8 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           onKeyDown={(e) => handleFill(i, e)}
           onMouseDown={(e) => handleFill(i, e)}
           onMouseEnter={(e) => handleFill(i, e)}
-          ref={squareRefs[i]}
+          // eslint-disable-next-line no-return-assign
+          ref={(el) => (squareRefs.current[i] = el)}
           role="button"
           style={{ backgroundColor: gridCopy[i] }}
           tabIndex={0}
