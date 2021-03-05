@@ -24,6 +24,7 @@ export interface createDrawingState {
   errors: { [key: string]: any };
   grid: string[];
   currentColor: string;
+  isInitial: boolean;
 }
 
 const initialGrid = (size = 35): string[] =>
@@ -42,6 +43,7 @@ class CreateDrawing extends Form {
     errors: {},
     grid: [...initialGrid()],
     currentColor: '#3f51b5',
+    isInitial: true,
   };
 
   schema = {
@@ -70,6 +72,7 @@ class CreateDrawing extends Form {
         ...canvasStateTimeline.slice(0, currentStateIndex + 1),
         newGrid,
       ],
+      isInitial: false,
     });
   };
 
@@ -90,35 +93,43 @@ class CreateDrawing extends Form {
       grid: newGrid,
       canvasStateTimeline: resetTimeline,
       currentStateIndex: 0,
+      isInitial: true,
     });
   };
 
   handleUndo = (): void => {
-    const { canvasStateTimeline, currentStateIndex } = this.state;
+    const { canvasStateTimeline, currentStateIndex, grid } = this.state;
     // console.log({ canvasStateTimeline, currentStateIndex });
     if (currentStateIndex < 1) return;
+    const size = Math.sqrt(grid.length);
     const newIdex = currentStateIndex - 1;
 
     this.setState({
       grid: canvasStateTimeline[newIdex],
       canvasStateTimeline: [...canvasStateTimeline],
       currentStateIndex: newIdex,
+      isInitial:
+        canvasStateTimeline[newIdex].join() === initialGrid(size).join(),
     });
   };
 
   handleRedo = (): void => {
-    const { canvasStateTimeline, currentStateIndex } = this.state;
+    const { canvasStateTimeline, currentStateIndex, grid } = this.state;
     // prettier-ignore
     if (currentStateIndex === canvasStateTimeline.length - 1) return;
+    const size = Math.sqrt(grid.length);
     const newIdex = currentStateIndex + 1;
     this.setState({
       grid: canvasStateTimeline[newIdex],
       canvasStateTimeline: [...canvasStateTimeline],
       currentStateIndex: newIdex,
+      isInitial:
+        canvasStateTimeline[newIdex].join() === initialGrid(size).join(),
     });
   };
 
   handleReset = (): void => {
+    if (this.state.isInitial) return;
     const { currentStateIndex, canvasStateTimeline, grid } = this.state;
     const size = Math.sqrt(grid.length);
     this.setState({
@@ -128,6 +139,7 @@ class CreateDrawing extends Form {
         ...canvasStateTimeline.slice(0, currentStateIndex + 1),
         initialGrid(size),
       ],
+      isInitial: true,
     });
   };
 
