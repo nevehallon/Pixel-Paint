@@ -153,29 +153,29 @@ class CreateDrawing extends Form {
             grid={this.state.grid}
           />
         </div>
-        <div className="tools container d-flex justify-content-around mt-2">
-          <div className="colorPickerContainer">
-            <span>Current Color:</span>
+        <div className="tools d-flex justify-content-around mt-2 mx-auto">
+          <div className="colorPickerContainer d-flex align-items-center">
+            <small className="mr-2">Current Color:</small>
             <ColorPicker
               currentColor={this.state.currentColor}
               emitChangeComplete={this.handleChangeComplete}
             />
           </div>
           <IconButton aria-label="undo" onClick={this.handleUndo}>
-            <UndoIcon />
+            <UndoIcon fontSize="small" />
           </IconButton>
           <IconButton aria-label="redo" onClick={this.handleRedo}>
-            <RedoIcon />
+            <RedoIcon fontSize="small" />
           </IconButton>
           <Button
             aria-label="reset"
-            color="primary"
+            color="secondary"
             endIcon={<GridOnIcon />}
             onClick={this.handleReset}
             size="small"
             variant="contained"
           >
-            Clear Canvas
+            <small>Clear</small>
           </Button>
         </div>
         <hr />
