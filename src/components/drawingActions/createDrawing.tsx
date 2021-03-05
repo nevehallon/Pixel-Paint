@@ -112,7 +112,8 @@ class CreateDrawing extends Form {
       canvasStateTimeline: [...canvasStateTimeline],
       currentStateIndex: newIdex,
       isInitial:
-        canvasStateTimeline[newIdex].join() === initialGrid(size).join(),
+        JSON.stringify(canvasStateTimeline[newIdex]) ===
+        JSON.stringify(initialGrid(size)),
     });
   };
 
@@ -127,7 +128,8 @@ class CreateDrawing extends Form {
       canvasStateTimeline: [...canvasStateTimeline],
       currentStateIndex: newIdex,
       isInitial:
-        canvasStateTimeline[newIdex].join() === initialGrid(size).join(),
+        JSON.stringify(canvasStateTimeline[newIdex]) ===
+        JSON.stringify(initialGrid(size)),
     });
   };
 

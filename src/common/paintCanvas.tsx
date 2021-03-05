@@ -17,7 +17,7 @@ export interface CanvasProps {
 }
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
-  const [gridCopy, setGridCopy] = useState([...grid]);
+  // const [gridCopy, setGridCopy] = useState([...grid]); // TODO:
   const squareRefs = useRef<any[]>([]);
   const sqrt = Math.sqrt(grid.length);
   const emitState = (
@@ -53,41 +53,51 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   }, []);
 
   useEffect(() => {
-    setGridCopy([...grid]);
-    squareRefs.current = grid.map(createRef);
+    // setGridCopy([...grid]);
+    // squareRefs.current = grid.map(genGrid); //TODO:
+    // console.log(squareRefs.current);
   }, [grid, grid.length, fillAction]);
 
   const handleFill = (i: number, e: any | Event): any => {
+    const squares = squareRefs.current;
     if (e.type === 'keydown') {
       // allow user to navigate the grid with arrow keys
       if (e.keyCode > 36 && e.keyCode < 41) {
         e.keyCode === 37
-          ? squareRefs.current[i - 1 >= 0 ? i - 1 : i]?.focus()
+          ? squares[i - 1 >= 0 ? i - 1 : i]?.focus()
           : e.keyCode === 38
-          ? squareRefs.current[i - sqrt >= 0 ? i - sqrt : i]?.focus()
+          ? squares[i - sqrt >= 0 ? i - sqrt : i]?.focus()
           : e.keyCode === 39
-          ? squareRefs.current[i + 1 >= 0 ? i + 1 : i]?.focus()
+          ? squares[i + 1 >= 0 ? i + 1 : i]?.focus()
           : e.keyCode === 40
-          ? squareRefs.current[i + sqrt >= 0 ? i + sqrt : i]?.focus()
+          ? squares[i + sqrt >= 0 ? i + sqrt : i]?.focus()
           : undefined;
         e.preventDefault();
       }
     }
+
     if (
-      gridCopy[i].fill === currentColor ||
+      squares[i].style.backgroundColor === currentColor ||
       (e.type === 'mouseenter' && !Detector.isMouseDown) ||
       (e.type === 'keydown' && e.keyCode !== 13)
     ) {
       return;
     }
 
-    squareRefs.current[i].style.backgroundColor = currentColor;
-    if (squareRefs.current[i].dataset.touched === 'false') {
-      squareRefs.current[i].dataset.touched = true;
+    squares[i].style.backgroundColor = currentColor;
+    if (squares[i].dataset.touched === 'false') {
+      squares[i].dataset.touched = true;
     }
 
     if (e.type === 'mouseenter') Detector.canCallBack = true;
-    if (e.type === 'keydown') emitState(gridCopy);
+    if (e.type === 'keydown') {
+      emitState(
+        squares.map((x: any) => ({
+          fill: x.style.backgroundColor,
+          touched: x.dataset.touched,
+        }))
+      );
+    }
   };
 
   // console.log('rendered');
@@ -114,7 +124,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           // eslint-disable-next-line no-return-assign
           ref={(el) => (squareRefs.current[i] = el)}
           role="button"
-          style={{ backgroundColor: gridCopy[i].fill }}
+          style={{ backgroundColor: x.fill }}
           tabIndex={0}
         />
       ))}
