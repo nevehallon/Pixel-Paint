@@ -15,22 +15,25 @@ import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
 
 export interface createDrawingState {
-  canvasStateTimeline: string[][];
+  canvasStateTimeline: { fill: string; touched: boolean }[][];
   currentStateIndex: number;
   formData: {
     drawingName: string;
     description: string;
   };
   errors: { [key: string]: any };
-  grid: string[];
+  grid: { fill: string; touched: boolean }[];
   currentColor: string;
   isInitial: boolean;
 }
 
-const initialGrid = (size = 35): string[] =>
+const initialGrid = (size = 35): { fill: string; touched: boolean }[] =>
   Array(size ** 2)
     .fill('')
-    .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
+    .map((_, i) => ({
+      fill: i % 2 === 0 ? 'lightgrey' : 'white',
+      touched: false,
+    }));
 class CreateDrawing extends Form {
   state: createDrawingState = {
     canvasStateTimeline: [[...initialGrid()]],
@@ -63,7 +66,7 @@ class CreateDrawing extends Form {
     (this.props as any).history.replace('/my-drawings');
   };
 
-  handleFill = (newGrid: string[]): void => {
+  handleFill = (newGrid: { fill: string; touched: boolean }[]): void => {
     const { currentStateIndex, canvasStateTimeline } = this.state;
     this.setState({
       grid: newGrid,
@@ -161,7 +164,9 @@ class CreateDrawing extends Form {
           </div>
           <PaintCanvas
             currentColor={currentColor}
-            fillAction={(newGrid: string[]): any => this.handleFill(newGrid)}
+            fillAction={(newGrid: { fill: string; touched: boolean }[]): any =>
+              this.handleFill(newGrid)
+            }
             grid={this.state.grid}
           />
         </div>

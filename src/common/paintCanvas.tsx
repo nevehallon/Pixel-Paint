@@ -11,8 +11,8 @@ function getCoords(index: number, length: number): string {
 }
 
 export interface CanvasProps {
-  fillAction: (grid: string[]) => void;
-  grid: string[];
+  fillAction: (grid: { fill: string; touched: boolean }[]) => void;
+  grid: { fill: string; touched: boolean }[];
   currentColor: string;
 }
 
@@ -21,7 +21,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   const squareRefs = useRef<any[]>([]);
   const sqrt = Math.sqrt(grid.length);
   const emitState = (
-    newGrid: string[],
+    newGrid: CanvasProps['grid'],
     e: any | Event = { type: '', keycode: 0 }
   ): any => {
     Detector.canCallBack = false;
@@ -37,9 +37,10 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
   useEffect(() => {
     Detector.callback = () => {
-      Detector.newGrid = squareRefs.current.map(
-        (x: any) => x.style.backgroundColor
-      );
+      Detector.newGrid = squareRefs.current.map((x: any) => ({
+        fill: x.style.backgroundColor,
+        touched: x.dataset.touched,
+      }));
       if (Detector.canCallBack) {
         emitState(Detector.newGrid);
       }
@@ -53,7 +54,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
   useEffect(() => {
     setGridCopy([...grid]);
-    squareRefs.current = grid.map((_) => createRef());
+    squareRefs.current = grid.map(createRef);
   }, [grid, grid.length, fillAction]);
 
   const handleFill = (i: number, e: any | Event): any => {
@@ -73,7 +74,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
       }
     }
     if (
-      gridCopy[i] === currentColor ||
+      gridCopy[i].fill === currentColor ||
       (e.type === 'mouseenter' && !Detector.isMouseDown) ||
       (e.type === 'keydown' && e.keyCode !== 13)
     ) {
@@ -81,6 +82,9 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     }
 
     squareRefs.current[i].style.backgroundColor = currentColor;
+    if (squareRefs.current[i].dataset.touched === 'false') {
+      squareRefs.current[i].dataset.touched = true;
+    }
 
     if (e.type === 'mouseenter') Detector.canCallBack = true;
     if (e.type === 'keydown') emitState(gridCopy);
@@ -102,6 +106,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
         <div
           aria-label="fill square"
           className="square"
+          data-touched={x.touched}
           key={getCoords(i, arr.length)}
           onKeyDown={(e) => handleFill(i, e)}
           onMouseDown={(e) => handleFill(i, e)}
@@ -109,7 +114,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           // eslint-disable-next-line no-return-assign
           ref={(el) => (squareRefs.current[i] = el)}
           role="button"
-          style={{ backgroundColor: gridCopy[i] }}
+          style={{ backgroundColor: gridCopy[i].fill }}
           tabIndex={0}
         />
       ))}
