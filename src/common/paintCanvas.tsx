@@ -74,6 +74,8 @@ function PaintCanvas({
 
   const handleFill = (i: number, e: any | Event): any => {
     if (e.type === 'mousedown') {
+      // stop right click
+      if (e.which === 3 || e.button === 2) return;
       Detector.drawStart = true;
     }
     const squares = squareRefs.current;
