@@ -88,7 +88,10 @@ class CreateDrawing extends Form {
     if (newNumber < 15 || newNumber > 35) return;
     const newGrid = Array(newNumber ** 2)
       .fill('')
-      .map((_, i) => (i % 2 === 0 ? 'lightgrey' : 'white'));
+      .map((_, i) => ({
+        fill: i % 2 === 0 ? 'lightgrey' : 'white',
+        touched: false,
+      }));
 
     const resetTimeline = [newGrid];
 

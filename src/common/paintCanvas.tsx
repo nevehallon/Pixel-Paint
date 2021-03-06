@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { createRef, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 import Detector from '../services/paintHelperService';
 
@@ -17,7 +17,6 @@ export interface CanvasProps {
 }
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
-  // const [gridCopy, setGridCopy] = useState([...grid]); // TODO:
   const squareRefs = useRef<any[]>([]);
   const sqrt = Math.sqrt(grid.length);
   const emitState = (
@@ -51,12 +50,6 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    // setGridCopy([...grid]);
-    // squareRefs.current = grid.map(genGrid); //TODO:
-    // console.log(squareRefs.current);
-  }, [grid, grid.length, fillAction]);
 
   const handleFill = (i: number, e: any | Event): any => {
     const squares = squareRefs.current;
@@ -103,6 +96,16 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
   // console.log('rendered');
   // console.count(); TODO: fix multiple renders
 
+  const setSquareRef = (
+    index: number,
+    element: HTMLDivElement | null
+  ): void => {
+    if (index === 0) {
+      squareRefs.current = [];
+    }
+    squareRefs.current[index] = element;
+  };
+
   return (
     <div
       className="paintGrid"
@@ -122,7 +125,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           onMouseDown={(e) => handleFill(i, e)}
           onMouseEnter={(e) => handleFill(i, e)}
           // eslint-disable-next-line no-return-assign
-          ref={(el) => (squareRefs.current[i] = el)}
+          ref={(el) => setSquareRef(i, el)}
           role="button"
           style={{ backgroundColor: x.fill }}
           tabIndex={0}
