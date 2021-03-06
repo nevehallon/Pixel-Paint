@@ -17,8 +17,19 @@ export interface CanvasProps {
 }
 
 function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
-  const squareRefs = useRef<any[]>([]);
   const sqrt = Math.sqrt(grid.length);
+  const squareRefs = useRef<any[]>([]);
+
+  const setSquareRef = (
+    index: number,
+    element: HTMLDivElement | null
+  ): void => {
+    if (index === 0) {
+      squareRefs.current = [];
+    }
+    squareRefs.current[index] = element;
+  };
+
   const emitState = (
     newGrid: CanvasProps['grid'],
     e: any | Event = { type: '', keycode: 0 }
@@ -95,16 +106,6 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
   // console.log('rendered');
   // console.count(); TODO: fix multiple renders
-
-  const setSquareRef = (
-    index: number,
-    element: HTMLDivElement | null
-  ): void => {
-    if (index === 0) {
-      squareRefs.current = [];
-    }
-    squareRefs.current[index] = element;
-  };
 
   return (
     <div
