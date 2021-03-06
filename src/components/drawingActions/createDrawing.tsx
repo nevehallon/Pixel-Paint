@@ -45,7 +45,7 @@ class CreateDrawing extends Form {
     },
     errors: {},
     grid: [...initialGrid()],
-    currentColor: '#3f51b5',
+    currentColor: 'rgb(63, 81, 181)',
     isInitial: true,
   };
 
@@ -79,8 +79,8 @@ class CreateDrawing extends Form {
     });
   };
 
-  handleChangeComplete = (color: { hex: any }): void => {
-    this.setState({ currentColor: color.hex });
+  handleChangeComplete = (color: { rgb: any }): void => {
+    this.setState({ currentColor: color.rgb });
   };
 
   handleNumberChange = (e: ChangeEvent<HTMLInputElement>): void => {
