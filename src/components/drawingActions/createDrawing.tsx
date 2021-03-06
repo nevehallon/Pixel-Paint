@@ -4,6 +4,7 @@ import React, { ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button, IconButton, InputLabel, TextField } from '@material-ui/core';
+import GridOffIcon from '@material-ui/icons/GridOff';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
@@ -13,29 +14,33 @@ import { Form, PageHeader } from '../../common';
 import ColorPicker from '../../common/colorPicker';
 import PaintCanvas from '../../common/paintCanvas';
 import { createDrawing } from '../../services/drawingsService';
+import GlobalListener from '../../services/globalListener';
 
+const initialGrid = (size = 35): { fill: string; touched: string }[] =>
+  Array(size ** 2)
+    .fill('')
+    .map((_, i) => ({
+      fill: i % 2 === 0 ? 'lightgrey' : 'white',
+      touched: '',
+    }));
 export interface createDrawingState {
-  canvasStateTimeline: { fill: string; touched: boolean }[][];
+  addedStyle: { border: string };
+  gateKeep: boolean;
+  canvasStateTimeline: { fill: string; touched: string }[][];
   currentStateIndex: number;
   formData: {
     drawingName: string;
     description: string;
   };
   errors: { [key: string]: any };
-  grid: { fill: string; touched: boolean }[];
+  grid: { fill: string; touched: string }[];
   currentColor: string;
   isInitial: boolean;
 }
-
-const initialGrid = (size = 35): { fill: string; touched: boolean }[] =>
-  Array(size ** 2)
-    .fill('')
-    .map((_, i) => ({
-      fill: i % 2 === 0 ? 'lightgrey' : 'white',
-      touched: false,
-    }));
 class CreateDrawing extends Form {
   state: createDrawingState = {
+    addedStyle: { border: '1px solid #00000065' },
+    gateKeep: true,
     canvasStateTimeline: [[...initialGrid()]],
     currentStateIndex: 0,
     formData: {
@@ -66,7 +71,7 @@ class CreateDrawing extends Form {
     (this.props as any).history.replace('/my-drawings');
   };
 
-  handleFill = (newGrid: { fill: string; touched: boolean }[]): void => {
+  handleFill = (newGrid: { fill: string; touched: string }[]): void => {
     const { currentStateIndex, canvasStateTimeline } = this.state;
     this.setState({
       grid: newGrid,
@@ -90,7 +95,7 @@ class CreateDrawing extends Form {
       .fill('')
       .map((_, i) => ({
         fill: i % 2 === 0 ? 'lightgrey' : 'white',
-        touched: false,
+        touched: '',
       }));
 
     const resetTimeline = [newGrid];
@@ -151,6 +156,30 @@ class CreateDrawing extends Form {
     });
   };
 
+  handleGridOff = (hideGrid: boolean): void => {
+    const { grid, gateKeep } = this.state;
+    if (hideGrid) {
+      this.setState({
+        addedStyle: { border: 'none' },
+        grid: grid.map((x) => ({
+          ...x,
+          fill: x.touched ? x.fill : 'transparent',
+        })),
+        gateKeep: false,
+      });
+      return;
+    }
+
+    if (gateKeep) return;
+
+    const { currentStateIndex, canvasStateTimeline } = this.state;
+
+    this.setState({
+      addedStyle: { border: '1px solid #00000065' },
+      grid: canvasStateTimeline[currentStateIndex],
+    });
+  };
+
   render(): React.ReactNode {
     const { grid, currentColor } = this.state;
     const inputProps = {
@@ -168,8 +197,9 @@ class CreateDrawing extends Form {
             <p>Lets make a new drawing!</p>
           </div>
           <PaintCanvas
+            addedStyle={this.state.addedStyle}
             currentColor={currentColor}
-            fillAction={(newGrid: { fill: string; touched: boolean }[]): any =>
+            fillAction={(newGrid: { fill: string; touched: string }[]): any =>
               this.handleFill(newGrid)
             }
             grid={this.state.grid}
@@ -198,6 +228,20 @@ class CreateDrawing extends Form {
             variant="contained"
           >
             <small>Clear</small>
+          </Button>
+          <Button
+            aria-label="see results"
+            color="secondary"
+            endIcon={<GridOffIcon />}
+            onMouseDown={() => this.handleGridOff(true)}
+            size="small"
+            variant="contained"
+          >
+            <GlobalListener
+              eventType="mouseup"
+              handler={() => this.handleGridOff(false)}
+            />
+            <small>Demo</small>
           </Button>
         </div>
         <hr />

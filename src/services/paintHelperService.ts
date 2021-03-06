@@ -4,7 +4,7 @@ class Detector {
     window.addEventListener('mouseup', this.handleMouseUp);
   }
 
-  newGrid!: { fill: string; touched: boolean }[];
+  newGrid!: { fill: string; touched: string }[];
 
   canCallBack = false;
 
@@ -20,6 +20,11 @@ class Detector {
     this.isMouseDown = false;
 
     this.callback();
+  };
+
+  cleanup = () => {
+    window.removeEventListener('mousedown', this.handleMouseDown);
+    window.removeEventListener('mouseup', this.handleMouseUp);
   };
 }
 

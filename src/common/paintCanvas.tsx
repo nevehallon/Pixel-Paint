@@ -11,12 +11,20 @@ function getCoords(index: number, length: number): string {
 }
 
 export interface CanvasProps {
-  fillAction: (grid: { fill: string; touched: boolean }[]) => void;
-  grid: { fill: string; touched: boolean }[];
+  fillAction: (grid: { fill: string; touched: string }[]) => void;
+  grid: { fill: string; touched: string }[];
   currentColor: string;
+  addedStyle: {
+    border: string;
+  };
 }
 
-function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
+function PaintCanvas({
+  fillAction,
+  grid,
+  currentColor,
+  addedStyle,
+}: CanvasProps): any {
   const sqrt = Math.sqrt(grid.length);
   const squareRefs = useRef<any[]>([]);
 
@@ -58,6 +66,7 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
 
     return () => {
       Detector.callback = () => {};
+      Detector.cleanup();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -89,8 +98,8 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
     }
 
     squares[i].style.backgroundColor = currentColor;
-    if (squares[i].dataset.touched === 'false') {
-      squares[i].dataset.touched = true;
+    if (!squares[i].dataset.touched) {
+      squares[i].dataset.touched = 'true';
     }
 
     if (e.type === 'mouseenter') Detector.canCallBack = true;
@@ -124,11 +133,12 @@ function PaintCanvas({ fillAction, grid, currentColor }: CanvasProps): any {
           key={getCoords(i, arr.length)}
           onKeyDown={(e) => handleFill(i, e)}
           onMouseDown={(e) => handleFill(i, e)}
+          // TODO: only if mousedown starts in square is it valid
           onMouseEnter={(e) => handleFill(i, e)}
           // eslint-disable-next-line no-return-assign
           ref={(el) => setSquareRef(i, el)}
           role="button"
-          style={{ backgroundColor: x.fill }}
+          style={{ backgroundColor: x.fill, ...addedStyle }}
           tabIndex={0}
         />
       ))}
