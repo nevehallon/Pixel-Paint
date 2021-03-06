@@ -42,6 +42,7 @@ function PaintCanvas({
     newGrid: CanvasProps['grid'],
     e: any | Event = { type: '', keycode: 0 }
   ): any => {
+    Detector.drawStart = false;
     Detector.canCallBack = false;
 
     if (e.type === 'keyup' && e.keyCode !== 13) {
@@ -72,6 +73,9 @@ function PaintCanvas({
   }, []);
 
   const handleFill = (i: number, e: any | Event): any => {
+    if (e.type === 'mousedown') {
+      Detector.drawStart = true;
+    }
     const squares = squareRefs.current;
     if (e.type === 'keydown') {
       // allow user to navigate the grid with arrow keys
@@ -91,7 +95,8 @@ function PaintCanvas({
 
     if (
       squares[i].style.backgroundColor === currentColor ||
-      (e.type === 'mouseenter' && !Detector.isMouseDown) ||
+      (e.type === 'mouseenter' &&
+        (!Detector.isMouseDown || !Detector.drawStart)) ||
       (e.type === 'keydown' && e.keyCode !== 13)
     ) {
       return;
@@ -133,7 +138,6 @@ function PaintCanvas({
           key={getCoords(i, arr.length)}
           onKeyDown={(e) => handleFill(i, e)}
           onMouseDown={(e) => handleFill(i, e)}
-          // TODO: only if mousedown starts in square is it valid
           onMouseEnter={(e) => handleFill(i, e)}
           // eslint-disable-next-line no-return-assign
           ref={(el) => setSquareRef(i, el)}
