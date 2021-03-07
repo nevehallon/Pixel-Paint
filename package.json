@@ -47,6 +47,7 @@
     "@types/react-color": "^3.0.4",
     "@types/react-router-dom": "^5.1.7",
     "@types/reactcss": "^1.2.3",
+    "better-docs": "^2.3.2",
     "immer": "^8.0.1"
   },
   "resolutions": {
@@ -58,7 +59,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "eslintConfig": {
     "extends": "react-app"
