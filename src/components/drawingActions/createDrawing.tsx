@@ -84,8 +84,8 @@ class CreateDrawing extends Form {
     });
   };
 
-  handleChangeComplete = (color: { rgb: any }): void => {
-    this.setState({ currentColor: color.rgb });
+  handleChangeComplete = ({ rgb: { r, g, b, a } }: { rgb: any }): void => {
+    this.setState({ currentColor: `rgb(${[r, g, b, a].join(', ')})` });
   };
 
   handleNumberChange = (e: ChangeEvent<HTMLInputElement>): void => {
