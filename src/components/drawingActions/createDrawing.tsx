@@ -41,7 +41,7 @@ class CreateDrawing extends Form {
   state: createDrawingState = {
     addedStyle: { border: '1px solid #00000065' },
     gateKeep: true,
-    canvasStateTimeline: [[...initialGrid()]],
+    canvasStateTimeline: [initialGrid()],
     currentStateIndex: 0,
     formData: {
       drawingName: '',
@@ -49,19 +49,21 @@ class CreateDrawing extends Form {
       // TODO:
     },
     errors: {},
-    grid: [...initialGrid()],
+    grid: initialGrid(),
     currentColor: 'rgb(63, 81, 181)',
     isInitial: true,
   };
 
   schema = {
-    drawingName: Joi.string().min(2).max(255).required().label('drawingName'),
+    drawingName: Joi.string().min(2).max(255).required().label('Name'),
     description: Joi.string().min(2).max(1024).required().label('description'),
+    grid: Joi.array().min(1).max(1225).required().label('canvas'),
     // TODO:
   };
 
   doSubmit = async (): Promise<void> => {
-    const { ...data } = this.state.formData;
+    const { formData, grid } = this.state;
+    const data = { ...formData, grid };
 
     await createDrawing(data);
     toast.success('A new drawing was created', {

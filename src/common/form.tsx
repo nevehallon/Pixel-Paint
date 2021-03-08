@@ -1,20 +1,28 @@
 import React, { Component, FormEvent } from 'react';
+import { toast } from 'react-toastify';
 
 import Joi from 'joi';
 
 import { Input } from '.';
 
 class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
-  schema!: { [key: string]: Joi.StringSchema };
+  schema!: { [key: string]: Joi.StringSchema | Joi.ArraySchema };
 
   doSubmit!: () => Promise<void>;
 
   handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    const errors = this.validate();
+    const errors = this.validate(true);
 
     this.setState({ errors: errors || {} });
+
+    if (errors !== null && errors.grid) {
+      toast.error('Canvas can not be blank', {
+        position: 'top-center',
+        autoClose: 2500,
+      });
+    }
 
     if (!errors) this.doSubmit();
   };
@@ -30,11 +38,20 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     return error ? error.details[0].message : null;
   };
 
-  validate = (): any => {
+  validate = (isSubmit = false): any => {
     const {
-      state: { formData },
-      schema,
+      state: { formData, grid },
+      schema: { drawingName, description },
     } = this;
+
+    const schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
+      drawingName,
+      description,
+    };
+    if (grid && isSubmit) {
+      formData.grid = [...grid].filter((x) => x.touched);
+      schema.grid = this.schema.grid;
+    } else delete formData.grid;
 
     const { error } = Joi.object(schema)!.validate(formData, {
       abortEarly: false,
@@ -48,6 +65,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
       errors[path[0]] = message;
     });
 
+    console.log(isSubmit, errors);
     return errors;
   };
 
