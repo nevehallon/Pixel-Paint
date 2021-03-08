@@ -122,6 +122,7 @@ function PaintCanvas({
 
   // console.log('rendered');
   // console.count(); TODO: fix multiple renders
+  // TODO: painting freezes (inly fix is to refresh page rn)
 
   return (
     <div
