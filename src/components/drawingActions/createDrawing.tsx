@@ -231,7 +231,7 @@ class CreateDrawing extends Form {
           </Button>
           <Button
             aria-label="see results"
-            color="secondary"
+            color="primary"
             endIcon={<GridOffIcon />}
             onMouseDown={() => this.handleGridOff(true)}
             size="small"
