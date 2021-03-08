@@ -4,14 +4,6 @@ import { apiUrl } from '../config.json';
 import { Drawing } from '../interfaces/Drawing';
 import http from './httpService';
 
-export const initialGrid = (size = 35): { fill: string; touched: string }[] =>
-  Array(size ** 2)
-    .fill('')
-    .map((_, i) => ({
-      fill: i % 2 === 0 ? 'lightgrey' : 'white',
-      touched: '',
-    }));
-
 export function createDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
   return http.post(`${apiUrl}/drawings`, drawing);
 }
@@ -53,7 +45,6 @@ export function editDrawing(drawing: Drawing): Promise<AxiosResponse<any>> {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  initialGrid,
   createDrawing,
   getMyDrawings,
   getDrawing,

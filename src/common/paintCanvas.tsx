@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect, useRef } from 'react';
 
-import Detector from '../../services/paintHelperService';
+import Detector from '../services/paintHelperService';
 
 function getCoords(index: number, length: number): string {
   return `${Math.floor(index / Math.sqrt(length))},${Math.floor(

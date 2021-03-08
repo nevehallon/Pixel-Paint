@@ -65,6 +65,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
       errors[path[0]] = message;
     });
 
+    console.log(isSubmit, errors);
     return errors;
   };
 
