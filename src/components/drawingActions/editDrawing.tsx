@@ -55,6 +55,8 @@ class EditDrawing extends DrawingForm {
   };
 
   doSubmit = async (): Promise<void> => {
+    // this.handleGridOff(true, true);
+    // return;
     const { formData, grid } = this.state;
     const data = { ...formData, grid };
 

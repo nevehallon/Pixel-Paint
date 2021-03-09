@@ -44,8 +44,11 @@ class DrawingForm extends Form {
   }
 
   convert2image = (): void => {
+    console.log('hit');
+
     // ?
     html2canvas(this.gridRef.current).then((canvas) => {
+      // this.gridRef.current.parentNode.appendChild(canvas);
       // TODO: append canvas to DOM
     });
   };
