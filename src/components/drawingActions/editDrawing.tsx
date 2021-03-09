@@ -24,7 +24,7 @@ class EditDrawing extends DrawingForm {
   state = {
     addedStyle: { border: '1px solid #00000065' },
     gateKeep: true,
-    canvasStateTimeline: [initialGrid()],
+    canvasStateTimeline: [],
     currentStateIndex: 0,
     formData: {
       _id: '',
@@ -34,7 +34,7 @@ class EditDrawing extends DrawingForm {
     errors: {},
     grid: initialGrid(),
     currentColor: 'rgb(63, 81, 181)',
-    isInitial: true,
+    isInitial: false,
   };
 
   async componentDidMount(): Promise<void> {
@@ -44,9 +44,12 @@ class EditDrawing extends DrawingForm {
       );
       const { drawingName, description, grid, _id } = this.mapToState(data);
 
+      const savedGrid = grid.map(({ fill, touched }) => ({ fill, touched }));
+
       this.setState({
         formData: { drawingName, description, _id },
-        grid: grid.map(({ fill, touched }) => ({ fill, touched })),
+        grid: savedGrid,
+        canvasStateTimeline: [savedGrid],
       });
     } catch (error) {
       // eslint-disable-next-line no-console
