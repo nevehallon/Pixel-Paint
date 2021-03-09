@@ -12,11 +12,6 @@ import { Drawing } from '../../interfaces/Drawing';
 import { editDrawing, getDrawing } from '../../services/drawingsService';
 
 class EditDrawing extends DrawingForm {
-  constructor(props: { [x: string]: any } | Readonly<{ [x: string]: any }>) {
-    super(props);
-    this.schema._id = Joi.string();
-  }
-
   state = {
     addedStyle: { border: '1px solid #00000065' },
     gateKeep: true,
@@ -34,6 +29,7 @@ class EditDrawing extends DrawingForm {
   };
 
   async componentDidMount(): Promise<void> {
+    this.schema._id = Joi.string();
     try {
       const { data }: any = await getDrawing(
         (this.props as any).match.params.id

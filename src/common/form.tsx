@@ -40,32 +40,17 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
 
   validate = (isSubmit = false): any => {
     const {
-      state: { formData, grid },
-      schema: { drawingName, description, _id },
+      state: { formData },
+      schema,
     } = this;
-
-    const schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
-      drawingName,
-      description,
-    };
-    if (_id) schema._id = _id;
-    if (grid && isSubmit) {
-      formData.grid = [...grid].filter((x) => x.touched);
-      schema.grid = this.schema.grid;
-    } else delete formData.grid;
-
     const { error } = Joi.object(schema)!.validate(formData, {
       abortEarly: false,
     });
-
     if (!error) return null;
-
     const errors: { [name: string]: any } = {};
-
     error.details.forEach(({ path, message }: any) => {
       errors[path[0]] = message;
     });
-
     return errors;
   };
 

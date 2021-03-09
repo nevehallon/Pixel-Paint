@@ -10,7 +10,7 @@ const tokenKey = 'localData';
 
 export function getCurrentUser(): { [x: string]: any } | null {
   try {
-    const localData = JSON.parse(localStorage.getItem(tokenKey) ?? 'null');
+    const localData = JSON.parse(localStorage.getItem(tokenKey) || 'null');
     return { ...jwtDecode(localData.token), name: localData.name };
   } catch (error) {
     return null;

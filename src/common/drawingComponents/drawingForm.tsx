@@ -1,10 +1,11 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, createRef, RefObject } from 'react';
 
 import { Button, IconButton, InputLabel, TextField } from '@material-ui/core';
 import GridOffIcon from '@material-ui/icons/GridOff';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
+import html2canvas from 'html2canvas';
 import Joi from 'joi';
 
 import { initialGrid } from '../../services/drawingsService';
@@ -34,10 +35,56 @@ export interface DrawingState {
 }
 
 class DrawingForm extends Form {
+  constructor(
+    props: { [x: string]: any } | Readonly<{ [x: string]: any }>,
+    private gridRef: RefObject<any>
+  ) {
+    super(props);
+    this.gridRef = createRef();
+  }
+
+  convert2image = (): void => {
+    // ?
+    html2canvas(this.gridRef.current).then((canvas) => {
+      // TODO: append canvas to DOM
+    });
+  };
+
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
     drawingName: Joi.string().min(2).max(255).required().label('drawingName'),
     description: Joi.string().min(2).max(1024).required().label('description'),
     grid: Joi.array().min(1).max(1225).required().label('canvas'),
+  };
+
+  validate = (isSubmit = false): any => {
+    const {
+      state: { formData, grid },
+      schema: { drawingName, description, _id },
+    } = this;
+
+    const schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
+      drawingName,
+      description,
+    };
+    if (_id) schema._id = _id;
+    if (grid && isSubmit) {
+      formData.grid = [...grid].filter((x) => x.touched);
+      schema.grid = this.schema.grid;
+    } else delete formData.grid;
+
+    const { error } = Joi.object(schema)!.validate(formData, {
+      abortEarly: false,
+    });
+
+    if (!error) return null;
+
+    const errors: { [name: string]: any } = {};
+
+    error.details.forEach(({ path, message }: any) => {
+      errors[path[0]] = message;
+    });
+
+    return errors;
   };
 
   handleFill = (newGrid: GridItem[]): void => {
@@ -125,17 +172,24 @@ class DrawingForm extends Form {
     });
   };
 
-  handleGridOff = (hideGrid: boolean): void => {
+  handleGridOff = (hideGrid: boolean, convert = false): void => {
     const { grid, gateKeep } = this.state;
     if (hideGrid) {
-      this.setState({
-        addedStyle: { border: 'none' },
-        grid: grid.map((x: GridItem) => ({
-          ...x,
-          fill: x.touched ? x.fill : 'transparent',
-        })),
-        gateKeep: false,
-      });
+      this.setState(
+        {
+          addedStyle: { border: 'none' },
+          grid: grid.map((x: GridItem) => ({
+            ...x,
+            fill: x.touched ? x.fill : 'transparent',
+          })),
+          gateKeep: false,
+        },
+        () => {
+          if (!convert) return;
+          // ? convert grid to image format
+          this.convert2image();
+        }
+      );
       return;
     }
 
@@ -181,6 +235,7 @@ class DrawingForm extends Form {
           currentColor={currentColor}
           fillAction={(newGrid: GridItem[]): any => this.handleFill(newGrid)}
           grid={this.state.grid}
+          ref={this.gridRef}
         />
       </>
     );
