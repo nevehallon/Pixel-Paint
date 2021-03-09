@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { Component, FormEvent } from 'react';
 import { toast } from 'react-toastify';
 

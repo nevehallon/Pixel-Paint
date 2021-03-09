@@ -5,7 +5,7 @@ import GridOffIcon from '@material-ui/icons/GridOff';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 import Joi from 'joi';
 
 import { initialGrid } from '../../services/drawingsService';
@@ -43,14 +43,17 @@ class DrawingForm extends Form {
     this.gridRef = createRef();
   }
 
-  convert2image = (): void => {
-    console.log('hit');
-
-    // ?
-    html2canvas(this.gridRef.current).then((canvas) => {
-      // this.gridRef.current.parentNode.appendChild(canvas);
-      // TODO: append canvas to DOM
+  convert2image = async (): Promise<void> => {
+    const imgRef: HTMLElement = this.gridRef.current;
+    const img = await toPng(imgRef, {
+      backgroundColor: 'transparent',
+      quality: 0.1,
+      style: { margin: 'auto', width: '100%', height: '100%' },
+      width: imgRef.offsetWidth,
+      height: imgRef.offsetHeight,
+      pixelRatio: 1,
     });
+    console.log(img);
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {

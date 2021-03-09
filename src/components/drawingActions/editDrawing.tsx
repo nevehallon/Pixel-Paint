@@ -55,18 +55,17 @@ class EditDrawing extends DrawingForm {
   };
 
   doSubmit = async (): Promise<void> => {
-    // this.handleGridOff(true, true);
-    // return;
-    const { formData, grid } = this.state;
-    const data = { ...formData, grid };
+    this.handleGridOff(true, true);
+    // const { formData, grid } = this.state;
+    // const data = { ...formData, grid };
 
-    await editDrawing(data);
+    // await editDrawing(data);
 
-    toast.success('Drawing was updated', {
-      position: 'top-center',
-      autoClose: 2500,
-    });
-    (this.props as any).history.replace('/my-drawings');
+    // toast.success('Drawing was updated', {
+    //   position: 'top-center',
+    //   autoClose: 2500,
+    // });
+    // (this.props as any).history.replace('/my-drawings');
   };
 
   render(): React.ReactNode {
