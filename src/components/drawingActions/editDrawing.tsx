@@ -44,7 +44,10 @@ class EditDrawing extends DrawingForm {
       );
       const { drawingName, description, grid, _id } = this.mapToState(data);
 
-      this.setState({ formData: { drawingName, description, _id }, grid });
+      this.setState({
+        formData: { drawingName, description, _id },
+        grid: grid.map(({ fill, touched }) => ({ fill, touched })),
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);

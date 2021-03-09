@@ -41,13 +41,14 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   validate = (isSubmit = false): any => {
     const {
       state: { formData, grid },
-      schema: { drawingName, description },
+      schema: { drawingName, description, _id },
     } = this;
 
     const schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
       drawingName,
       description,
     };
+    if (_id) schema._id = _id;
     if (grid && isSubmit) {
       formData.grid = [...grid].filter((x) => x.touched);
       schema.grid = this.schema.grid;
@@ -64,6 +65,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     error.details.forEach(({ path, message }: any) => {
       errors[path[0]] = message;
     });
+    console.log(errors);
 
     return errors;
   };
