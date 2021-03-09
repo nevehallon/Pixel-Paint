@@ -9,11 +9,7 @@ import Joi from 'joi';
 
 import { DrawingForm, PageHeader } from '../../common';
 import { Drawing } from '../../interfaces/Drawing';
-import {
-  editDrawing,
-  getDrawing,
-  initialGrid,
-} from '../../services/drawingsService';
+import { editDrawing, getDrawing } from '../../services/drawingsService';
 
 class EditDrawing extends DrawingForm {
   constructor(props: { [x: string]: any } | Readonly<{ [x: string]: any }>) {
@@ -32,7 +28,7 @@ class EditDrawing extends DrawingForm {
       description: '',
     },
     errors: {},
-    grid: initialGrid(),
+    grid: [],
     currentColor: 'rgb(63, 81, 181)',
     isInitial: false,
   };
@@ -84,7 +80,11 @@ class EditDrawing extends DrawingForm {
           <div className="col-12">
             <p>Edit your drawing</p>
           </div>
-          {grid.length ? this.renderPaintCanvas() : null}
+          {grid.length ? (
+            this.renderPaintCanvas()
+          ) : (
+            <div className="m-auto text-info">LOADING...</div>
+          )}
         </div>
         {this.renderTools()}
         <div className="container">
