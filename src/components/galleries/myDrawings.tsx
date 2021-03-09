@@ -34,11 +34,14 @@ class MyDrawings extends Component {
     }
   }
 
-  handleDeleteDrawing = async (id: string): Promise<void> => {
+  handleDeleteDrawing = async (id: string, index: number): Promise<void> => {
+    const { drawings } = this.state;
     try {
+      this.setState({ drawings: [...drawings].filter((_, i) => i !== index) });
       await deleteDrawing(id);
       this.getData();
     } catch (error) {
+      this.setState({ drawings });
       // eslint-disable-next-line no-console
       console.error(error);
     }
@@ -56,11 +59,11 @@ class MyDrawings extends Component {
 
             <div className="row">
               {drawings.length ? (
-                drawings.map((drawing) => (
+                drawings.map((drawing, i) => (
                   <DrawingCard
                     drawing={drawing}
                     key={drawing._id}
-                    onDelete={() => this.handleDeleteDrawing(drawing._id)}
+                    onDelete={() => this.handleDeleteDrawing(drawing._id, i)}
                   />
                 ))
               ) : (

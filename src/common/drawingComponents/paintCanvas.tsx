@@ -49,7 +49,7 @@ function PaintCanvas({
     if (e.type === 'keyup' && e.keyCode !== 13) {
       return;
     }
-    if (!Helper.current.isMouseDown) {
+    if (!Helper.current?.isMouseDown) {
       // update parent state
       fillAction(newGrid);
     }
@@ -101,7 +101,7 @@ function PaintCanvas({
     if (
       squares[i].style.backgroundColor === currentColor ||
       (e.type === 'mouseenter' &&
-        (!Helper.current.isMouseDown || !Helper.current.drawStart)) ||
+        (!Helper.current?.isMouseDown || !Helper.current?.drawStart)) ||
       (e.type === 'keydown' && e.keyCode !== 13)
     ) {
       return;
