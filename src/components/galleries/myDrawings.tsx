@@ -13,6 +13,7 @@ interface MyDrawingsProps {
 class MyDrawings extends Component {
   state: MyDrawingsProps = {
     drawings: [],
+    loading: true,
   };
 
   async componentDidMount(): Promise<void> {
@@ -25,8 +26,8 @@ class MyDrawings extends Component {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length
-        ? this.setState({ drawings: data })
-        : this.setState({ drawings: [] });
+        ? this.setState({ loading: false, drawings: data })
+        : this.setState({ loading: false, drawings: [] });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
@@ -44,7 +45,7 @@ class MyDrawings extends Component {
   };
 
   render(): React.ReactNode {
-    const { drawings } = this.state;
+    const { drawings, loading } = this.state;
 
     return (
       <div className="container">
@@ -63,7 +64,9 @@ class MyDrawings extends Component {
                   />
                 ))
               ) : (
-                <div className=" mx-auto">No drawings yet...</div>
+                <div className={`mx-auto ${loading ? 'text-info' : ''}`}>
+                  {loading ? 'LOADING' : 'No drawings yet'}...
+                </div>
               )}
             </div>
             <Link className="btn btn-info mt-2" to="/create-drawing">
