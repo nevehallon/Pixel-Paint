@@ -65,7 +65,6 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     error.details.forEach(({ path, message }: any) => {
       errors[path[0]] = message;
     });
-    console.log(errors);
 
     return errors;
   };
