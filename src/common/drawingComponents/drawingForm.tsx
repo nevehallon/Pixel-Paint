@@ -222,8 +222,8 @@ class DrawingForm extends Form {
             variant="contained"
           >
             <GlobalListener
-              eventType="mouseup"
-              handler={() => this.handleGridOff(false)}
+              eventType={['mouseup']}
+              handler={[() => this.handleGridOff(false)]}
             />
             <small>Demo</small>
           </Button>

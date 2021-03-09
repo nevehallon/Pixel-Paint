@@ -10,7 +10,7 @@ class Detector {
 
   canCallBack = false;
 
-  callback = () => {};
+  callback = (): void => {};
 
   isMouseDown = false;
 
@@ -24,10 +24,10 @@ class Detector {
     this.callback();
   };
 
-  cleanup = () => {
+  cleanup = (): void => {
     window.removeEventListener('mousedown', this.handleMouseDown);
     window.removeEventListener('mouseup', this.handleMouseUp);
   };
 }
 
-export default new Detector();
+export default Detector;

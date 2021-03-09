@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { useEffect, useRef } from 'react';
+import { MutableRefObject, useEffect, useRef } from 'react';
 
 import Detector from '../../services/paintHelperService';
 
@@ -26,6 +26,7 @@ function PaintCanvas({
   addedStyle,
 }: CanvasProps): any {
   const sqrt = Math.sqrt(grid.length);
+  const Helper = useRef() as MutableRefObject<Detector>;
   const squareRefs = useRef<any[]>([]);
 
   const setSquareRef = (
@@ -42,32 +43,34 @@ function PaintCanvas({
     newGrid: CanvasProps['grid'],
     e: any | Event = { type: '', keycode: 0 }
   ): any => {
-    Detector.drawStart = false;
-    Detector.canCallBack = false;
+    Helper.current.drawStart = false;
+    Helper.current.canCallBack = false;
 
     if (e.type === 'keyup' && e.keyCode !== 13) {
       return;
     }
-    if (!Detector.isMouseDown) {
+    if (!Helper.current.isMouseDown) {
       // update parent state
       fillAction(newGrid);
     }
   };
 
   useEffect(() => {
-    Detector.callback = () => {
-      Detector.newGrid = squareRefs.current.map((x: any) => ({
+    Helper.current = new Detector();
+    const helper = Helper.current;
+    helper.callback = () => {
+      helper.newGrid = squareRefs.current.map((x: any) => ({
         fill: x.style.backgroundColor,
         touched: x.dataset.touched,
       }));
-      if (Detector.canCallBack) {
-        emitState(Detector.newGrid);
+      if (helper.canCallBack) {
+        emitState(helper.newGrid);
       }
     };
 
     return () => {
-      Detector.callback = () => {};
-      Detector.cleanup();
+      helper.callback = () => {};
+      helper.cleanup();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -76,7 +79,7 @@ function PaintCanvas({
     if (e.type === 'mousedown') {
       // stop right click
       if (e.which === 3 || e.button === 2) return;
-      Detector.drawStart = true;
+      Helper.current.drawStart = true;
     }
     const squares = squareRefs.current;
     if (e.type === 'keydown') {
@@ -98,7 +101,7 @@ function PaintCanvas({
     if (
       squares[i].style.backgroundColor === currentColor ||
       (e.type === 'mouseenter' &&
-        (!Detector.isMouseDown || !Detector.drawStart)) ||
+        (!Helper.current.isMouseDown || !Helper.current.drawStart)) ||
       (e.type === 'keydown' && e.keyCode !== 13)
     ) {
       return;
@@ -109,7 +112,7 @@ function PaintCanvas({
       squares[i].dataset.touched = 'true';
     }
 
-    if (e.type === 'mouseenter') Detector.canCallBack = true;
+    if (e.type === 'mouseenter') Helper.current.canCallBack = true;
     if (e.type === 'keydown') {
       emitState(
         squares.map((x: any) => ({
@@ -122,7 +125,6 @@ function PaintCanvas({
 
   // console.log('rendered');
   // console.count(); TODO: fix multiple renders
-  // TODO: painting freezes (inly fix is to refresh page rn)
 
   return (
     <div

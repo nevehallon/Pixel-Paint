@@ -5,13 +5,14 @@ function GlobalListener({
   eventType,
   handler,
 }: {
-  eventType: string;
-  handler: () => any;
+  eventType: string[];
+  handler: (() => any)[];
 }): null {
   useEffect(() => {
-    window.addEventListener(eventType, handler);
+    eventType.forEach((x, i) => window.addEventListener(x, handler[i]));
+
     return () => {
-      window.removeEventListener(eventType, handler);
+      eventType.forEach((x, i) => window.removeEventListener(x, handler[i]));
     };
   }, []);
   return null;
