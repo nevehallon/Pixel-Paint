@@ -72,8 +72,8 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
           command: () => history.push('/sign-up'),
         },
         {
-          label: 'Make me a Painter',
-          style: { display: !user?.painter ? '' : 'none' },
+          label: 'Sign Up as a Painter',
+          style: { display: !user?.painter ? '' : 'none', fontSize: 14 },
           icon: 'fas fa-paint-brush',
           command: () => history.push('/painter-sign-up'),
         },
