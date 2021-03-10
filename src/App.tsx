@@ -61,7 +61,7 @@ class App extends Component {
             <Redirect to="/" /> {/* add 404 page not found */}
           </Switch>
         </main>
-        <footer>
+        <footer className="bg-dark">
           <Footer />
         </footer>
       </div>

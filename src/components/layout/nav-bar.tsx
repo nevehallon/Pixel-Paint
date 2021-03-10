@@ -8,7 +8,7 @@ type MenuItem = Exclude<MenubarProps['model'], undefined>[number];
 const Navbar = ({ user }: { [key: string]: any } | any): any => {
   const history = useHistory();
 
-  const items /* : MenuItem[] */ = [
+  const items = [
     {
       command: (event: any) => {
         event.originalEvent.preventDefault();
@@ -61,26 +61,26 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
       items: [
         {
           label: 'Sign In',
-          style: { display: !user ? '' : 'none' },
           icon: 'pi pi-fw pi-sign-in',
+          style: { display: !user ? '' : 'none' },
           command: () => history.push('/sign-in'),
         },
         {
           label: 'Sign Up',
-          style: { display: !user ? '' : 'none' },
           icon: 'pi pi-fw pi-user-plus',
+          style: { display: !user ? '' : 'none' },
           command: () => history.push('/sign-up'),
         },
         {
           label: 'Sign Up as a Painter',
-          style: { display: !user?.painter ? '' : 'none', fontSize: 14 },
           icon: 'fas fa-paint-brush',
+          style: { display: !user?.painter ? '' : 'none', fontSize: 14 },
           command: () => history.push('/painter-sign-up'),
         },
         {
           label: 'Logout',
-          style: { display: user ? '' : 'none' },
           icon: 'pi pi-fw pi-sign-out',
+          style: { display: user ? '' : 'none' },
           command: () => history.push('/logout'),
         },
       ],
@@ -92,7 +92,7 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
   return (
     <div>
       <div className="card">
-        <Menubar end={end} model={items as any} /* start={start} */ />
+        <Menubar end={end} model={items as any} />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 const Footer = (): any => (
-  <p className="border-top pt-3 text-center">
+  <p className="border-top pt-3 text-center text-white">
     PixelPaint <i className="fas fa-paint-brush" /> App &copy;{' '}
     {new Date().getFullYear()}
   </p>
