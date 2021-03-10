@@ -3,6 +3,8 @@ import { render } from 'react-dom';
 import './index.scss';
 import { BrowserRouter } from 'react-router-dom';
 
+import PrimeReact from 'primereact/api';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -11,7 +13,14 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import 'jquery/dist/jquery';
 import 'popper.js/dist/popper';
 import 'bootstrap/dist/js/bootstrap';
+
 import 'fontsource-roboto';
+
+import 'primereact/resources/themes/vela-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
+PrimeReact.ripple = true;
 
 render(
   <StrictMode>
