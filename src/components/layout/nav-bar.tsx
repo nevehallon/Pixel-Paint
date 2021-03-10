@@ -1,6 +1,5 @@
-import { Link, NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-import classNames from 'classnames';
 import { InputText } from 'primereact/inputtext';
 import { Menubar, MenubarProps } from 'primereact/menubar';
 
@@ -11,100 +10,89 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
 
   const items /* : MenuItem[] */ = [
     {
-      label: 'Home',
-      icon: 'pi pi-fw pi-file',
-      template: (
-        <NavLink className="nav-link" exact to="/">
-          Home
-        </NavLink>
+      command: (event: any) => {
+        event.originalEvent.preventDefault();
+        history.push('/');
+      },
+      template: (item: MenuItem, options: any) => (
+        <a
+          aria-haspopup="false"
+          className={options.className}
+          href="/"
+          onClick={options.onClick}
+          role="menuitem"
+          tabIndex={0}
+          target={item.target}
+        >
+          PixelPaint <i className="fas fa-paint-brush" /> App
+        </a>
       ),
+    },
+    {
+      label: 'Home',
+      icon: 'pi pi-fw pi-home',
+      command: () => history.push('/'),
     },
     {
       label: 'About',
-      icon: 'pi pi-fw pi-pencil',
-      template: (
-        <NavLink className="nav-link" to="/about">
-          About
-        </NavLink>
-      ),
+      icon: 'pi pi-fw pi-info-circle',
+      command: () => history.push('/about'),
     },
     {
       label: 'Studio',
-      icon: 'pi pi-fw pi-user',
-      disabled: !user,
+      icon: 'pi pi-fw pi-palette',
+      style: { display: user ? '' : 'none' },
       items: [
         {
           label: 'Create Drawing',
-          icon: 'pi pi-fw pi-bookmark',
-          template: (
-            <NavLink className="nav-link" to="/create-drawing">
-              <small>Create Drawing</small>
-            </NavLink>
-          ),
+          icon: 'pi pi-fw pi-image',
+          command: () => history.push('/create-drawing'),
         },
         {
           label: 'My Drawings',
-          icon: 'pi pi-fw pi-video',
-          template: (
-            <NavLink className="nav-link" to="/my-drawings">
-              <small>My Drawings</small>
-            </NavLink>
-          ),
+          icon: 'pi pi-fw pi-images',
+          command: () => history.push('/my-drawings'),
         },
       ],
     },
     {
       label: 'Account',
-      icon: 'pi pi-fw pi-calendar',
-      disabled: user,
+      icon: 'pi pi-fw pi-user',
       items: [
         {
           label: 'Sign In',
-          icon: 'pi pi-fw pi-bookmark',
-          template: (
-            <NavLink className="nav-link" to="/sign-in">
-              <small>Sign In</small>
-            </NavLink>
-          ),
+          style: { display: !user ? '' : 'none' },
+          icon: 'pi pi-fw pi-sign-in',
+          command: () => history.push('/sign-in'),
         },
         {
-          label: 'My Drawings',
-          icon: 'pi pi-fw pi-video',
-          template: (
-            <NavLink className="nav-link" to="/sign-up">
-              <small>Sign Up</small>
-            </NavLink>
-          ),
+          label: 'Sign Up',
+          style: { display: !user ? '' : 'none' },
+          icon: 'pi pi-fw pi-user-plus',
+          command: () => history.push('/sign-up'),
         },
         {
-          label: 'My Drawings',
-          icon: 'pi pi-fw pi-video',
-          template: (
-            <NavLink className="nav-link pl-2 pr-0" to="/painter-sign-up">
-              <small>Create Painter Account</small>
-            </NavLink>
-          ),
+          label: 'Make me a Painter',
+          style: { display: !user?.painter ? '' : 'none' },
+          icon: 'fas fa-paint-brush',
+          command: () => history.push('/painter-sign-up'),
+        },
+        {
+          label: 'Logout',
+          style: { display: user ? '' : 'none' },
+          icon: 'pi pi-fw pi-sign-out',
+          command: () => history.push('/logout'),
         },
       ],
     },
-    {
-      label: 'Log Out',
-      icon: 'pi pi-fw pi-calendar',
-      command: () => history.replace('/logout'),
-    },
   ];
 
-  const start = (
-    <Link className="navbar-brand" to="/">
-      PixelPaint <i className="fas fa-paint-brush" /> App
-    </Link>
-  );
   const end = <InputText placeholder="Search" type="text" />;
 
   return (
     <div>
       <div className="card">
-        <Menubar end={end} model={items} start={start} />
+        <Menubar end={end} model={items as any} /* start={start} */ />
       </div>
     </div>
   );

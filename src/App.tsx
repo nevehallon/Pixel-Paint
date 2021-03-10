@@ -28,6 +28,7 @@ class App extends Component {
 
   render(): React.ReactNode {
     const { user } = this.state;
+
     return (
       <div className="d-flex flex-column min-vh-100">
         <ToastContainer />

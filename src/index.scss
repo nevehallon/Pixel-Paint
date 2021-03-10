@@ -26,7 +26,7 @@ code {
 }
 
 .fa-paint-brush {
-  font-size: 30px;
+  font-size: 22px;
   background: gold; /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(left, cyan, blue, violet, orange, yellow, green); /* For Safari 5.1 to 6.0 */
   background: -o-linear-gradient(right, cyan, blue, violet, orange, yellow, green); /* For Opera 11.1 to 12.0 */
@@ -34,7 +34,8 @@ code {
   background: linear-gradient(to right, cyan, blue, violet, orange, yellow, green); /* Standard syntax (must be last) */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 2px #333);
+  filter: drop-shadow(0 0 2px white);
+  text-shadow: 0px 0px 22px white;
 }
 
 .Toastify__progress-bar {
