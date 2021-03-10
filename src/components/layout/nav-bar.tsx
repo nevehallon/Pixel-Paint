@@ -91,9 +91,7 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
 
   return (
     <div>
-      <div className="card">
-        <Menubar end={end} model={items as any} />
-      </div>
+      <Menubar end={end} model={items as any} />
     </div>
   );
 };

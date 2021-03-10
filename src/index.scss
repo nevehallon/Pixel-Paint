@@ -15,14 +15,23 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: var(--surface-e) !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.App {
-  text-align: center;
+main {
+  background: var(--surface-e) !important;
+  color: var(--text-color);
+  font-size: 14px;
+  border-left: 10px solid var(--surface-d) !important;
+  border-right: 10px solid var(--surface-d) !important;
+}
+footer {
+  background: #1f2d40;
+  border: 1px solid #304562 !important;
 }
 
 .fa-paint-brush {

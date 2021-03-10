@@ -7,7 +7,6 @@ import CreateDrawing from './components/drawingActions/createDrawing';
 import EditDrawing from './components/drawingActions/editDrawing';
 import MyDrawings from './components/galleries/myDrawings';
 import Footer from './components/layout/footer';
-// import Navbar from './components/layout/navbar';
 import Navbar from './components/layout/nav-bar';
 import About from './components/pages/about';
 import Home from './components/pages/home';
@@ -61,7 +60,7 @@ class App extends Component {
             <Redirect to="/" /> {/* add 404 page not found */}
           </Switch>
         </main>
-        <footer className="bg-dark">
+        <footer>
           <Footer />
         </footer>
       </div>

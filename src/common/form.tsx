@@ -78,7 +78,11 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     this.setState({ formData: updatedFormData, errors: errorsCopy });
   };
 
-  renderInput(name: string, label: string, type = 'text'): React.ReactNode {
+  renderInput = (
+    name: string,
+    label: string,
+    type = 'text'
+  ): React.ReactNode => {
     const { formData, errors } = this.state;
     return (
       <Input
@@ -90,7 +94,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
         value={formData[name]}
       />
     );
-  }
+  };
 
   renderButton(label = ''): React.ReactNode {
     return (

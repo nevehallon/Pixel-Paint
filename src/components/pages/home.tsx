@@ -1,5 +1,3 @@
-import React from 'react';
-
 import PageHeader from '../../common/pageHeader';
 
 const Home = (): any => (
