@@ -19,14 +19,15 @@ const Input = ({ name, label, error, ...rest }: InputProps): any => {
       </ul>
     </>
   );
+
   return (
     <div className="form-group pt-2 p-fluid">
       {rest.type === 'password' ? (
         <span className="p-float-label p-field">
           <Password
-            // className="form-control"
-            footer={footer}
-            header={header}
+            feedback={rest.feedback}
+            footer={rest.feedback && footer}
+            header={rest.feedback && header}
             id={name}
             name={name}
             onInput={(e) => setValue((e.target as HTMLInputElement).value)}
@@ -39,10 +40,10 @@ const Input = ({ name, label, error, ...rest }: InputProps): any => {
       ) : (
         <span className="p-float-label p-field">
           <InputText
-            // className="form-control"
             id={name}
             name={name}
             type="text"
+            /* prettier-ignore */
             {...rest}
           />
           <label htmlFor={name}>{label}</label>

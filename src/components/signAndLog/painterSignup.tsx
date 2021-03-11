@@ -87,7 +87,9 @@ class PainterSignup extends Form {
           <div className="col-lg-6 m-auto">
             <form noValidate onSubmit={this.handleSubmit}>
               {this.renderInput('email', 'Email', 'email')}
-              {this.renderInput('password', 'Password', 'password')}
+              {this.renderInput('password', 'Password', 'password', {
+                feedback: true,
+              })}
               {this.renderInput('name', 'Name')}
               {this.renderButton('Next')}
             </form>

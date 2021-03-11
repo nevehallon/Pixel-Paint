@@ -81,7 +81,8 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   renderInput = (
     name: string,
     label: string,
-    type = 'text'
+    type = 'text',
+    { ...rest }: { [x: string]: any } = { val: undefined }
   ): React.ReactNode => {
     const { formData, errors } = this.state;
     return (
@@ -92,6 +93,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
         onChange={this.handleChange}
         type={type}
         value={formData[name]}
+        {...rest}
       />
     );
   };

@@ -79,7 +79,9 @@ class Signin extends Form {
           <div className="col-lg-6 m-auto">
             <form noValidate onSubmit={this.handleSubmit}>
               {this.renderInput('email', 'Email', 'email')}
-              {this.renderInput('password', 'Password', 'password')}
+              {this.renderInput('password', 'Password', 'password', {
+                feedback: false,
+              })}
               {this.renderButton('Sign In')}
             </form>
           </div>

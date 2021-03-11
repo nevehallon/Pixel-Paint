@@ -84,7 +84,9 @@ class Signup extends Form {
               onSubmit={this.handleSubmit}
             >
               {this.renderInput('email', 'Email', 'email')}
-              {this.renderInput('password', 'Password', 'password')}
+              {this.renderInput('password', 'Password', 'password', {
+                feedback: true,
+              })}
               {this.renderInput('name', 'Name')}
               {this.renderButton('Sign Up')}
             </form>
