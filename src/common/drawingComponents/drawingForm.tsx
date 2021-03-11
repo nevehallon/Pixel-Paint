@@ -1,6 +1,7 @@
-import { ChangeEvent, createRef, RefObject } from 'react';
+import { createRef, RefObject } from 'react';
 
-import { Button, IconButton, InputLabel, TextField } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
 import GridOffIcon from '@material-ui/icons/GridOff';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
@@ -15,6 +16,10 @@ import PaintCanvas from './paintCanvas';
 
 import { Form } from '..';
 
+export interface inputNumberEvent {
+  originalEvent: Event;
+  value: any;
+}
 export interface GridItem {
   fill: string;
   touched: string;
@@ -110,8 +115,8 @@ class DrawingForm extends Form {
     this.setState({ currentColor: `rgb(${[r, g, b, a].join(', ')})` });
   };
 
-  handleNumberChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const newNumber = +e.target.value;
+  handleNumberChange = (e: inputNumberEvent): void => {
+    const newNumber = +e.value;
     if (newNumber < 15 || newNumber > 35) return;
     const newGrid = Array(newNumber ** 2)
       .fill('')
@@ -211,23 +216,36 @@ class DrawingForm extends Form {
 
   renderSizePicker(): JSX.Element {
     const { grid } = this.state;
-    const inputProps = {
+    const root = Math.sqrt(grid.length);
+    const inputProps: InputNumberProps = {
       step: 2,
       min: 15,
       max: 35,
-      value: Math.sqrt(grid.length),
+      value: root,
+      format: true,
+      readOnly: true,
     };
     return (
       <>
-        <InputLabel htmlFor="gridSize">Grid size</InputLabel>
-        <TextField
-          className="form-control mb-4"
-          id="gridSize"
-          inputProps={inputProps}
-          label="15x15 - 35x35"
-          onChange={this.handleNumberChange}
-          type="number"
-        />
+        <div className="p-grid p-fluid">
+          <div className=" p-field p-col-12">
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label htmlFor="gridSize">Grid Size (15x15 - 35x35)</label>
+            <InputNumber
+              buttonLayout="horizontal"
+              decrementButtonClassName=" p-button-outlined p-button-danger"
+              decrementButtonIcon="pi pi-minus"
+              id="gridSize"
+              incrementButtonClassName=" p-button-outlined p-button-info"
+              incrementButtonIcon="pi pi-plus"
+              name="gridSize"
+              {...inputProps}
+              onValueChange={(e) => this.handleNumberChange(e)}
+              showButtons
+              suffix={`x${root}`}
+            />
+          </div>
+        </div>
       </>
     );
   }

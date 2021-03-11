@@ -14,14 +14,14 @@ const Input = ({ name, label, error, ...rest }: InputProps): any => {
     <>
       <Divider />
       <p className="p-mt-2">Requirements</p>
-      <ul className="p-pl-2 p-ml-2 p-mt-0" style={{ lineHeight: '1.5' }}>
-        <li>Minimum 6 characters</li>
-      </ul>
+      <div className="p-pl-2 p-ml-2 p-mt-0" style={{ lineHeight: '1.5' }}>
+        <span> - Minimum 6 characters</span>
+      </div>
     </>
   );
 
   return (
-    <div className="form-group pt-2 p-fluid">
+    <div className=" my-4 p-fluid">
       {rest.type === 'password' ? (
         <span className="p-float-label p-field">
           <Password

@@ -3,6 +3,7 @@ import React, { Component, FormEvent } from 'react';
 import { toast } from 'react-toastify';
 
 import Joi from 'joi';
+import { Button } from 'primereact/button';
 
 import { Input } from '.';
 
@@ -101,13 +102,12 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   renderButton(label = ''): React.ReactNode {
     return (
       <div className="text-center">
-        <button
-          className="btn btn-block btn-primary"
+        <Button
+          className="btn-block p-button-outlined p-button-rounded"
           disabled={this.validate()}
+          label={label}
           type="submit"
-        >
-          {label}
-        </button>
+        />
       </div>
     );
   }
