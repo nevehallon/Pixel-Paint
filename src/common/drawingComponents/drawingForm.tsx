@@ -12,12 +12,7 @@ import { ColorPicker } from 'primereact/colorpicker';
 import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
 import { Toolbar } from 'primereact/toolbar';
 import { Subject } from 'rxjs/internal/Subject';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  takeUntil,
-  tap,
-} from 'rxjs/operators';
+import { debounceTime, take } from 'rxjs/operators';
 
 import { initialGrid } from '../../services/drawingsService';
 import GlobalListener from '../../services/globalListener';
@@ -121,8 +116,6 @@ class DrawingForm extends Form {
   };
 
   handleChangeComplete = ({ r, g, b }: { [key: string]: any }): void => {
-    console.log(`rgb(${[r, g, b].join(', ')})`);
-
     this.setState({ currentColor: `rgb(${[r, g, b].join(', ')})` });
   };
 
@@ -277,33 +270,31 @@ class DrawingForm extends Form {
   }
 
   renderTools(): JSX.Element {
-    const onSearch$ = new Subject();
+    const onChange$ = new Subject();
     const handleSearch = (rgb: { [key: string]: any }) => {
-      this.handleChangeComplete(rgb);
-      // setQueryName(e.target.value);
-      onSearch$.next(rgb);
+      onChange$.next(rgb);
     };
-    const subscription = onSearch$
-      .pipe(
-        debounceTime(1400),
-        tap((a) => console.log(a))
-      )
-      .subscribe();
+    onChange$
+      .pipe(debounceTime(100), take(1))
+      .subscribe((rgb: any) => this.handleChangeComplete(rgb));
 
     const [r, g, b] = this?.state?.currentColor?.match(/[0-9]{1,3}/g);
 
     const leftContents = (
       <>
-        <div className="colorPickerContainer d-flex align-items-center">
-          <h4>Current Color:</h4>
+        <div className="p-float-label">
           <ColorPicker
             format="rgb"
-            // eslint-disable-next-line no-return-assign
-            onChange={
-              ({ value }) => handleSearch(value)
-              // this.handleChangeComplete(rgb);
-            }
+            onChange={({ value }) => handleSearch(value)}
             value={{ r, g, b }}
+          />
+          <label
+            className="pi pi-palette"
+            style={{
+              transform: 'scale(1.5)',
+              color: `rgb(${[r, g, b].join(', ')})`,
+              filter: `invert(1) grayscale(1) contrast(9)`,
+            }}
           />
         </div>
       </>
