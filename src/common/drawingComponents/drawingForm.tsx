@@ -1,17 +1,26 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { createRef, RefObject } from 'react';
 
-import { Button, IconButton } from '@material-ui/core';
-import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
+import { Button } from '@material-ui/core';
 import GridOffIcon from '@material-ui/icons/GridOff';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
 import { toPng } from 'html-to-image';
 import Joi from 'joi';
+import { ColorPicker } from 'primereact/colorpicker';
+import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
+import { Toolbar } from 'primereact/toolbar';
+import { Subject } from 'rxjs/internal/Subject';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 
 import { initialGrid } from '../../services/drawingsService';
 import GlobalListener from '../../services/globalListener';
-import ColorPicker from './colorPicker';
 import PaintCanvas from './paintCanvas';
 
 import { Form } from '..';
@@ -111,8 +120,10 @@ class DrawingForm extends Form {
     });
   };
 
-  handleChangeComplete = ({ rgb: { r, g, b, a } }: { rgb: any }): void => {
-    this.setState({ currentColor: `rgb(${[r, g, b, a].join(', ')})` });
+  handleChangeComplete = ({ r, g, b }: { [key: string]: any }): void => {
+    console.log(`rgb(${[r, g, b].join(', ')})`);
+
+    this.setState({ currentColor: `rgb(${[r, g, b].join(', ')})` });
   };
 
   handleNumberChange = (e: inputNumberEvent): void => {
@@ -266,49 +277,79 @@ class DrawingForm extends Form {
   }
 
   renderTools(): JSX.Element {
-    return (
+    const onSearch$ = new Subject();
+    const handleSearch = (rgb: { [key: string]: any }) => {
+      this.handleChangeComplete(rgb);
+      // setQueryName(e.target.value);
+      onSearch$.next(rgb);
+    };
+    const subscription = onSearch$
+      .pipe(
+        debounceTime(1400),
+        tap((a) => console.log(a))
+      )
+      .subscribe();
+
+    const [r, g, b] = this?.state?.currentColor?.match(/[0-9]{1,3}/g);
+
+    const leftContents = (
       <>
-        <div className="tools d-flex justify-content-around mt-2 mx-auto">
-          <div className="colorPickerContainer d-flex align-items-center">
-            <small className="mr-2">Current Color:</small>
-            <ColorPicker
-              currentColor={this.state.currentColor}
-              emitChangeComplete={this.handleChangeComplete}
-            />
-          </div>
-          <IconButton aria-label="undo" onClick={this.handleUndo}>
-            <UndoIcon fontSize="small" />
-          </IconButton>
-          <IconButton aria-label="redo" onClick={this.handleRedo}>
-            <RedoIcon fontSize="small" />
-          </IconButton>
-          <Button
-            aria-label="reset"
-            color="secondary"
-            endIcon={<GridOnIcon />}
-            onClick={this.handleReset}
-            size="small"
-            variant="contained"
-          >
-            <small>Clear</small>
-          </Button>
-          <Button
-            aria-label="see results"
-            color="primary"
-            endIcon={<GridOffIcon />}
-            onMouseDown={() => this.handleGridOff(true)}
-            size="small"
-            variant="contained"
-          >
-            <GlobalListener
-              eventType={['mouseup']}
-              handler={[() => this.handleGridOff(false)]}
-            />
-            <small>Demo</small>
-          </Button>
+        <div className="colorPickerContainer d-flex align-items-center">
+          <h4>Current Color:</h4>
+          <ColorPicker
+            format="rgb"
+            // eslint-disable-next-line no-return-assign
+            onChange={
+              ({ value }) => handleSearch(value)
+              // this.handleChangeComplete(rgb);
+            }
+            value={{ r, g, b }}
+          />
         </div>
-        <hr />
       </>
+    );
+    const rightContents = <></>;
+    const tools = (
+      <>
+        <Button aria-label="undo" onClick={this.handleUndo}>
+          <UndoIcon fontSize="small" />
+        </Button>
+        <Button aria-label="redo" onClick={this.handleRedo}>
+          <RedoIcon fontSize="small" />
+        </Button>
+        <Button
+          aria-label="reset"
+          color="secondary"
+          endIcon={<GridOnIcon />}
+          onClick={this.handleReset}
+          size="small"
+          variant="contained"
+        >
+          <small>Clear</small>
+        </Button>
+        <Button
+          aria-label="see results"
+          color="primary"
+          endIcon={<GridOffIcon />}
+          onMouseDown={() => this.handleGridOff(true)}
+          size="small"
+          variant="contained"
+        >
+          <GlobalListener
+            eventType={['mouseup']}
+            handler={[() => this.handleGridOff(false)]}
+          />
+          <small>Demo</small>
+        </Button>
+        {/* <hr /> TODO: */}
+      </>
+    );
+    return (
+      <Toolbar
+        className="tools my-2 mx-auto"
+        left={leftContents}
+        right={rightContents}
+      />
     );
   }
 }

@@ -6,7 +6,7 @@ function GlobalListener({
   handler,
 }: {
   eventType: string[];
-  handler: (() => any)[];
+  handler: ((e?: any) => any)[];
 }): null {
   useEffect(() => {
     eventType.forEach((x, i) => window.addEventListener(x, handler[i]));
