@@ -291,9 +291,9 @@ class DrawingForm extends Form {
           <label
             className="pi pi-palette"
             style={{
-              transform: 'scale(1.5)',
+              transform: 'scale(1.8)',
               color: `rgb(${[r, g, b].join(', ')})`,
-              filter: `invert(1) grayscale(1) contrast(9)`,
+              filter: `drop-shadow(0 0 2px white) invert(1) grayscale(1) contrast(4)`,
             }}
           />
         </div>
