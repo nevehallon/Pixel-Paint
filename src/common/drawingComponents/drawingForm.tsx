@@ -10,6 +10,7 @@ import { toPng } from 'html-to-image';
 import Joi from 'joi';
 import { ColorPicker } from 'primereact/colorpicker';
 import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
+import { Badge } from 'primereact/badge';
 import { Toolbar } from 'primereact/toolbar';
 import { Subject } from 'rxjs/internal/Subject';
 import { debounceTime, take } from 'rxjs/operators';
@@ -280,20 +281,31 @@ class DrawingForm extends Form {
 
     const [r, g, b] = this?.state?.currentColor?.match(/[0-9]{1,3}/g);
 
+    const cpStyles = {
+      color: `rgb(${[r, g, b].join(', ')})`,
+      filter: `drop-shadow(0 0 2px white) invert(1) grayscale(1) contrast(4)`,
+    };
+
     const leftContents = (
       <>
-        <div className="p-float-label">
+        <div className="p-float-label p-overlay-badge">
           <ColorPicker
             format="rgb"
             onChange={({ value }) => handleSearch(value)}
             value={{ r, g, b }}
           />
+          <Badge
+            style={{
+              backgroundColor: cpStyles.color,
+              boxShadow: '0 0 1px 1px',
+              filter: `drop-shadow(0 0 2px white)`,
+            }}
+          />
           <label
             className="pi pi-palette"
             style={{
               transform: 'scale(1.8)',
-              color: `rgb(${[r, g, b].join(', ')})`,
-              filter: `drop-shadow(0 0 2px white) invert(1) grayscale(1) contrast(4)`,
+              ...cpStyles,
             }}
           />
         </div>
