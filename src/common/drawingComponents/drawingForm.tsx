@@ -7,11 +7,8 @@ import GridOnIcon from '@material-ui/icons/GridOn';
 import { toPng } from 'html-to-image';
 import Joi from 'joi';
 import { ColorPicker } from 'primereact/colorpicker';
-import { ScrollPanel } from 'primereact/scrollpanel';
-import { Divider } from 'primereact/divider';
 import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
 import { Badge } from 'primereact/badge';
-import { Toolbar } from 'primereact/toolbar';
 import { Subject } from 'rxjs/internal/Subject';
 import { debounceTime, take } from 'rxjs/operators';
 
@@ -286,79 +283,71 @@ class DrawingForm extends Form {
       filter: `drop-shadow(0 0 2px white) invert(1) grayscale(1) contrast(4)`,
     };
 
-    const leftContents = (
-      <>
-        <Button
-          aria-label="undo"
-          className="p-button-rounded p-button p-button-text"
-          icon="pi pi-replay"
-          onClick={this.handleUndo}
-        />
-        <Button
-          aria-label="redo"
-          className="p-button-rounded p-button p-button-text"
-          icon="pi pi-refresh"
-          onClick={this.handleRedo}
-        />
-        <Divider layout="vertical" style={{ padding: 0 }} />
-        <div className="p-float-label p-overlay-badge">
-          <ColorPicker
-            format="rgb"
-            onChange={({ value }) => handleSearch(value)}
-            value={{ r, g, b }}
-          />
-          <Badge
-            style={{
-              backgroundColor: cpStyles.color,
-              boxShadow: '0 0 1px 1px',
-              filter: `drop-shadow(0 0 2px white)`,
-            }}
-          />
-          <label
-            className="pi pi-palette"
-            style={{
-              transform: 'scale(1.8)',
-              ...cpStyles,
-            }}
-          />
-        </div>
-        <Divider layout="vertical" style={{ padding: 0 }} />
-      </>
-    );
-    const rightContents = (
-      <>
-        <Button
-          aria-label="reset"
-          className="w-100 p-button-text p-button-danger"
-          // endIcon={<GridOnIcon />}
-          label="Clear"
-          onClick={this.handleReset}
-        >
-          {/* <small>&nbsp; Clear</small> */}
-          <GridOnIcon />
-        </Button>
-        <Button
-          aria-label="see results"
-          className="w-100 p-button-text p-button-success"
-          // endIcon={<GridOffIcon />}
-          icon="pi pi-eye"
-          label="Demo"
-          onMouseDown={() => this.handleGridOff(true)}
-        >
-          <GlobalListener
-            eventType={['mouseup']}
-            handler={[() => this.handleGridOff(false)]}
-          />
-        </Button>
-      </>
-    );
     return (
-      <Toolbar
-        className="tools mx-auto"
-        left={leftContents}
-        right={rightContents}
-        style={{ overflow: 'scroll' }}
-      />
+      <div className="tools mx-auto p-card p-2">
+        <div className="leftContents d-flex align-items-center justify-content-start">
+          <Button
+            aria-label="undo"
+            className="p-button-rounded p-button p-button-text"
+            icon="pi pi-replay"
+            onClick={this.handleUndo}
+          />
+          <Button
+            aria-label="redo"
+            className="p-button-rounded p-button p-button-text"
+            icon="pi pi-refresh"
+            onClick={this.handleRedo}
+          />
+          {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
+          <div className="p-float-label p-overlay-badge">
+            <ColorPicker
+              format="rgb"
+              onChange={({ value }) => handleSearch(value)}
+              value={{ r, g, b }}
+            />
+            <Badge
+              style={{
+                backgroundColor: cpStyles.color,
+                boxShadow: '0 0 1px 1px',
+                filter: `drop-shadow(0 0 2px white)`,
+              }}
+            />
+            <label
+              className="pi pi-palette"
+              style={{
+                transform: 'scale(1.8)',
+                ...cpStyles,
+              }}
+            />
+          </div>
+          {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
+        </div>
+        <div className="rightContents d-flex align-content-center justify-content-end">
+          <Button
+            aria-label="reset"
+            className="p-button-rounded p-button-text p-button-danger"
+            // endIcon={<GridOnIcon />}
+            label="Clear"
+            onClick={this.handleReset}
+          >
+            {/* <small>&nbsp; Clear</small> */}
+            <GridOnIcon />
+          </Button>
+          <Button
+            aria-label="see results"
+            className="p-button-rounded p-button-text p-button-success"
+            // endIcon={<GridOffIcon />}
+            icon="pi pi-eye"
+            label="Demo"
+            onMouseDown={() => this.handleGridOff(true)}
+          >
+            <GlobalListener
+              eventType={['mouseup']}
+              handler={[() => this.handleGridOff(false)]}
+            />
+          </Button>
+        </div>
+      </div>
     );
   }
 }
