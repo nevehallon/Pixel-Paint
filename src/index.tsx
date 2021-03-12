@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 // import 'jquery/dist/jquery';
-// import 'popper.js/dist/popper';
+// import 'popper.js/dist/popper'; //TODO: remove if not needed
 // import 'bootstrap/dist/js/bootstrap';
 
 import 'fontsource-roboto';

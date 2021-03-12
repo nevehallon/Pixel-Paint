@@ -20,6 +20,11 @@ class MyDrawings extends Component {
     await this.getData();
   }
 
+  componentWillUnmount(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.setState = (state, callback) => {};
+  }
+
   async getData(): Promise<void> {
     try {
       const { data } = await getMyDrawings();

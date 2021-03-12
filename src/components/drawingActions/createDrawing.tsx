@@ -48,11 +48,13 @@ class CreateDrawing extends DrawingForm {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 m-auto">
-              <form noValidate onSubmit={this.handleSubmit}>
-                {this.renderSizePicker()}
-                {this.renderInput('drawingName', 'Name')}
-                {this.renderInput('description', 'description')}
-                {this.renderButton('Create Drawing')}
+              <form className="p-card" noValidate onSubmit={this.handleSubmit}>
+                <div className="p-card-content m-3">
+                  {this.renderSizePicker()}
+                  {this.renderInput('drawingName', 'Name')}
+                  {this.renderInput('description', 'description')}
+                  {this.renderButton('Create Drawing')}
+                </div>
               </form>
             </div>
           </div>

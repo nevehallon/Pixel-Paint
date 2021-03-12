@@ -87,18 +87,23 @@ class EditDrawing extends DrawingForm {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 m-auto">
-              <form noValidate onSubmit={this.handleSubmit}>
-                {this.renderSizePicker()}
-                {this.renderInput('drawingName', 'Name')}
-                {this.renderInput('description', 'description')}
+              <form className="p-card" noValidate onSubmit={this.handleSubmit}>
+                <div className="p-card-content m-3">
+                  {this.renderSizePicker()}
+                  {this.renderInput('drawingName', 'Name')}
+                  {this.renderInput('description', 'description')}
 
-                <div className="text-center mx-5 my-3">
-                  <Link className="btn btn-block btn-danger" to="/my-drawings">
-                    Cancel
-                  </Link>
+                  <div className="text-center mx-5 my-3">
+                    <Link
+                      className="btn btn-block btn-danger"
+                      to="/my-drawings"
+                    >
+                      Cancel
+                    </Link>
+                  </div>
+
+                  {this.renderButton('Update Drawing')}
                 </div>
-
-                {this.renderButton('Update Drawing')}
               </form>
             </div>
           </div>

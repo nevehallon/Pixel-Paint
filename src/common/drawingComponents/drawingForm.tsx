@@ -357,41 +357,6 @@ class DrawingForm extends Form {
         </Button>
       </>
     );
-    const tools = (
-      <>
-        <Button aria-label="undo" onClick={this.handleUndo}>
-          <UndoIcon fontSize="small" />
-        </Button>
-        <Button aria-label="redo" onClick={this.handleRedo}>
-          <RedoIcon fontSize="small" />
-        </Button>
-        <Button
-          aria-label="reset"
-          color="secondary"
-          endIcon={<GridOnIcon />}
-          onClick={this.handleReset}
-          // size="small"
-          variant="contained"
-        >
-          <small>Clear</small>
-        </Button>
-        <Button
-          aria-label="see results"
-          color="primary"
-          endIcon={<GridOffIcon />}
-          onMouseDown={() => this.handleGridOff(true)}
-          // size="small"
-          variant="contained"
-        >
-          <GlobalListener
-            eventType={['mouseup']}
-            handler={[() => this.handleGridOff(false)]}
-          />
-          <small>Demo</small>
-        </Button>
-        {/* <hr /> TODO: */}
-      </>
-    );
     return (
       <Toolbar
         className="tools my-2 mx-auto"
