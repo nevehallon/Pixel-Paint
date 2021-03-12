@@ -43,6 +43,7 @@ footer {
   background: -moz-linear-gradient(right, cyan, blue, violet, orange, yellow, green); /* For Firefox 3.6 to 15 */
   background: linear-gradient(to right, cyan, blue, violet, orange, yellow, green); /* Standard syntax (must be last) */
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 0 2px white);
   text-shadow: 0px 0px 22px white;
@@ -80,9 +81,6 @@ footer {
 .tools {
   max-width: 75vh;
   min-width: 38vh;
-
-  .p-colorpicker-preview {
-  }
 }
 
 .form-control {
@@ -103,5 +101,6 @@ select:-webkit-autofill:focus {
   border: 1px solid var(--primary-color);
   -webkit-text-fill-color: white;
   -webkit-box-shadow: 0 0 0px 1000px rgb(23, 33, 47) inset;
+  box-shadow: 0 0 0px 1000px rgb(23, 33, 47) inset;
   transition: background-color 5000s ease-in-out 0s;
 }

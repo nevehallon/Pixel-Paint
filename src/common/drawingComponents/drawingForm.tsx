@@ -1,14 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { createRef, RefObject } from 'react';
 
-import { Button } from '@material-ui/core';
 import GridOffIcon from '@material-ui/icons/GridOff';
+import { Button } from 'primereact/button';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
 import { toPng } from 'html-to-image';
 import Joi from 'joi';
 import { ColorPicker } from 'primereact/colorpicker';
+import { Divider } from 'primereact/divider';
 import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
 import { Badge } from 'primereact/badge';
 import { Toolbar } from 'primereact/toolbar';
@@ -288,6 +289,19 @@ class DrawingForm extends Form {
 
     const leftContents = (
       <>
+        <Button
+          aria-label="undo"
+          className="p-button-rounded p-button p-button-text"
+          icon="pi pi-replay"
+          onClick={this.handleUndo}
+        />
+        <Button
+          aria-label="redo"
+          className="p-button-rounded p-button p-button-text"
+          icon="pi pi-refresh"
+          onClick={this.handleRedo}
+        />
+        <Divider layout="vertical" style={{ padding: 0 }} />
         <div className="p-float-label p-overlay-badge">
           <ColorPicker
             format="rgb"
@@ -311,7 +325,35 @@ class DrawingForm extends Form {
         </div>
       </>
     );
-    const rightContents = <></>;
+    const rightContents = (
+      <>
+        <Button
+          aria-label="reset"
+          color="secondary"
+          endIcon={<GridOnIcon />}
+          onClick={this.handleReset}
+          // size="small"
+          variant="contained"
+        >
+          <small>Clear</small>
+        </Button>
+        <Button
+          aria-label="see results"
+          color="primary"
+          endIcon={<GridOffIcon />}
+          onMouseDown={() => this.handleGridOff(true)}
+          // size="small"
+          variant="contained"
+        >
+          <GlobalListener
+            eventType={['mouseup']}
+            handler={[() => this.handleGridOff(false)]}
+          />
+          <small>Demo</small>
+        </Button>
+        {/* <hr /> TODO: */}
+      </>
+    );
     const tools = (
       <>
         <Button aria-label="undo" onClick={this.handleUndo}>
@@ -325,7 +367,7 @@ class DrawingForm extends Form {
           color="secondary"
           endIcon={<GridOnIcon />}
           onClick={this.handleReset}
-          size="small"
+          // size="small"
           variant="contained"
         >
           <small>Clear</small>
@@ -335,7 +377,7 @@ class DrawingForm extends Form {
           color="primary"
           endIcon={<GridOffIcon />}
           onMouseDown={() => this.handleGridOff(true)}
-          size="small"
+          // size="small"
           variant="contained"
         >
           <GlobalListener
