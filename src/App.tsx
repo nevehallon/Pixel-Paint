@@ -34,7 +34,7 @@ class App extends Component {
         <header>
           <Navbar user={user} />
         </header>
-        <main className="container-fluid flex-fill">
+        <main className="container-fluid flex-fill" style={{ padding: 0 }}>
           <Switch>
             <ProtectedRoute
               component={EditDrawing}

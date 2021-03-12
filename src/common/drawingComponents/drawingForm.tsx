@@ -4,11 +4,10 @@ import { createRef, RefObject } from 'react';
 import GridOffIcon from '@material-ui/icons/GridOff';
 import { Button } from 'primereact/button';
 import GridOnIcon from '@material-ui/icons/GridOn';
-import RedoIcon from '@material-ui/icons/Redo';
-import UndoIcon from '@material-ui/icons/Undo';
 import { toPng } from 'html-to-image';
 import Joi from 'joi';
 import { ColorPicker } from 'primereact/colorpicker';
+import { ScrollPanel } from 'primereact/scrollpanel';
 import { Divider } from 'primereact/divider';
 import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
 import { Badge } from 'primereact/badge';
@@ -328,28 +327,24 @@ class DrawingForm extends Form {
     );
     const rightContents = (
       <>
-        <Divider layout="vertical" style={{ padding: 0 }} />
         <Button
           aria-label="reset"
+          className="w-100 p-button-text p-button-danger"
           // endIcon={<GridOnIcon />}
-          className="p-button-rounded p-button p-button-text p-button-danger"
+          label="Clear"
           onClick={this.handleReset}
-          // size="small"
-          variant="contained"
         >
+          {/* <small>&nbsp; Clear</small> */}
           <GridOnIcon />
-          <small>&nbsp; Clear</small>
         </Button>
         <Button
           aria-label="see results"
+          className="w-100 p-button-text p-button-success"
           // endIcon={<GridOffIcon />}
-          className="p-button-rounded p-button p-button-text p-button-success"
+          icon="pi pi-eye"
+          label="Demo"
           onMouseDown={() => this.handleGridOff(true)}
-          // size="small"
-          variant="contained"
         >
-          <GridOffIcon />
-          <small>&nbsp;Demo</small>
           <GlobalListener
             eventType={['mouseup']}
             handler={[() => this.handleGridOff(false)]}
@@ -359,9 +354,10 @@ class DrawingForm extends Form {
     );
     return (
       <Toolbar
-        className="tools my-2 mx-auto"
+        className="tools mx-auto"
         left={leftContents}
         right={rightContents}
+        style={{ overflow: 'scroll' }}
       />
     );
   }
