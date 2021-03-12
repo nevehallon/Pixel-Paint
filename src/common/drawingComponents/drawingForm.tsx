@@ -323,35 +323,38 @@ class DrawingForm extends Form {
             }}
           />
         </div>
+        <Divider layout="vertical" style={{ padding: 0 }} />
       </>
     );
     const rightContents = (
       <>
+        <Divider layout="vertical" style={{ padding: 0 }} />
         <Button
           aria-label="reset"
-          color="secondary"
-          endIcon={<GridOnIcon />}
+          // endIcon={<GridOnIcon />}
+          className="p-button-rounded p-button p-button-text p-button-danger"
           onClick={this.handleReset}
           // size="small"
           variant="contained"
         >
-          <small>Clear</small>
+          <GridOnIcon />
+          <small>&nbsp; Clear</small>
         </Button>
         <Button
           aria-label="see results"
-          color="primary"
-          endIcon={<GridOffIcon />}
+          // endIcon={<GridOffIcon />}
+          className="p-button-rounded p-button p-button-text p-button-success"
           onMouseDown={() => this.handleGridOff(true)}
           // size="small"
           variant="contained"
         >
+          <GridOffIcon />
+          <small>&nbsp;Demo</small>
           <GlobalListener
             eventType={['mouseup']}
             handler={[() => this.handleGridOff(false)]}
           />
-          <small>Demo</small>
         </Button>
-        {/* <hr /> TODO: */}
       </>
     );
     const tools = (
