@@ -16,6 +16,10 @@ function getCoords(index: number, length: number): string {
   )}`;
 }
 
+const handleTouchMove = (e: Event) => {
+  e.preventDefault();
+};
+
 export interface CanvasProps {
   fillAction: (grid: { fill: string; touched: string }[]) => void;
   grid: { fill: string; touched: string }[];
@@ -72,10 +76,12 @@ const PaintCanvas = forwardRef(
           emitState(helper.newGrid);
         }
       };
+      (ref as any).current.addEventListener('touchmove', handleTouchMove);
 
       return () => {
         helper.callback = () => {};
         helper.cleanup();
+        (ref as any).current.removeEventListener('touchmove', handleTouchMove);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -150,6 +156,7 @@ const PaintCanvas = forwardRef(
             onKeyDown={(e) => handleFill(i, e)}
             onMouseDown={(e) => handleFill(i, e)}
             onMouseEnter={(e) => handleFill(i, e)}
+            // onTouchMove={(e) => console.log(e)}
             // eslint-disable-next-line no-return-assign
             ref={(el) => setSquareRef(i, el)}
             role="button"
