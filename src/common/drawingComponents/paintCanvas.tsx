@@ -73,6 +73,7 @@ const PaintCanvas = forwardRef(
           fill: x.style.backgroundColor,
           touched: x.dataset.touched,
         }));
+
         if (helper.canCallBack) {
           emitState(helper.newGrid);
         }
@@ -88,10 +89,11 @@ const PaintCanvas = forwardRef(
     }, []);
 
     const handleFill = (i: number, e: any | Event): any => {
-      if (e.type === 'pointerdown' /* 'mousedown' */) {
+      if (e.type === 'pointerdown') {
         e.target.releasePointerCapture(e.pointerId);
         // stop right click
         if (e.which === 3 || e.button === 2) return;
+
         Helper.current.drawStart = true;
       }
       const squares = squareRefs.current;
@@ -120,12 +122,13 @@ const PaintCanvas = forwardRef(
         return;
       }
 
+      // ? setting square color
       squares[i].style.backgroundColor = currentColor;
       if (!squares[i].dataset.touched) {
         squares[i].dataset.touched = 'true';
       }
 
-      if (e.type === 'pointerenter') Helper.current.canCallBack = true;
+      Helper.current.canCallBack = true;
       if (e.type === 'keydown') {
         emitState(
           squares.map((x: any) => ({
