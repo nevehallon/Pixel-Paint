@@ -89,17 +89,22 @@ footer {
   min-width: 38vh;
 }
 
-.p-scrollpanel {
-  .p-scrollpanel-wrapper {
-    float: none;
+.sp {
+  .p-scrollpanel {
+    // height: 58px;
+    display: inline-block;
 
-    .p-scrollpanel-content {
-      padding: 0;
+    .p-scrollpanel-wrapper {
+      // float: none;
+
+      .p-scrollpanel-content {
+        padding: 0;
+      }
     }
-  }
 
-  .p-scrollpanel-bar {
-    height: 1px;
+    .p-scrollpanel-bar {
+      // height: 2px;
+    }
   }
 }
 
