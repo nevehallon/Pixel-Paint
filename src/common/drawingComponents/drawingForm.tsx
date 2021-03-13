@@ -342,11 +342,11 @@ class DrawingForm extends Form {
             // endIcon={<GridOffIcon />}
             icon="pi pi-eye"
             label="Demo"
-            onMouseDown={() => this.handleGridOff(true)}
+            onPointerDown={() => this.handleGridOff(true)}
           >
             <GlobalListener
-              eventType={['mouseup']}
-              handler={[() => this.handleGridOff(false)]}
+              eventType={['pointerup', 'touchend']}
+              handler={[() => this.handleGridOff(false), true]}
             />
           </Button>
         </div>

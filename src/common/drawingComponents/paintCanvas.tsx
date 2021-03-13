@@ -82,7 +82,7 @@ const PaintCanvas = forwardRef(
       return () => {
         helper.callback = () => {};
         helper.cleanup();
-        (ref as any).current.removeEventListener('touchmove', handleTouchMove);
+        // (ref as any).current.removeEventListener('touchmove', handleTouchMove);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
