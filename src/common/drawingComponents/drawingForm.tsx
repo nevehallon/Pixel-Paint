@@ -270,11 +270,13 @@ class DrawingForm extends Form {
   renderTools(): JSX.Element {
     const onChange$ = new Subject();
     const handleSearch = (rgb: { [key: string]: any }) => {
+      // console.log(rgb);
+
       onChange$.next(rgb);
     };
-    onChange$
-      .pipe(debounceTime(100), take(1))
-      .subscribe((rgb: any) => this.handleChangeComplete(rgb));
+    onChange$.pipe(debounceTime(100), take(1)).subscribe((rgb: any) => {
+      this.handleChangeComplete(rgb);
+    });
 
     const [r, g, b] = this?.state?.currentColor?.match(/[0-9]{1,3}/g);
 
@@ -302,7 +304,8 @@ class DrawingForm extends Form {
           <div className="p-float-label p-overlay-badge">
             <ColorPicker
               format="rgb"
-              onChange={({ value }) => handleSearch(value)}
+              // eslint-disable-next-line no-restricted-globals
+              onChange={({ value }) => !isNaN(value.r) && handleSearch(value)}
               value={{ r, g, b }}
             />
             <Badge
