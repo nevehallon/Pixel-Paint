@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { createRef, RefObject } from 'react';
 
-import GridOffIcon from '@material-ui/icons/GridOff';
 import { Button } from 'primereact/button';
 import GridOnIcon from '@material-ui/icons/GridOn';
 import { toPng } from 'html-to-image';
@@ -333,13 +332,11 @@ class DrawingForm extends Form {
             label="Clear"
             onClick={this.handleReset}
           >
-            {/* <small>&nbsp; Clear</small> */}
             <GridOnIcon />
           </Button>
           <Button
             aria-label="see results"
             className="p-button-rounded p-button-text p-button-success"
-            // endIcon={<GridOffIcon />}
             icon="pi pi-eye"
             label="Demo"
             onPointerDown={() => this.handleGridOff(true)}
