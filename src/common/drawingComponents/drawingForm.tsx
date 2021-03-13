@@ -304,6 +304,7 @@ class DrawingForm extends Form {
             {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
             <div className="p-float-label p-overlay-badge">
               <ColorPicker
+                appendTo={this.gridRef.current}
                 format="rgb"
                 onChange={({ value }) =>
                   // eslint-disable-next-line no-restricted-globals
