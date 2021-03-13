@@ -84,10 +84,27 @@ footer {
   }
 }
 
-.tools {
+.mobile-contain {
   max-width: 75vh;
   min-width: 38vh;
+}
 
+.p-scrollpanel {
+  .p-scrollpanel-wrapper {
+    float: none;
+
+    .p-scrollpanel-content {
+      padding: 0;
+    }
+  }
+
+  .p-scrollpanel-bar {
+    height: 1px;
+  }
+}
+
+.tools {
+  gap: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
 
@@ -98,6 +115,8 @@ footer {
   }
 
   .rightContents {
+    padding-right: 1.5rem;
+
     [aria-label="reset"] {
       display: flex;
       flex-direction: row-reverse;

@@ -6,6 +6,7 @@ import GridOnIcon from '@material-ui/icons/GridOn';
 import { toPng } from 'html-to-image';
 import Joi from 'joi';
 import { ColorPicker } from 'primereact/colorpicker';
+import { ScrollPanel } from 'primereact/scrollpanel';
 import { InputNumber, InputNumberProps } from 'primereact/inputnumber';
 import { Badge } from 'primereact/badge';
 import { Subject } from 'rxjs/internal/Subject';
@@ -285,69 +286,73 @@ class DrawingForm extends Form {
     };
 
     return (
-      <div className="tools mx-auto p-card p-2">
-        <div className="leftContents d-flex align-items-center justify-content-start">
-          <Button
-            aria-label="undo"
-            className="p-button-rounded p-button p-button-text"
-            icon="pi pi-replay"
-            onClick={this.handleUndo}
-          />
-          <Button
-            aria-label="redo"
-            className="p-button-rounded p-button p-button-text"
-            icon="pi pi-refresh"
-            onClick={this.handleRedo}
-          />
-          {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
-          <div className="p-float-label p-overlay-badge">
-            <ColorPicker
-              format="rgb"
-              // eslint-disable-next-line no-restricted-globals
-              onChange={({ value }) => !isNaN(value.r) && handleSearch(value)}
-              value={{ r, g, b }}
+      <ScrollPanel className="mobile-contain mx-auto p-card">
+        <div className="tools mx-auto p-2">
+          <div className="leftContents d-flex align-items-center justify-content-start">
+            <Button
+              aria-label="undo"
+              className="p-button-rounded p-button p-button-text"
+              icon="pi pi-replay"
+              onClick={this.handleUndo}
             />
-            <Badge
-              style={{
-                backgroundColor: cpStyles.color,
-                boxShadow: '0 0 1px 1px',
-                filter: `drop-shadow(0 0 2px white)`,
-              }}
+            <Button
+              aria-label="redo"
+              className="p-button-rounded p-button p-button-text"
+              icon="pi pi-refresh"
+              onClick={this.handleRedo}
             />
-            <label
-              className="pi pi-palette"
-              style={{
-                transform: 'scale(1.8)',
-                ...cpStyles,
-              }}
-            />
+            {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
+            <div className="p-float-label p-overlay-badge">
+              <ColorPicker
+                format="rgb"
+                onChange={({ value }) =>
+                  // eslint-disable-next-line no-restricted-globals
+                  !isNaN(value.r) && handleSearch(value)
+                }
+                value={{ r, g, b }}
+              />
+              <Badge
+                style={{
+                  backgroundColor: cpStyles.color,
+                  boxShadow: '0 0 1px 1px',
+                  filter: `drop-shadow(0 0 2px white)`,
+                }}
+              />
+              <label
+                className="pi pi-palette"
+                style={{
+                  transform: 'scale(1.8)',
+                  ...cpStyles,
+                }}
+              />
+            </div>
+            {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
           </div>
-          {/* <Divider layout="vertical" style={{ padding: 0 }} /> */}
+          <div className="rightContents d-flex align-content-center justify-content-around">
+            <Button
+              aria-label="reset"
+              className="p-button-rounded p-button-text p-button-danger"
+              // endIcon={<GridOnIcon />}
+              label="Clear"
+              onClick={this.handleReset}
+            >
+              <GridOnIcon />
+            </Button>
+            <Button
+              aria-label="see results"
+              className="p-button-rounded p-button-text p-button-success"
+              icon="pi pi-eye"
+              label="Demo"
+              onPointerDown={() => this.handleGridOff(true)}
+            >
+              <GlobalListener
+                eventType={['pointerup', 'touchend']}
+                handler={[() => this.handleGridOff(false), true]}
+              />
+            </Button>
+          </div>
         </div>
-        <div className="rightContents d-flex align-content-center justify-content-end">
-          <Button
-            aria-label="reset"
-            className="p-button-rounded p-button-text p-button-danger"
-            // endIcon={<GridOnIcon />}
-            label="Clear"
-            onClick={this.handleReset}
-          >
-            <GridOnIcon />
-          </Button>
-          <Button
-            aria-label="see results"
-            className="p-button-rounded p-button-text p-button-success"
-            icon="pi pi-eye"
-            label="Demo"
-            onPointerDown={() => this.handleGridOff(true)}
-          >
-            <GlobalListener
-              eventType={['pointerup', 'touchend']}
-              handler={[() => this.handleGridOff(false), true]}
-            />
-          </Button>
-        </div>
-      </div>
+      </ScrollPanel>
     );
   }
 }
