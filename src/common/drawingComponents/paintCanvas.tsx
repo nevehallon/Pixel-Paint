@@ -16,7 +16,8 @@ function getCoords(index: number, length: number): string {
   )}`;
 }
 
-const handleTouchMove = (e: Event) => {
+const handleTouchMove = (e: TouchEvent) => {
+  // ? stop user from scrolling when touching the canvas
   e.preventDefault();
 };
 
@@ -87,7 +88,8 @@ const PaintCanvas = forwardRef(
     }, []);
 
     const handleFill = (i: number, e: any | Event): any => {
-      if (e.type === 'mousedown') {
+      if (e.type === 'pointerdown' /* 'mousedown' */) {
+        e.target.releasePointerCapture(e.pointerId);
         // stop right click
         if (e.which === 3 || e.button === 2) return;
         Helper.current.drawStart = true;
@@ -111,7 +113,7 @@ const PaintCanvas = forwardRef(
 
       if (
         squares[i].style.backgroundColor === currentColor ||
-        (e.type === 'mouseenter' &&
+        (e.type === 'pointerenter' &&
           (!Helper.current?.isMouseDown || !Helper.current?.drawStart)) ||
         (e.type === 'keydown' && e.keyCode !== 13)
       ) {
@@ -123,7 +125,7 @@ const PaintCanvas = forwardRef(
         squares[i].dataset.touched = 'true';
       }
 
-      if (e.type === 'mouseenter') Helper.current.canCallBack = true;
+      if (e.type === 'pointerenter') Helper.current.canCallBack = true;
       if (e.type === 'keydown') {
         emitState(
           squares.map((x: any) => ({
@@ -147,17 +149,14 @@ const PaintCanvas = forwardRef(
         }}
       >
         {grid.map((x, i, arr) => (
-          // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
           <div
             aria-label="fill square"
             className="square"
             data-touched={x.touched}
             key={getCoords(i, arr.length)}
             onKeyDown={(e) => handleFill(i, e)}
-            onMouseDown={(e) => handleFill(i, e)}
-            onMouseEnter={(e) => handleFill(i, e)}
-            // onTouchMove={(e) => console.log(e)}
-            // eslint-disable-next-line no-return-assign
+            onPointerDown={(e) => handleFill(i, e)}
+            onPointerEnter={(e) => handleFill(i, e)}
             ref={(el) => setSquareRef(i, el)}
             role="button"
             style={{ backgroundColor: x.fill, ...addedStyle }}

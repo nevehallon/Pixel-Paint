@@ -1,7 +1,7 @@
 class Detector {
   constructor() {
-    window.addEventListener('mousedown', this.handleMouseDown);
-    window.addEventListener('mouseup', this.handleMouseUp);
+    window.addEventListener('pointerdown', this.handleMouseDown);
+    window.addEventListener('pointerup', this.handleMouseUp);
   }
 
   drawStart = false;
@@ -25,8 +25,8 @@ class Detector {
   };
 
   cleanup = (): void => {
-    window.removeEventListener('mousedown', this.handleMouseDown);
-    window.removeEventListener('mouseup', this.handleMouseUp);
+    window.removeEventListener('pointerdown', this.handleMouseDown);
+    window.removeEventListener('pointerup', this.handleMouseUp);
   };
 }
 
