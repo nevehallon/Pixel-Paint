@@ -84,7 +84,7 @@ class PainterSignup extends Form {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-6 m-auto p-card">
+          <div className=" m-auto p-card">
             <form
               className="p-card-content"
               noValidate

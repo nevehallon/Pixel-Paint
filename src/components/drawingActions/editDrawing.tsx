@@ -86,7 +86,7 @@ class EditDrawing extends DrawingForm {
         {this.renderTools()}
         <div className="container">
           <div className="row">
-            <div className="col-lg-6 m-auto">
+            <div className=" m-auto">
               <form className="p-card" noValidate onSubmit={this.handleSubmit}>
                 <div className="p-card-content m-3">
                   {this.renderSizePicker()}
