@@ -26,6 +26,7 @@ class EditDrawing extends DrawingForm {
     grid: [],
     currentColor: 'rgb(63, 81, 181)',
     isInitial: false,
+    dataUrl: '',
   };
 
   async componentDidMount(): Promise<void> {
@@ -55,17 +56,18 @@ class EditDrawing extends DrawingForm {
   };
 
   doSubmit = async (): Promise<void> => {
-    this.handleGridOff(true, true);
-    // const { formData, grid } = this.state;
-    // const data = { ...formData, grid };
+    const { formData, grid, dataUrl } = this.state;
+    const data = { ...formData, grid, dataUrl };
 
-    // await editDrawing(data);
+    console.log(dataUrl);
 
-    // toast.success('Drawing was updated', {
-    //   position: 'top-center',
-    //   autoClose: 2500,
-    // });
-    // (this.props as any).history.replace('/my-drawings');
+    await editDrawing(data);
+
+    toast.success('Drawing was updated', {
+      position: 'top-center',
+      autoClose: 2500,
+    });
+    (this.props as any).history.replace('/my-drawings');
   };
 
   render(): React.ReactNode {

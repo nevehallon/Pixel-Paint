@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { createRef, RefObject } from 'react';
 
@@ -39,6 +40,7 @@ export interface DrawingState {
   grid: GridItem[];
   currentColor: string;
   isInitial: boolean;
+  dataUrl: string;
 }
 
 class DrawingForm extends Form {
@@ -50,12 +52,17 @@ class DrawingForm extends Form {
     this.gridRef = createRef();
   }
 
-  convert2image = async (): Promise<void> => {
+  convert2image = async (): Promise<string> => {
     const imgRef: HTMLElement = this.gridRef.current;
 
+    Array.from(imgRef.children).forEach((x: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      x.dataset.touched ? false : (x.style.backgroundColor = 'transparent');
+      x.style.border = 'none';
+    });
     imgRef.style.width = '50px';
     imgRef.style.height = '50px';
-    const dataUrl = await toPng(imgRef, {
+    return toPng(imgRef, {
       backgroundColor: 'transparent',
       style: { margin: 'auto', width: '100%', height: '100%' },
       width: imgRef.offsetWidth,
@@ -63,20 +70,20 @@ class DrawingForm extends Form {
       pixelRatio: 1,
       skipFonts: true,
     });
-    // const png = new Image();
-    // png.src = dataUrl;
-    console.log(/* png */ dataUrl);
+    // this.setState({ dataUrl });
+    // return dataUrl;
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
     drawingName: Joi.string().min(2).max(255).required().label('drawingName'),
     description: Joi.string().min(2).max(1024).required().label('description'),
     grid: Joi.array().min(1).max(1225).required().label('canvas'),
+    dataUrl: Joi.string().required().label('src'),
   };
 
   validate = (isSubmit = false): any => {
     const {
-      state: { formData, grid },
+      state: { formData, grid, dataUrl },
       schema: { drawingName, description, _id },
     } = this;
 
@@ -88,7 +95,10 @@ class DrawingForm extends Form {
     if (grid && isSubmit) {
       formData.grid = [...grid].filter((x) => x.touched);
       schema.grid = this.schema.grid;
-    } else delete formData.grid;
+      formData.dataUrl = dataUrl;
+      schema.dataUrl = this.schema.dataUrl;
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    } else delete formData.grid && delete formData.dataUrl;
 
     const { error } = Joi.object(schema)!.validate(formData, {
       abortEarly: false,
@@ -190,24 +200,17 @@ class DrawingForm extends Form {
     });
   };
 
-  handleGridOff = (hideGrid: boolean, convert = false): void => {
+  handleGridOff = (hideGrid: boolean /* , convert = false */): void => {
     const { grid, gateKeep } = this.state;
     if (hideGrid) {
-      this.setState(
-        {
-          addedStyle: { border: 'none' },
-          grid: grid.map((x: GridItem) => ({
-            ...x,
-            fill: x.touched ? x.fill : 'transparent',
-          })),
-          gateKeep: false,
-        },
-        () => {
-          if (!convert) return;
-          // ? convert grid to image format
-          this.convert2image();
-        }
-      );
+      this.setState({
+        addedStyle: { border: 'none' },
+        grid: grid.map((x: GridItem) => ({
+          ...x,
+          fill: x.touched ? x.fill : 'transparent',
+        })),
+        gateKeep: false,
+      });
       return;
     }
 

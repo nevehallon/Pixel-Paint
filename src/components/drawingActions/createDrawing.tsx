@@ -20,11 +20,12 @@ class CreateDrawing extends DrawingForm {
     grid: initialGrid(),
     currentColor: 'rgb(63, 81, 181)',
     isInitial: true,
+    dataUrl: '',
   };
 
   doSubmit = async (): Promise<void> => {
-    const { formData, grid } = this.state;
-    const data = { ...formData, grid };
+    const { formData, grid, dataUrl } = this.state;
+    const data = { ...formData, grid, dataUrl };
 
     await createDrawing(data);
     toast.success('A new drawing was created', {

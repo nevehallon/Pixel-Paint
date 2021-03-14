@@ -12,9 +12,15 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
 
   doSubmit!: () => Promise<void>;
 
-  handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+  convert2image!: () => Promise<string>;
 
+  handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    if (this.state.grid) {
+      const dataUrl = await this.convert2image();
+      // eslint-disable-next-line react/no-unused-state
+      this.setState({ dataUrl });
+    }
     const errors = this.validate(true);
 
     this.setState({ errors: errors || {} });
