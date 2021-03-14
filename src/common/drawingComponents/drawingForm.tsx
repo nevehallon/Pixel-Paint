@@ -52,15 +52,20 @@ class DrawingForm extends Form {
 
   convert2image = async (): Promise<void> => {
     const imgRef: HTMLElement = this.gridRef.current;
-    const img = await toPng(imgRef, {
+
+    imgRef.style.width = '50px';
+    imgRef.style.height = '50px';
+    const dataUrl = await toPng(imgRef, {
       backgroundColor: 'transparent',
-      quality: 0.1,
       style: { margin: 'auto', width: '100%', height: '100%' },
       width: imgRef.offsetWidth,
       height: imgRef.offsetHeight,
       pixelRatio: 1,
+      skipFonts: true,
     });
-    console.log(img);
+    // const png = new Image();
+    // png.src = dataUrl;
+    console.log(/* png */ dataUrl);
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
