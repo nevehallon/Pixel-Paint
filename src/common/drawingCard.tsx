@@ -24,16 +24,16 @@ const DrawingCard = ({
     />
   );
   const footer = (
-    <span>
+    <span className="p-fluid">
       <Button
-        className="p-button-rounded p-button-text btn-block"
-        icon="pi pi-pen"
+        className="p-button-rounded p-button-text p-button-lg d-inline-block"
+        icon="pi pi-pencil"
         label="Edit"
         onClick={() => history.push(`./edit/${_id}`)}
       />
       <Button
-        className="p-button-rounded p-button-text p-button-danger btn-block"
-        icon="pi pi-times"
+        className="p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
+        icon="pi pi-trash"
         label="Delete"
         onClick={onDelete}
       />
