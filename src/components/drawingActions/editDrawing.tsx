@@ -59,8 +59,6 @@ class EditDrawing extends DrawingForm {
     const { formData, grid, dataUrl } = this.state;
     const data = { ...formData, grid, dataUrl };
 
-    console.log(dataUrl);
-
     await editDrawing(data);
 
     toast.success('Drawing was updated', {

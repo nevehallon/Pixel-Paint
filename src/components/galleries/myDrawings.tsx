@@ -23,6 +23,7 @@ class MyDrawings extends Component {
   componentWillUnmount(): void {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.setState = (state, callback) => {};
+    // ? making sure there are no data leaks
   }
 
   async getData(): Promise<void> {
