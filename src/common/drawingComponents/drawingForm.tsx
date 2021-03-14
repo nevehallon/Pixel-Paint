@@ -287,7 +287,7 @@ class DrawingForm extends Form {
 
     return (
       <ScrollPanel
-        className="mobile-contain mx-auto p-card"
+        className="sp contain mx-auto p-card"
         style={{ width: '100%', height: '58px' }}
       >
         <div className="tools p-2">

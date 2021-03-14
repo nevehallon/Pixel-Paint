@@ -84,27 +84,26 @@ footer {
   }
 }
 
-.mobile-contain {
+.p-card {
+  min-width: 32vh;
+}
+
+.contain {
   max-width: 75vh;
   min-width: 38vh;
 }
 
-.sp {
-  .p-scrollpanel {
-    // height: 58px;
-    display: inline-block;
-
-    .p-scrollpanel-wrapper {
-      // float: none;
-
-      .p-scrollpanel-content {
-        padding: 0;
-      }
+.sp.p-scrollpanel {
+  .p-scrollpanel-wrapper {
+    .p-scrollpanel-content {
+      padding: 0;
     }
+  }
 
-    .p-scrollpanel-bar {
-      // height: 2px;
-    }
+  .p-scrollpanel-bar {
+    background-color: var(--primary-color);
+    height: 5px;
+    opacity: 1;
   }
 }
 
