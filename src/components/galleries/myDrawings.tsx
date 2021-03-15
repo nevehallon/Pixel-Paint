@@ -59,29 +59,27 @@ class MyDrawings extends Component {
     return (
       <div className="container">
         <PageHeader titleText="Drawing Collection" />
-        <div className="row">
-          <div className="col-12 text-center">
-            <p>Your drawing Collection</p>
+        <div className="my-4 col-12 text-center">
+          <p>Your drawing Collection</p>
 
-            <div className="row">
-              {drawings.length ? (
-                drawings.map((drawing, i) => (
-                  <DrawingCard
-                    drawing={drawing}
-                    key={drawing._id}
-                    onDelete={() => this.handleDeleteDrawing(drawing._id, i)}
-                  />
-                ))
-              ) : (
-                <div className={`mx-auto ${loading ? 'text-info' : ''}`}>
-                  {loading ? 'LOADING' : 'No drawings yet'}...
-                </div>
-              )}
-            </div>
-            <Link className="btn btn-info mt-2" to="/create-drawing">
-              Create a new drawing
-            </Link>
+          <div className="row">
+            {drawings.length ? (
+              drawings.map((drawing, i) => (
+                <DrawingCard
+                  drawing={drawing}
+                  key={drawing._id}
+                  onDelete={() => this.handleDeleteDrawing(drawing._id, i)}
+                />
+              ))
+            ) : (
+              <div className={`mx-auto ${loading ? 'text-info' : ''}`}>
+                {loading ? 'LOADING' : 'No drawings yet'}...
+              </div>
+            )}
           </div>
+          <Link className="btn btn-info mt-2" to="/create-drawing">
+            Create a new drawing
+          </Link>
         </div>
       </div>
     );
