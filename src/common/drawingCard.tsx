@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Button } from 'primereact/button';
@@ -7,7 +6,10 @@ import { Card } from 'primereact/card';
 import { DrawingProps } from '../interfaces/DrawingProps';
 
 const DrawingCard = ({
-  drawing: { _id, drawingName, description, dataUrl },
+  _id,
+  drawingName,
+  description,
+  dataUrl,
   onDelete,
 }: DrawingProps): any => {
   const history = useHistory();

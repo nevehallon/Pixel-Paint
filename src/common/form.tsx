@@ -20,7 +20,9 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
       const dataUrl = await this.convert2image();
       // eslint-disable-next-line react/no-unused-state
       this.setState({ dataUrl });
+      console.log(dataUrl);
     }
+
     const errors = this.validate(true);
 
     this.setState({ errors: errors || {} });

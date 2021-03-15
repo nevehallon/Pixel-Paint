@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import DrawingCard from '../../common/drawingCard';
+// import DrawingCard from '../../common/drawingCard';
 import PageHeader from '../../common/pageHeader';
 import { deleteDrawing, getMyDrawings } from '../../services/drawingsService';
+import { List } from './CardList';
+
+import './styles.scss';
 
 interface MyDrawingsProps {
   drawings: any[];
@@ -62,15 +65,15 @@ class MyDrawings extends Component {
         <div className="my-4 col-12 text-center">
           <p>Your drawing Collection</p>
 
-          <div className="row">
+          <div className="row drawingListContainer">
             {drawings.length ? (
-              drawings.map((drawing, i) => (
-                <DrawingCard
-                  drawing={drawing}
-                  key={drawing._id}
-                  onDelete={() => this.handleDeleteDrawing(drawing._id, i)}
-                />
-              ))
+              // path={['/:id', '/']}
+              <List
+                drawings={drawings}
+                emitDelete={(drawing: string, i: number) =>
+                  this.handleDeleteDrawing(drawing, i)
+                }
+              />
             ) : (
               <div className={`mx-auto ${loading ? 'text-info' : ''}`}>
                 {loading ? 'LOADING' : 'No drawings yet'}...

@@ -60,8 +60,10 @@ class DrawingForm extends Form {
       x.dataset.touched ? false : (x.style.backgroundColor = 'transparent');
       x.style.border = 'none';
     });
-    imgRef.style.width = '50px';
-    imgRef.style.height = '50px';
+    imgRef.style.minWidth = '175px';
+    imgRef.style.minHeight = '175px';
+    imgRef.style.width = '175px';
+    imgRef.style.height = '175px';
     return toPng(imgRef, {
       backgroundColor: 'transparent',
       style: { margin: 'auto', width: '100%', height: '100%' },
@@ -70,8 +72,6 @@ class DrawingForm extends Form {
       pixelRatio: 1,
       skipFonts: true,
     });
-    // this.setState({ dataUrl });
-    // return dataUrl;
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
