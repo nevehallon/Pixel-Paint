@@ -2,7 +2,7 @@
 import { memo, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { motion, useMotionValue } from 'framer-motion';
+import { motion, useMotionValue, useViewportScroll } from 'framer-motion';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
 import useScrollConstraints from '../utils/use-scroll-constraints';
@@ -31,7 +31,7 @@ interface Props extends DrawingProps {
 
 // Distance in pixels a user has to scroll a card down before we recognise
 // a swipe-to dismiss action.
-const dismissDistance = -150;
+const dismissDistance = 150;
 
 const Card = memo(
   ({
@@ -47,6 +47,7 @@ const Card = memo(
     const history = useHistory();
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
+    const { scrollY } = useViewportScroll();
 
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
@@ -62,7 +63,7 @@ const Card = memo(
     );
 
     function checkSwipeToDismiss() {
-      y.get() < dismissDistance && history.go(-1);
+      y.get() > dismissDistance && history.replace('/my-drawings');
       // console.log(y.get());
     }
 
@@ -89,21 +90,28 @@ const Card = memo(
         <Overlay isSelected={isSelected} />
         <div className={`card-content-container ${isSelected && 'open'}`}>
           <motion.div
+            animate
             className="card-content"
             drag={isSelected ? 'y' : false}
             dragConstraints={constraints}
+            initial={false}
             layout
             onDrag={(event, info) => {
+              // console.log(info.delta.y);
+              // y.set(y.get() + info.delta.y);
               checkSwipeToDismiss();
             }}
-            onUpdate={checkZIndex}
+            // onDragEnd={() => y.set(0)}
+            onUpdate={(latest) => {
+              checkZIndex(latest as any);
+            }}
             ref={cardRef}
             style={{ zIndex, y }}
             transition={isSelected ? openSpring : closeSpring}
           >
             <Image
               backgroundColor={backgroundColor}
-              id={_id}
+              // id={_id}
               isSelected={isSelected}
               pointOfInterest={pointOfInterest}
             />
@@ -121,11 +129,10 @@ const Card = memo(
       </li>
     );
   },
-  (prev, next) => {
-    console.log(prev.isSelected, next.isSelected);
+  (prev, next) =>
+    // console.log(prev.isSelected, next.isSelected);
 
-    return prev.isSelected === next.isSelected;
-  }
+    prev.isSelected === next.isSelected
 );
 
 export default Card;
