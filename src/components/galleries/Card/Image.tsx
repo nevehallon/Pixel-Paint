@@ -3,20 +3,23 @@ import { motion } from 'framer-motion';
 import { closeSpring } from './animations';
 
 export interface ImageProps {
-  id: string;
   isSelected: boolean;
   pointOfInterest?: number | undefined;
   backgroundColor: string;
+  src: string;
+  id: string;
 }
 
 export const Image = ({
-  id,
   isSelected,
   pointOfInterest = 0,
   backgroundColor,
+  src,
+  id,
 }: ImageProps): any => (
   <motion.div
     className="d-card-image-container"
+    layoutId={`d-card-image-container-${id}`}
     style={{ backgroundColor, originX: 0, originY: 0 }}
   >
     <motion.img
@@ -24,8 +27,8 @@ export const Image = ({
       animate={isSelected ? { x: -20, y: -20 } : { x: -pointOfInterest, y: 0 }}
       className="d-card-image"
       initial={false}
-      // src={`images/${id}.jpg`}
-      src="http://placehold.jp/150x150.png"
+      layoutId={`d-card-image-${id}`}
+      src={src}
       transition={closeSpring}
     />
   </motion.div>

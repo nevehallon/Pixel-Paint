@@ -2,7 +2,7 @@
 import { memo, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { motion, useMotionValue } from 'framer-motion';
+import { AnimateSharedLayout, motion, useMotionValue } from 'framer-motion';
 import { animate } from 'popmotion';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
@@ -98,34 +98,38 @@ const Card = memo(
       <li className="d-card" ref={containerRef}>
         <Overlay isSelected={isSelected} />
         <div className={`d-card-content-container ${isSelected && 'open'}`}>
-          <motion.div
-            className="d-card-content"
-            drag={isSelected ? 'y' : false}
-            dragConstraints={constraints}
-            layout
-            onDragEnd={checkSwipeToDismiss}
-            onUpdate={checkZIndex}
-            onViewportBoxUpdate={(_, delta) => {
-              y.set(delta.y.translate);
-            }}
-            ref={cardRef}
-            style={{ zIndex, y }}
-            transition={isSelected ? openSpring : closeSpring}
-          >
-            <Image
-              backgroundColor={backgroundColor}
-              id={_id}
-              isSelected={isSelected}
-              pointOfInterest={pointOfInterest}
-            />
-            <Title
-              category={category}
-              id={_id}
-              isSelected={isSelected}
-              title={drawingName}
-            />
-            <ContentPlaceholder />
-          </motion.div>
+          <AnimateSharedLayout type="crossfade">
+            <motion.div
+              className="d-card-content"
+              drag={isSelected ? 'y' : false}
+              dragConstraints={constraints}
+              layout
+              layoutId={`d-card-content-${_id}`}
+              onDragEnd={checkSwipeToDismiss}
+              onUpdate={checkZIndex}
+              onViewportBoxUpdate={(_, delta) => {
+                y.set(delta.y.translate);
+              }}
+              ref={cardRef}
+              style={{ zIndex, y }}
+              transition={isSelected ? openSpring : closeSpring}
+            >
+              <Image
+                backgroundColor={backgroundColor}
+                id={_id}
+                isSelected={isSelected}
+                pointOfInterest={pointOfInterest}
+                src={dataUrl}
+              />
+              <Title
+                category={category}
+                id={_id}
+                isSelected={isSelected}
+                title={drawingName}
+              />
+              <ContentPlaceholder description={description} id={_id} />
+            </motion.div>
+          </AnimateSharedLayout>
         </div>
         {!isSelected && (
           <Link className="d-card-open-link" to={`my-drawings/${_id}`} />

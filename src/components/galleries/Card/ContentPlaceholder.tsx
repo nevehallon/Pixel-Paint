@@ -2,19 +2,17 @@ import { memo } from 'react';
 
 import { motion } from 'framer-motion';
 
-export const ContentPlaceholder = memo(() => (
-  <motion.div
-    animate
-    className="content-container"
-    style={{ originY: 0, originX: 0 }}
-  >
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, aperiam
-      ullam. Saepe inventore quaerat itaque ad, mollitia perspiciatis blanditiis
-      omnis vero unde natus nihil beatae odit adipisci asperiores expedita
-      cupiditate.
-    </p>
-  </motion.div>
-));
+export const ContentPlaceholder = memo(
+  ({ description, id }: { id: string; description: string }) => (
+    <motion.div
+      animate
+      className="content-container"
+      layoutId={`content-container-${id}`}
+      style={{ originY: 0, originX: 0 }}
+    >
+      <p>{description}</p>
+    </motion.div>
+  )
+);
 
 export default ContentPlaceholder;
