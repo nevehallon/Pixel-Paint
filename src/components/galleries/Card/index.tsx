@@ -2,7 +2,8 @@
 import { memo, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { motion, useMotionValue, useViewportScroll } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
+import { animate } from 'popmotion';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
 import useScrollConstraints from '../utils/use-scroll-constraints';
@@ -17,6 +18,7 @@ const Overlay = ({ isSelected }: { isSelected: boolean }) => (
     animate={{ opacity: isSelected ? 1 : 0 }}
     className="overlay"
     initial={false}
+    // layout
     style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
     transition={{ duration: 0.2 }}
   >
@@ -29,7 +31,7 @@ interface Props extends DrawingProps {
   [key: string]: any;
 }
 
-// Distance in pixels a user has to scroll a card down before we recognise
+// Distance in pixels a user has to scroll a card down before we recognize
 // a swipe-to dismiss action.
 const dismissDistance = 150;
 
@@ -47,30 +49,36 @@ const Card = memo(
     const history = useHistory();
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
-    const { scrollY } = useViewportScroll();
+
+    useEffect(() => {
+      if (y.isAnimating()) return;
+
+      y.start((complete) => {
+        const animation = animate({
+          from: y.get(),
+          velocity: y.getVelocity(),
+          stiffness: 400,
+          damping: 40,
+          onUpdate: (v: number) => y.set(v),
+          onComplete: complete,
+        });
+
+        return () => animation.stop();
+      });
+    });
 
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
 
-    useEffect(
-      () =>
-        y.onChange((latest) => {
-          console.log(latest);
-        }),
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      []
-    );
-
     function checkSwipeToDismiss() {
-      y.get() > dismissDistance && history.replace('/my-drawings');
-      // console.log(y.get());
+      y.get() > dismissDistance && history.go(-1); /* replace('/my-drawings') */
     }
 
-    function checkZIndex(latest: { scaleX: number }) {
+    function checkZIndex(latest: { y: number }) {
       if (isSelected) {
         zIndex.set(2);
-      } else if (!isSelected && latest.scaleX < 1.01) {
+      } else if (!isSelected && latest.y < 1.01) {
         zIndex.set(0);
       }
     }
@@ -90,21 +98,14 @@ const Card = memo(
         <Overlay isSelected={isSelected} />
         <div className={`card-content-container ${isSelected && 'open'}`}>
           <motion.div
-            animate
+            // animate
             className="card-content"
             drag={isSelected ? 'y' : false}
             dragConstraints={constraints}
-            initial={false}
-            layout
-            onDrag={(event, info) => {
-              // console.log(info.delta.y);
-              // y.set(y.get() + info.delta.y);
-              checkSwipeToDismiss();
-            }}
-            // onDragEnd={() => y.set(0)}
-            onUpdate={(latest) => {
-              checkZIndex(latest as any);
-            }}
+            // initial={false}
+            // layout
+            onDrag={checkSwipeToDismiss}
+            onUpdate={checkZIndex}
             ref={cardRef}
             style={{ zIndex, y }}
             transition={isSelected ? openSpring : closeSpring}
@@ -129,10 +130,7 @@ const Card = memo(
       </li>
     );
   },
-  (prev, next) =>
-    // console.log(prev.isSelected, next.isSelected);
-
-    prev.isSelected === next.isSelected
+  (prev, next) => prev.isSelected === next.isSelected
 );
 
 export default Card;

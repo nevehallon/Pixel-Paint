@@ -17,7 +17,7 @@ const deltaThreshold = 5;
 // If wheel event fires beyond constraints, multiple the delta by this amount
 const elasticFactor = 0.2;
 
-function springTo(value: MotionValue, from: number, to: number) {
+function springTo(value: MotionValue, from: number, to: number): void {
   if (value.isAnimating()) return;
 
   value.start((complete) => {
@@ -43,11 +43,11 @@ const debouncedSpringTo = debounce(springTo, 100);
  * @param constraints - top/bottom scroll constraints in pixels.
  * @param isActive - `true` if this listener should fire.
  */
-export default function useWheelScroll(
+function useWheelScroll(
   ref: RefObject<Element>,
   y: MotionValue<number>,
   constraints: Constraints | null,
-  onWheelCallback: (e: WheelEvent) => void,
+  onWheelCallback: () => void,
   isActive: boolean
 ): void {
   const onWheel = (event: WheelEvent) => {
@@ -88,8 +88,10 @@ export default function useWheelScroll(
       debouncedSpringTo.cancel();
     }
 
-    onWheelCallback(event);
+    onWheelCallback();
   };
 
   useDomEvent(ref, 'wheel', (isActive as any) && onWheel, { passive: false });
 }
+
+export default useWheelScroll;

@@ -20,7 +20,7 @@ export const Title = ({ title, category, isSelected }: TitleProps): any => {
       animate={{ x, y }}
       className="title-container"
       initial={false}
-      layout
+      // layout
       style={{ originX: 0, originY: 0 }}
       transformTemplate={scaleTranslate}
       transition={isSelected ? openSpring : closeSpring}

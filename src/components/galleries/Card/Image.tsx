@@ -17,7 +17,7 @@ export const Image = ({
 }: ImageProps): any => (
   <motion.div
     className="card-image-container"
-    layout
+    // layout
     style={{ backgroundColor, originX: 0, originY: 0 }}
   >
     <motion.img
@@ -25,6 +25,7 @@ export const Image = ({
       animate={isSelected ? { x: -20, y: -20 } : { x: -pointOfInterest, y: 0 }}
       className="card-image"
       initial={false}
+      // layout
       // src={`images/${id}.jpg`}
       transition={closeSpring}
     />

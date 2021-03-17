@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { memo } from 'react';
 
 import { motion } from 'framer-motion';
 
-export const ContentPlaceholder = React.memo(() => (
+export const ContentPlaceholder = memo(() => (
   <motion.div
     className="content-container"
-    layout
+    // layout
     style={{ originY: 0, originX: 0 }}
   >
     <p>
