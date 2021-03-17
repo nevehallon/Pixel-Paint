@@ -6,12 +6,16 @@ export interface TitleProps {
   title: any;
   category: any;
   isSelected: any;
+  id: string;
 }
 
-const scaleTranslate = ({ x, y, scaleX, scaleY }: { [key: string]: any }) =>
-  `scaleX(${scaleX}) scaleY(${scaleY}) translate(${x}, ${y}) translateZ(0)`;
+const scaleTranslate = ({ x, y, scaleX, scaleY }: { [key: string]: any }) => {
+  console.log({ x, y, scaleX, scaleY });
 
-export const Title = ({ title, category, isSelected }: TitleProps): any => {
+  return `translate(${x}, ${y}) translateZ(0)`;
+};
+
+export const Title = ({ id, title, category, isSelected }: TitleProps): any => {
   const x = isSelected ? 30 : 15;
   const y = x;
 
@@ -20,9 +24,7 @@ export const Title = ({ title, category, isSelected }: TitleProps): any => {
       animate={{ x, y }}
       className="title-container"
       initial={false}
-      // layout
       style={{ originX: 0, originY: 0 }}
-      transformTemplate={scaleTranslate}
       transition={isSelected ? openSpring : closeSpring}
     >
       <span className="category">{category}</span>

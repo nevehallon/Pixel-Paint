@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 
 export const ContentPlaceholder = memo(() => (
   <motion.div
+    animate
     className="content-container"
-    // layout
     style={{ originY: 0, originX: 0 }}
   >
     <p>

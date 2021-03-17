@@ -18,9 +18,8 @@ const Overlay = ({ isSelected }: { isSelected: boolean }) => (
     animate={{ opacity: isSelected ? 1 : 0 }}
     className="overlay"
     initial={false}
-    // layout
     style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
-    transition={{ duration: 0.2 }}
+    transition={{ duration: 0.2, delay: 0.1 }}
   >
     <Link replace to="/my-drawings" />
   </motion.div>
@@ -72,7 +71,9 @@ const Card = memo(
     const constraints = useScrollConstraints(cardRef, isSelected);
 
     function checkSwipeToDismiss() {
-      y.get() > dismissDistance && history.go(-1); /* replace('/my-drawings') */
+      const yValue = y.get();
+      (yValue > dismissDistance || yValue < -dismissDistance) &&
+        history.go(-1); /* replace('/my-drawings') */
     }
 
     function checkZIndex(latest: { y: number }) {
@@ -94,30 +95,32 @@ const Card = memo(
     );
 
     return (
-      <li className="card" ref={containerRef}>
+      <li className="d-card" ref={containerRef}>
         <Overlay isSelected={isSelected} />
-        <div className={`card-content-container ${isSelected && 'open'}`}>
+        <div className={`d-card-content-container ${isSelected && 'open'}`}>
           <motion.div
-            // animate
-            className="card-content"
+            className="d-card-content"
             drag={isSelected ? 'y' : false}
             dragConstraints={constraints}
-            // initial={false}
-            // layout
-            onDrag={checkSwipeToDismiss}
+            layout
+            onDragEnd={checkSwipeToDismiss}
             onUpdate={checkZIndex}
+            onViewportBoxUpdate={(_, delta) => {
+              y.set(delta.y.translate);
+            }}
             ref={cardRef}
             style={{ zIndex, y }}
             transition={isSelected ? openSpring : closeSpring}
           >
             <Image
               backgroundColor={backgroundColor}
-              // id={_id}
+              id={_id}
               isSelected={isSelected}
               pointOfInterest={pointOfInterest}
             />
             <Title
               category={category}
+              id={_id}
               isSelected={isSelected}
               title={drawingName}
             />
@@ -125,7 +128,7 @@ const Card = memo(
           </motion.div>
         </div>
         {!isSelected && (
-          <Link className="card-open-link" to={`my-drawings/${_id}`} />
+          <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
         )}
       </li>
     );

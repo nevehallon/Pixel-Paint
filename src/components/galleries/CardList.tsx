@@ -12,7 +12,7 @@ export const List = ({
   const match: any = useRouteMatch('/my-drawings/:id');
 
   return (
-    <ul className="card-list">
+    <ul className="d-card-list">
       {drawings.map((drawing: any, i: number) => (
         <Card
           isSelected={match?.params.id === drawing._id}
