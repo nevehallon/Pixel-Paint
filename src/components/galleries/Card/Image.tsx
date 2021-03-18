@@ -24,7 +24,6 @@ export const Image = ({
   >
     <motion.img
       alt=""
-      // animate={isSelected ? { x: -20, y: -20 } : { x: -pointOfInterest, y: 0 }}
       className="d-card-image"
       initial={false}
       layoutId={`d-card-image-${id}`}

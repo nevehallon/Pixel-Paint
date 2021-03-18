@@ -2,7 +2,12 @@
 import { memo, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { AnimateSharedLayout, motion, useMotionValue } from 'framer-motion';
+import {
+  AnimateSharedLayout,
+  motion,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion';
 import { animate } from 'popmotion';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
@@ -12,18 +17,6 @@ import { closeSpring, openSpring } from './animations';
 import { ContentPlaceholder } from './ContentPlaceholder';
 import { Image } from './Image';
 import { Title } from './Title';
-
-const Overlay = ({ isSelected }: { isSelected: boolean }) => (
-  <motion.div
-    animate={{ opacity: isSelected ? 1 : 0 }}
-    className="overlay"
-    initial={false}
-    style={{ pointerEvents: isSelected ? 'auto' : 'none' }}
-    transition={{ duration: 0.2, delay: 0.1 }}
-  >
-    <Link replace to="/my-drawings" />
-  </motion.div>
-);
 
 interface Props extends DrawingProps {
   isSelected: boolean;
@@ -38,7 +31,6 @@ const Card = memo(
   ({
     isSelected,
     category,
-    pointOfInterest,
     backgroundColor,
     _id,
     drawingName,
@@ -48,6 +40,9 @@ const Card = memo(
     const history = useHistory();
     const y = useMotionValue(0);
     const zIndex = useMotionValue(isSelected ? 2 : 0);
+    const input = [-500, 0, 500];
+    const output = [0, isSelected ? 1 : 0, 0];
+    const opacity = useTransform(y, input, output);
 
     useEffect(() => {
       if (y.isAnimating()) return;
@@ -96,7 +91,15 @@ const Card = memo(
 
     return (
       <li className="d-card" ref={containerRef}>
-        <Overlay isSelected={isSelected} />
+        <motion.div
+          // animate={{ opacity: isSelected ? 1 : 0 }}
+          className="overlay"
+          // initial={false}
+          style={{ opacity, pointerEvents: isSelected ? 'auto' : 'none' }}
+          transition={{ duration: 0.2, delay: 0.1 }}
+        >
+          <Link replace to="/my-drawings" />
+        </motion.div>
         <div className={`d-card-content-container ${isSelected && 'open'}`}>
           <AnimateSharedLayout type="crossfade">
             <motion.div
@@ -118,7 +121,6 @@ const Card = memo(
                 backgroundColor={backgroundColor}
                 id={_id}
                 isSelected={isSelected}
-                pointOfInterest={pointOfInterest}
                 src={dataUrl}
               />
               <Title
