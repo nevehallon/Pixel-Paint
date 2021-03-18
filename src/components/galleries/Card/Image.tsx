@@ -1,36 +1,33 @@
-import { motion } from 'framer-motion';
+/* eslint-disable react/jsx-max-props-per-line */
+import { motion, MotionValue } from 'framer-motion';
 
-import { closeSpring } from './animations';
+import { closeSpring, openSpring } from './animations';
 
 export interface ImageProps {
   isSelected: boolean;
-  pointOfInterest?: number | undefined;
   backgroundColor: string;
   src: string;
   id: string;
+  y: MotionValue<number>;
 }
 
 export const Image = ({
   isSelected,
-  pointOfInterest = 0,
   backgroundColor,
   src,
   id,
+  y,
 }: ImageProps): any => (
-  <motion.div
-    className="d-card-image-container"
-    layoutId={`d-card-image-container-${id}`}
-    style={{ backgroundColor, originX: 0, originY: 0 }}
-  >
+  <div className="d-card-image-container">
     <motion.img
       alt=""
       className="d-card-image"
-      initial={false}
-      layoutId={`d-card-image-${id}`}
+      layout
       src={src}
-      transition={closeSpring}
+      style={{ y }}
+      transition={isSelected ? openSpring : closeSpring}
     />
-  </motion.div>
+  </div>
 );
 
 export default Image;

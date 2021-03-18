@@ -12,8 +12,6 @@ export interface TitleProps {
 export const Title = ({ id, title, category, isSelected }: TitleProps): any => (
   <motion.div
     className="title-container"
-    initial={false}
-    layoutId={`title-container-${id}`}
     transition={isSelected ? openSpring : closeSpring}
   >
     <span className="category">{category}</span>

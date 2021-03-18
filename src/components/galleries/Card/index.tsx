@@ -39,7 +39,7 @@ const Card = memo(
   }: Props) => {
     const history = useHistory();
     const y = useMotionValue(0);
-    const zIndex = useMotionValue(isSelected ? 2 : 0);
+    // const zIndex = useMotionValue(isSelected ? 2 : 0);
     const input = [-500, 0, 500];
     const output = [0, isSelected ? 1 : 0, 0];
     const opacity = useTransform(y, input, output);
@@ -72,11 +72,11 @@ const Card = memo(
     }
 
     function checkZIndex(latest: { y: number }) {
-      if (isSelected) {
-        zIndex.set(2);
-      } else if (!isSelected && latest.y < 1.01) {
-        zIndex.set(0);
-      }
+      // if (isSelected) {
+      //   zIndex.set(2);
+      // } else if (!isSelected && latest.y < 1.01) {
+      //   zIndex.set(0);
+      // }
     }
 
     // When this card is selected, attach a wheel event listener
@@ -94,27 +94,35 @@ const Card = memo(
         <motion.div
           // animate={{ opacity: isSelected ? 1 : 0 }}
           className="overlay"
-          // initial={false}
           style={{ opacity, pointerEvents: isSelected ? 'auto' : 'none' }}
           transition={{ duration: 0.2, delay: 0.1 }}
         >
           <Link replace to="/my-drawings" />
         </motion.div>
-        <div className={`d-card-content-container ${isSelected && 'open'}`}>
-          <AnimateSharedLayout type="crossfade">
+
+        <AnimateSharedLayout type="crossfade">
+          <motion.div
+            animate={
+              isSelected ? { zIndex: 2 } : { transitionEnd: { zIndex: 0 } }
+            }
+            className={`d-card-content-container ${isSelected && 'open'}`}
+            layout="position"
+            // style={{ y, zIndex }}
+            transition={isSelected ? openSpring : closeSpring}
+          >
             <motion.div
               className="d-card-content"
               drag={isSelected ? 'y' : false}
               dragConstraints={constraints}
               layout
-              layoutId={`d-card-content-${_id}`}
+              // layoutId={`d-card-content-${_id}`}
               onDragEnd={checkSwipeToDismiss}
-              onUpdate={checkZIndex}
+              // onUpdate={checkZIndex}
               onViewportBoxUpdate={(_, delta) => {
                 y.set(delta.y.translate);
               }}
               ref={cardRef}
-              style={{ zIndex, y }}
+              style={{ /* zIndex, */ y }}
               transition={isSelected ? openSpring : closeSpring}
             >
               <Image
@@ -122,6 +130,7 @@ const Card = memo(
                 id={_id}
                 isSelected={isSelected}
                 src={dataUrl}
+                y={y}
               />
               <Title
                 category={category}
@@ -131,8 +140,8 @@ const Card = memo(
               />
               <ContentPlaceholder description={description} id={_id} />
             </motion.div>
-          </AnimateSharedLayout>
-        </div>
+          </motion.div>
+        </AnimateSharedLayout>
         {!isSelected && (
           <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
         )}
