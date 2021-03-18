@@ -63,7 +63,7 @@ class MyDrawings extends Component {
       <div className="container">
         <PageHeader titleText="Drawing Collection" />
         <div className="my-4 col-12 text-center">
-          <p>Your drawing Collection</p>
+          <h6>Your drawing Collection</h6>
 
           <div className="row drawingListContainer">
             {drawings.length ? (
