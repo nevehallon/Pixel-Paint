@@ -18,12 +18,12 @@ export const Title = ({ id, title, category, isSelected }: TitleProps): any => {
 
   return (
     <motion.div
-      animate={{ x, y }}
+      // animate={{ x, y }}
       className="title-container"
       initial={false}
       layoutId={`title-container-${id}`}
-      style={{ originX: 0, originY: 0 }}
-      transformTemplate={scaleTranslate}
+      // style={{ originX: 0, originY: 0 }}
+      // transformTemplate={scaleTranslate}
       transition={isSelected ? openSpring : closeSpring}
     >
       <span className="category">{category}</span>

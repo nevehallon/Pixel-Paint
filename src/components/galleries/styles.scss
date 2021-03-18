@@ -100,6 +100,7 @@
     height: 420px;
     width: 100%;
     transform: translateZ(0);
+    padding-top: 6rem;
 
     background: transparent;
     background: linear-gradient(90deg, #0000 0%, white 7%, white 93%, #0000 100%);
@@ -107,7 +108,8 @@
     .d-card-image {
       margin: 20px auto;
       pointer-events: none;
-      width: 250px;
+      width: clamp(250px, 280px, 90%);
+      padding: 0 1rem;
     }
   }
 
