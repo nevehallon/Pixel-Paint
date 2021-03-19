@@ -82,7 +82,7 @@ function useWheelScroll(
     }
 
     if (!startedAnimation) {
-      y.stop();
+      // y.stop();
       y.set(newY);
     } else {
       debouncedSpringTo.cancel();

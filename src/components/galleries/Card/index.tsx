@@ -43,23 +43,6 @@ const Card = memo(
     const output = [0, isSelected ? 1 : 0, 0];
     const opacity = useTransform(y, input, output);
 
-    // useEffect(() => {
-    //   if (y.isAnimating()) return;
-
-    //   y.start((complete) => {
-    //     const animation = animate({
-    //       from: y.get(),
-    //       velocity: y.getVelocity(),
-    //       stiffness: 400,
-    //       damping: 40,
-    //       onUpdate: (v: number) => y.set(v),
-    //       onComplete: complete,
-    //     });
-
-    //     return () => animation.stop();
-    //   });
-    // });
-
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
