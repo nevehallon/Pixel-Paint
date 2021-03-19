@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-max-props-per-line */
-import { motion, MotionValue } from 'framer-motion';
+import { motion, MotionValue, useMotionValue } from 'framer-motion';
 
 import { closeSpring, openSpring } from './animations';
 

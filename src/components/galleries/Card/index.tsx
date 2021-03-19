@@ -39,7 +39,6 @@ const Card = memo(
   }: Props) => {
     const history = useHistory();
     const y = useMotionValue(0);
-    // const zIndex = useMotionValue(isSelected ? 2 : 0);
     const input = [-500, 0, 500];
     const output = [0, isSelected ? 1 : 0, 0];
     const opacity = useTransform(y, input, output);
@@ -71,14 +70,6 @@ const Card = memo(
         history.go(-1); /* replace('/my-drawings') */
     }
 
-    function checkZIndex(latest: { y: number }) {
-      // if (isSelected) {
-      //   zIndex.set(2);
-      // } else if (!isSelected && latest.y < 1.01) {
-      //   zIndex.set(0);
-      // }
-    }
-
     // When this card is selected, attach a wheel event listener
     const containerRef = useRef(null);
     useWheelScroll(
@@ -102,12 +93,9 @@ const Card = memo(
 
         <AnimateSharedLayout type="crossfade">
           <motion.div
-            animate={
-              isSelected ? { zIndex: 2 } : { transitionEnd: { zIndex: 0 } }
-            }
+            animate={isSelected ? openSpring : closeSpring}
             className={`d-card-content-container ${isSelected && 'open'}`}
             layout="position"
-            // style={{ y, zIndex }}
             transition={isSelected ? openSpring : closeSpring}
           >
             <motion.div
@@ -117,12 +105,11 @@ const Card = memo(
               layout
               // layoutId={`d-card-content-${_id}`}
               onDragEnd={checkSwipeToDismiss}
-              // onUpdate={checkZIndex}
               onViewportBoxUpdate={(_, delta) => {
                 y.set(delta.y.translate);
               }}
               ref={cardRef}
-              style={{ /* zIndex, */ y }}
+              style={{ y }}
               transition={isSelected ? openSpring : closeSpring}
             >
               <Image
