@@ -5,26 +5,27 @@ import { closeSpring, openSpring } from './animations';
 
 export interface ImageProps {
   isSelected: boolean;
-  backgroundColor: string;
+  // backgroundColor: string;
   src: string;
   id: string;
-  y: MotionValue<number>;
+  // y: MotionValue<number>;
 }
 
 export const Image = ({
   isSelected,
-  backgroundColor,
+  // backgroundColor,
   src,
+  // y,
   id,
-  y,
 }: ImageProps): any => (
   <div className="d-card-image-container">
     <motion.img
       alt=""
+      animate={isSelected ? openSpring : closeSpring}
       className="d-card-image"
       layout
       src={src}
-      style={{ y }}
+      // style={{ y }}
       transition={isSelected ? openSpring : closeSpring}
     />
   </div>

@@ -43,22 +43,22 @@ const Card = memo(
     const output = [0, isSelected ? 1 : 0, 0];
     const opacity = useTransform(y, input, output);
 
-    useEffect(() => {
-      if (y.isAnimating()) return;
+    // useEffect(() => {
+    //   if (y.isAnimating()) return;
 
-      y.start((complete) => {
-        const animation = animate({
-          from: y.get(),
-          velocity: y.getVelocity(),
-          stiffness: 400,
-          damping: 40,
-          onUpdate: (v: number) => y.set(v),
-          onComplete: complete,
-        });
+    //   y.start((complete) => {
+    //     const animation = animate({
+    //       from: y.get(),
+    //       velocity: y.getVelocity(),
+    //       stiffness: 400,
+    //       damping: 40,
+    //       onUpdate: (v: number) => y.set(v),
+    //       onComplete: complete,
+    //     });
 
-        return () => animation.stop();
-      });
-    });
+    //     return () => animation.stop();
+    //   });
+    // });
 
     // We'll use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
@@ -66,8 +66,9 @@ const Card = memo(
 
     function checkSwipeToDismiss() {
       const yValue = y.get();
-      (yValue > dismissDistance || yValue < -dismissDistance) &&
-        history.go(-1); /* replace('/my-drawings') */
+      const isInBounds = yValue > dismissDistance || yValue < -dismissDistance;
+
+      isInBounds && history.go(-1); /* replace('/my-drawings') */
     }
 
     // When this card is selected, attach a wheel event listener
@@ -113,11 +114,11 @@ const Card = memo(
               transition={isSelected ? openSpring : closeSpring}
             >
               <Image
-                backgroundColor={backgroundColor}
+                // backgroundColor={backgroundColor}
                 id={_id}
                 isSelected={isSelected}
                 src={dataUrl}
-                y={y}
+                // y={y}
               />
               <Title
                 category={category}
