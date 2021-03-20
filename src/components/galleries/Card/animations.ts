@@ -13,7 +13,7 @@ export const openSpring: Transition = {
 export const closeSpring: Transition = {
   type: 'spring',
   stiffness: 300,
-  damping: 35,
+  damping: 30,
 };
 export const openAnimation:
   | AnimationControls

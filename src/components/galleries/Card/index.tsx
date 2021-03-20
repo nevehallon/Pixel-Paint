@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { memo, useEffect, useRef } from 'react';
+import { memo, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { animate } from 'popmotion';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
 import useScrollConstraints from '../utils/use-scroll-constraints';
@@ -91,16 +90,12 @@ const Card = memo(
             className="d-card-content"
             layout
             transition={isSelected ? openSpring : closeSpring}
-            // style={{ y }}
-
-            // layoutId={`d-card-content-${_id}`}
           >
             <Image
               // backgroundColor={backgroundColor}
               id={_id}
               isSelected={isSelected}
               src={dataUrl}
-              // y={y}
             />
             <Title
               category={category}

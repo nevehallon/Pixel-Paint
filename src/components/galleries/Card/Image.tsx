@@ -13,14 +13,12 @@ export interface ImageProps {
   // backgroundColor: string;
   src: string;
   id: string;
-  // y: MotionValue<number>;
 }
 
 export const Image = ({
   isSelected,
   // backgroundColor,
   src,
-  // y,
   id,
 }: ImageProps): any => (
   <motion.div
@@ -36,7 +34,6 @@ export const Image = ({
       layout
       src={src}
       transition={isSelected ? openSpring : closeSpring}
-      // style={{ y }}
     />
   </motion.div>
 );
