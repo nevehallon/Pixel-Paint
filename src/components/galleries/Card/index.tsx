@@ -113,7 +113,7 @@ const Card = memo(
                 label="Delete"
                 onClick={() => {
                   onDelete();
-                  history.replace('my-drawings/');
+                  history.replace('/my-drawings');
                 }}
               />
             </span>

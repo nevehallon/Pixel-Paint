@@ -17,6 +17,10 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (this.state.grid) {
+      toast.dark('One moment please', {
+        position: 'top-center',
+        autoClose: 2500,
+      });
       const dataUrl = await this.convert2image();
       // eslint-disable-next-line react/no-unused-state
       this.setState({ dataUrl });

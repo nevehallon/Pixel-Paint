@@ -43,6 +43,7 @@ class EditDrawing extends DrawingForm {
         formData: { drawingName, description, _id },
         grid: savedGrid,
         canvasStateTimeline: [savedGrid],
+        isInitial: false,
       });
     } catch (error) {
       // eslint-disable-next-line no-console
