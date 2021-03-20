@@ -100,15 +100,15 @@ const Card = memo(
               title={drawingName}
             />
             <ContentPlaceholder description={description} id={_id} />
-            <span className="p-fluid">
+            <span className="p-fluid d-flex justify-content-around mx-1 my-3">
               <Button
-                className="p-button-rounded p-button-text p-button-lg d-inline-block"
+                className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
                 icon="pi pi-pencil"
                 label="Edit"
                 onClick={() => history.replace(`/edit/${_id}`)}
               />
               <Button
-                className="p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
+                className="mx-1 p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
                 icon="pi pi-trash"
                 label="Delete"
                 onClick={() => {
