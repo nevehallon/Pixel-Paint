@@ -58,6 +58,19 @@ const Card = memo(
 
     return (
       <li className="d-card" ref={containerRef}>
+        {/* TODO: add pi-ellipsis-v as icon btn for options in top right
+        // * Options:
+        //! exit options menu (pi-times-circle)
+        //? Share (pi-share-alt),
+        //? info (pi-info / pi-info-circle),
+        //? fork (if others' drawing),
+        //? open in new window (pi-external-link),
+        //? download image (pi-download)
+        //? copy image link (pi-link)
+
+        // * TOP left to
+        //? add to favorites (pi-star (status favorite) / pi-star-o)
+        */}
         <motion.div
           className="overlay"
           style={{ opacity, pointerEvents: isSelected ? 'auto' : 'none' }}
