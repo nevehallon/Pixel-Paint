@@ -2,12 +2,7 @@
 import { memo, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import {
-  AnimateSharedLayout,
-  motion,
-  useMotionValue,
-  useTransform,
-} from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { animate } from 'popmotion';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
@@ -67,7 +62,6 @@ const Card = memo(
     return (
       <li className="d-card" ref={containerRef}>
         <motion.div
-          // animate={{ opacity: isSelected ? 1 : 0 }}
           className="overlay"
           style={{ opacity, pointerEvents: isSelected ? 'auto' : 'none' }}
           transition={{ duration: 0.2, delay: 0.1 }}
@@ -75,44 +69,40 @@ const Card = memo(
           <Link replace to="/my-drawings" />
         </motion.div>
 
-        <AnimateSharedLayout type="crossfade">
+        <motion.div
+          animate={isSelected ? openSpring : closeSpring}
+          className={`d-card-content-container ${isSelected && 'open'}`}
+          drag={isSelected ? 'y' : false}
+          dragConstraints={constraints}
+          layout
+          onDragEnd={checkSwipeToDismiss}
+          onViewportBoxUpdate={(_, delta) => {
+            y.set(delta.y.translate);
+          }}
+          ref={cardRef}
+          style={{ y }}
+        >
           <motion.div
-            animate={isSelected ? openSpring : closeSpring}
-            className={`d-card-content-container ${isSelected && 'open'}`}
-            layout="position"
-            transition={isSelected ? openSpring : closeSpring}
+            className="d-card-content"
+            layout
+            // layoutId={`d-card-content-${_id}`}
           >
-            <motion.div
-              className="d-card-content"
-              drag={isSelected ? 'y' : false}
-              dragConstraints={constraints}
-              layout
-              // layoutId={`d-card-content-${_id}`}
-              onDragEnd={checkSwipeToDismiss}
-              onViewportBoxUpdate={(_, delta) => {
-                y.set(delta.y.translate);
-              }}
-              ref={cardRef}
-              style={{ y }}
-              transition={isSelected ? openSpring : closeSpring}
-            >
-              <Image
-                // backgroundColor={backgroundColor}
-                id={_id}
-                isSelected={isSelected}
-                src={dataUrl}
-                // y={y}
-              />
-              <Title
-                category={category}
-                id={_id}
-                isSelected={isSelected}
-                title={drawingName}
-              />
-              <ContentPlaceholder description={description} id={_id} />
-            </motion.div>
+            <Image
+              // backgroundColor={backgroundColor}
+              id={_id}
+              isSelected={isSelected}
+              src={dataUrl}
+              // y={y}
+            />
+            <Title
+              category={category}
+              id={_id}
+              isSelected={isSelected}
+              title={drawingName}
+            />
+            <ContentPlaceholder description={description} id={_id} />
           </motion.div>
-        </AnimateSharedLayout>
+        </motion.div>
         {!isSelected && (
           <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
         )}

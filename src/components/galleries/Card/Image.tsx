@@ -18,7 +18,11 @@ export const Image = ({
   // y,
   id,
 }: ImageProps): any => (
-  <div className="d-card-image-container">
+  <motion.div
+    animate={isSelected ? openSpring : closeSpring}
+    className="d-card-image-container"
+    layout
+  >
     <motion.img
       alt=""
       animate={isSelected ? openSpring : closeSpring}
@@ -26,9 +30,8 @@ export const Image = ({
       layout
       src={src}
       // style={{ y }}
-      transition={isSelected ? openSpring : closeSpring}
     />
-  </div>
+  </motion.div>
 );
 
 export default Image;

@@ -117,14 +117,13 @@
 
   .title-container {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 0;
+    left: 30px;
     max-width: 300px;
   }
 
   .open .title-container {
-    top: 30px;
-    left: 30px;
+    top: 15px;
   }
 
   h2 {
