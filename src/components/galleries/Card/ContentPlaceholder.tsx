@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 export const ContentPlaceholder = memo(
-  ({ description, id }: { id: string; description: string }) => (
+  ({ description }: { description: string }) => (
     <div className="content-container">
       <p>{description}</p>
     </div>

@@ -11,10 +11,9 @@ export interface TitleProps {
   title: any;
   category: any;
   isSelected: any;
-  id: string;
 }
 
-export const Title = ({ id, title, category, isSelected }: TitleProps): any => (
+export const Title = ({ title, category, isSelected }: TitleProps): any => (
   <motion.div
     animate={isSelected ? openAnimation : closeAnimation}
     className="title-container"

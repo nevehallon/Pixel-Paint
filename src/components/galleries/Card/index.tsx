@@ -94,11 +94,10 @@ const Card = memo(
             <Image isSelected={isSelected} src={dataUrl} />
             <Title
               category={category}
-              id={_id}
               isSelected={isSelected}
               title={drawingName}
             />
-            <ContentPlaceholder description={description} id={_id} />
+            <ContentPlaceholder description={description} />
             <span className="p-fluid d-flex justify-content-around mx-1 my-3">
               <Button
                 className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
