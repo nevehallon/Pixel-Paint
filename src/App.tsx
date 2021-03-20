@@ -57,7 +57,7 @@ class App extends Component {
             <Route component={Logout} path="/logout" />
             <Route component={About} path="/about" />
             <Route component={Home} exact path="/" />
-            <Redirect to="/" /> {/* add 404 page not found */}
+            <Redirect to="/" /> {/* TODO: add 404 page not found */}
           </Switch>
         </main>
         <footer>

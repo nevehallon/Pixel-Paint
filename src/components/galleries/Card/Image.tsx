@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-max-props-per-line */
-import { motion, MotionValue, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import {
   closeAnimation,
@@ -10,17 +9,10 @@ import {
 
 export interface ImageProps {
   isSelected: boolean;
-  // backgroundColor: string;
   src: string;
-  id: string;
 }
 
-export const Image = ({
-  isSelected,
-  // backgroundColor,
-  src,
-  id,
-}: ImageProps): any => (
+export const Image = ({ isSelected, src }: ImageProps): any => (
   <motion.div
     animate={isSelected ? openAnimation : closeAnimation}
     className="d-card-image-container"
@@ -34,7 +26,6 @@ export const Image = ({
       layout
       loading="lazy"
       onError={(e) => {
-        // TODO: fix
         (e.target as any).src =
           'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png';
       }}

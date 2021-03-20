@@ -49,7 +49,21 @@ class CreateDrawing extends DrawingForm {
         <div className="container">
           <div className="row">
             <div className=" m-auto">
-              <form className="p-card" noValidate onSubmit={this.handleSubmit}>
+              <form
+                className="p-card"
+                noValidate
+                onSubmit={(e) => {
+                  if (this.state.isInitial) {
+                    e.preventDefault();
+                    toast.error('Canvas can not be blank', {
+                      position: 'top-center',
+                      autoClose: 2500,
+                    });
+                    return;
+                  }
+                  this.handleSubmit(e);
+                }}
+              >
                 <div className="p-card-content m-3">
                   {this.renderSizePicker()}
                   {this.renderInput('drawingName', 'Name')}

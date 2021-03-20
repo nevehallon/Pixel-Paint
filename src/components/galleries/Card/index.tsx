@@ -3,6 +3,7 @@ import { memo, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { Button } from 'primereact/button';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
 import useScrollConstraints from '../utils/use-scroll-constraints';
@@ -30,7 +31,7 @@ const Card = memo(
   ({
     isSelected,
     category,
-    backgroundColor,
+    onDelete,
     _id,
     drawingName,
     description,
@@ -50,7 +51,7 @@ const Card = memo(
       const yValue = y.get();
       const isInBounds = yValue > dismissDistance || yValue < -dismissDistance;
 
-      isInBounds && history.go(-1); /* replace('/my-drawings') */
+      isInBounds && history.go(-1);
     }
 
     // When this card is selected, attach a wheel event listener
@@ -91,12 +92,7 @@ const Card = memo(
             layout
             transition={isSelected ? openSpring : closeSpring}
           >
-            <Image
-              // backgroundColor={backgroundColor}
-              id={_id}
-              isSelected={isSelected}
-              src={dataUrl}
-            />
+            <Image isSelected={isSelected} src={dataUrl} />
             <Title
               category={category}
               id={_id}
@@ -104,6 +100,23 @@ const Card = memo(
               title={drawingName}
             />
             <ContentPlaceholder description={description} id={_id} />
+            <span className="p-fluid">
+              <Button
+                className="p-button-rounded p-button-text p-button-lg d-inline-block"
+                icon="pi pi-pencil"
+                label="Edit"
+                onClick={() => history.replace(`/edit/${_id}`)}
+              />
+              <Button
+                className="p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
+                icon="pi pi-trash"
+                label="Delete"
+                onClick={() => {
+                  onDelete();
+                  history.replace('my-drawings/');
+                }}
+              />
+            </span>
           </motion.div>
         </motion.div>
         {!isSelected && (
