@@ -28,10 +28,16 @@ export const Image = ({
     transition={isSelected ? openSpring : closeSpring}
   >
     <motion.img
-      alt=""
+      alt="drawing thumbnail"
       animate={isSelected ? openAnimation : closeAnimation}
       className="d-card-image"
       layout
+      loading="lazy"
+      onError={(e) => {
+        // TODO: fix
+        (e.target as any).src =
+          'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image-300x225.png';
+      }}
       src={src}
       transition={isSelected ? openSpring : closeSpring}
     />
