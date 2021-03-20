@@ -8,7 +8,12 @@ import { animate } from 'popmotion';
 import { DrawingProps } from '../../../interfaces/DrawingProps';
 import useScrollConstraints from '../utils/use-scroll-constraints';
 import useWheelScroll from '../utils/use-wheel-scroll';
-import { closeSpring, openSpring } from './animations';
+import {
+  closeAnimation,
+  closeSpring,
+  openAnimation,
+  openSpring,
+} from './animations';
 import { ContentPlaceholder } from './ContentPlaceholder';
 import { Image } from './Image';
 import { Title } from './Title';
@@ -70,21 +75,24 @@ const Card = memo(
         </motion.div>
 
         <motion.div
-          animate={isSelected ? openSpring : closeSpring}
+          _dragY={y}
+          animate={isSelected ? openAnimation : closeAnimation}
           className={`d-card-content-container ${isSelected && 'open'}`}
           drag={isSelected ? 'y' : false}
           dragConstraints={constraints}
           layout
           onDragEnd={checkSwipeToDismiss}
-          onViewportBoxUpdate={(_, delta) => {
-            y.set(delta.y.translate);
-          }}
           ref={cardRef}
           style={{ y }}
+          transition={isSelected ? openSpring : closeSpring}
         >
           <motion.div
+            animate={isSelected ? openAnimation : closeAnimation}
             className="d-card-content"
             layout
+            transition={isSelected ? openSpring : closeSpring}
+            // style={{ y }}
+
             // layoutId={`d-card-content-${_id}`}
           >
             <Image

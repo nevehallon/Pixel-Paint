@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
 
-import { closeSpring, openSpring } from './animations';
+import {
+  closeAnimation,
+  closeSpring,
+  openAnimation,
+  openSpring,
+} from './animations';
 
 export interface TitleProps {
   title: any;
@@ -11,9 +16,10 @@ export interface TitleProps {
 
 export const Title = ({ id, title, category, isSelected }: TitleProps): any => (
   <motion.div
-    animate={isSelected ? openSpring : closeSpring}
+    animate={isSelected ? openAnimation : closeAnimation}
     className="title-container"
     layout
+    transition={isSelected ? openSpring : closeSpring}
   >
     <span className="category">{category}</span>
     <h2>{title}</h2>
