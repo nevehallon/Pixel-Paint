@@ -28,15 +28,7 @@ interface Props extends DrawingProps {
 const dismissDistance = 150;
 
 const Card = memo(
-  ({
-    isSelected,
-    category,
-    onDelete,
-    _id,
-    drawingName,
-    description,
-    dataUrl,
-  }: Props) => {
+  ({ isSelected, onDelete, _id, drawingName, description, dataUrl }: Props) => {
     const history = useHistory();
     const y = useMotionValue(0);
     const input = [-500, 0, 500];
@@ -92,11 +84,7 @@ const Card = memo(
             transition={isSelected ? openSpring : closeSpring}
           >
             <Image isSelected={isSelected} src={dataUrl} />
-            <Title
-              category={category}
-              isSelected={isSelected}
-              title={drawingName}
-            />
+            <Title isSelected={isSelected} title={drawingName} />
             <ContentPlaceholder description={description} />
             <span className="p-fluid d-flex justify-content-around mx-1 my-3">
               <Button

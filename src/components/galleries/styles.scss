@@ -120,16 +120,25 @@
     top: 0;
     left: 30px;
     max-width: 300px;
+
+    h2 {
+      color: #fff;
+      filter: drop-shadow(0 0 2px #000);
+      margin: 8px 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .open .title-container {
     top: 15px;
-  }
+    overflow-wrap: anywhere;
+    max-width: unset;
+    padding-right: 2rem;
 
-  h2 {
-    color: #fff;
-    filter: drop-shadow(0 0 2px #000);
-    margin: 8px 0;
+    h2 {
+      overflow: wrap;
+    }
   }
 
   .overlay {
