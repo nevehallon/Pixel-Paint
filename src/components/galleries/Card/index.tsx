@@ -80,7 +80,6 @@ const Card = memo(
           className={`d-card-content-container ${isSelected && 'open'}`}
           drag={isSelected ? 'y' : false}
           dragConstraints={constraints}
-          layout
           onDragEnd={checkSwipeToDismiss}
           ref={cardRef}
           style={{ y }}

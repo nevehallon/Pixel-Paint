@@ -350,6 +350,7 @@ class DrawingForm extends Form {
               label="Clear"
               onClick={this.handleReset}
             >
+              {/* TODO: whileTap={{ scale: 0.9 }} */}
               <GridOnIcon />
             </Button>
             <Button
