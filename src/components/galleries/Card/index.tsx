@@ -130,17 +130,20 @@ const Card = memo(
           {!isSelected && (
             <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
           )}
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence>
             {!isSelected && (
               <motion.div
-                animate={{ x: 0, opacity: 1 }}
+                animate={{ opacity: 1, scale: 1, transformOrigin: '50% 50% 0' }}
                 className="speedDial-container"
-                exit={{ x: -300, opacity: 0 }}
-                initial={{ x: 300, opacity: 0 }}
-                key="key"
-                layout
-                layoutId="ID_"
-                // transition={{ delay: 2, duration: 1 }}
+                initial={{
+                  opacity: 0,
+                  scale: 0.7,
+                  transformOrigin: '50% 50% 0',
+                }}
+                // key="key"
+                // layout="position"
+                // layoutId="ID_"
+                transition={{ delay: 1, duration: 1 }}
               >
                 <SpeedDialTooltipOpen />
               </motion.div>
