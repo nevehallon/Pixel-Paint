@@ -68,15 +68,15 @@ class Signin extends Form {
     }
 
     return (
-      <div className="container">
+      <div className="container sub-main">
         <PageHeader titleText="Sign in with your PixelPaint account" />
         <div className="row text-center">
           <div className="col-12">
             <p>You can open a new account for free</p>
           </div>
         </div>
-        <div className="row">
-          <div className=" m-auto p-card">
+        <div className="mx-2">
+          <div className="px-4 m-auto p-card form-container">
             <form
               className="p-card-content"
               noValidate

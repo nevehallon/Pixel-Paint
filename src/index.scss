@@ -84,6 +84,16 @@ footer {
   }
 }
 
+.sub-main {
+  display: grid;
+  grid-template-rows: 0.2fr 0.4fr 1fr;
+  margin-bottom: 2rem;
+}
+
+.form-container {
+  max-width: 75vh;
+}
+
 .p-card,
 .d-card {
   min-width: 24vh;

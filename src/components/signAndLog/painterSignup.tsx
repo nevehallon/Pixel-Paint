@@ -76,15 +76,15 @@ class PainterSignup extends Form {
     }
 
     return (
-      <div className="container">
+      <div className="sub-main">
         <PageHeader titleText="Painter Registration Form" />
         <div className="row text-center">
           <div className="col-12">
             <p>Open a new painter account</p>
           </div>
         </div>
-        <div className="row">
-          <div className=" m-auto p-card">
+        <div className="mx-2">
+          <div className="px-4 m-auto p-card form-container">
             <form
               className="p-card-content"
               noValidate
