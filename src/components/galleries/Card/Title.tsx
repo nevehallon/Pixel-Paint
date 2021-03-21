@@ -16,7 +16,7 @@ export const Title = ({ title, isSelected }: TitleProps): any => (
   <motion.div
     animate={isSelected ? openAnimation : closeAnimation}
     className="title-container"
-    layout
+    // layout="position"
     transition={isSelected ? openSpring : closeSpring}
   >
     <h2>{title}</h2>
