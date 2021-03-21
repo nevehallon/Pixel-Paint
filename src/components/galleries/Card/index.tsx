@@ -2,7 +2,13 @@
 import { memo, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import {
+  AnimatePresence,
+  AnimateSharedLayout,
+  motion,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion';
 import { Button } from 'primereact/button';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
@@ -16,6 +22,7 @@ import {
 } from './animations';
 import { ContentPlaceholder } from './ContentPlaceholder';
 import { Image } from './Image';
+import SpeedDialTooltipOpen from './quickActions';
 import { Title } from './Title';
 
 interface Props extends DrawingProps {
@@ -78,7 +85,7 @@ const Card = memo(
         >
           <Link replace to="/my-drawings" />
         </motion.div>
-
+        {/* <MotionConfig transition={{ duration: ? }}> TODO: add to set configuration options for all child motion components */}
         <motion.div
           _dragY={y}
           animate={isSelected ? openAnimation : closeAnimation}
@@ -118,9 +125,29 @@ const Card = memo(
             </span>
           </motion.div>
         </motion.div>
-        {!isSelected && (
-          <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
-        )}
+        {/* <AnimateSharedLayout type="crossfade"> */}
+        <div>
+          {!isSelected && (
+            <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
+          )}
+          <AnimatePresence exitBeforeEnter>
+            {!isSelected && (
+              <motion.div
+                animate={{ x: 0, opacity: 1 }}
+                className="speedDial-container"
+                exit={{ x: -300, opacity: 0 }}
+                initial={{ x: 300, opacity: 0 }}
+                key="key"
+                layout
+                layoutId="ID_"
+                // transition={{ delay: 2, duration: 1 }}
+              >
+                <SpeedDialTooltipOpen />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        {/* </AnimateSharedLayout> */}
       </li>
     );
   },
