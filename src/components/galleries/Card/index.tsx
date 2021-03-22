@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { memo, useRef } from 'react';
+import { memo, useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-import {
-  AnimatePresence,
-  AnimateSharedLayout,
-  motion,
-  useMotionValue,
-  useTransform,
-} from 'framer-motion';
+import { Backdrop } from '@material-ui/core';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Button } from 'primereact/button';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
@@ -36,6 +31,8 @@ const dismissDistance = 150;
 
 const Card = memo(
   ({ isSelected, onDelete, _id, drawingName, description, dataUrl }: Props) => {
+    const [isOpen, setOpen] = useState(false);
+
     const history = useHistory();
     const y = useMotionValue(0);
     const input = [-500, 0, 500];
@@ -103,6 +100,11 @@ const Card = memo(
             layout
             transition={isSelected ? openSpring : closeSpring}
           >
+            <Backdrop
+              open={isOpen}
+              style={{ zIndex: 1, position: 'absolute' }}
+            />
+
             <Image isSelected={isSelected} src={dataUrl} />
             <Title isSelected={isSelected} title={drawingName} />
             <ContentPlaceholder description={description} />
@@ -148,7 +150,10 @@ const Card = memo(
                 damping: 11,
               }}
             >
-              <SpeedDialTooltipOpen />
+              <SpeedDialTooltipOpen
+                emitClose={() => setOpen(false)}
+                emitOpen={() => setOpen(true)}
+              />
             </motion.div>
           )}
         </div>

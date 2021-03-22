@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import Backdrop from '@material-ui/core/Backdrop';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
@@ -29,21 +28,28 @@ const actions = [
   { icon: <FavoriteIcon />, name: 'Like' },
 ];
 
-export default function SpeedDialTooltipOpen(): JSX.Element {
+export default function SpeedDialTooltipOpen({
+  emitOpen,
+  emitClose,
+}: {
+  emitOpen: () => void;
+  emitClose: () => void;
+}): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
+    emitOpen();
     setOpen(true);
   };
 
   const handleClose = () => {
+    emitClose();
     setOpen(false);
   };
 
   return (
     <div>
-      {/* <Backdrop open={open} /> */}
       <SpeedDial
         ariaLabel="SpeedDial tooltip"
         className={classes.speedDial}
