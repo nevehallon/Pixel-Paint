@@ -87,7 +87,6 @@ const Card = memo(
         >
           <Link replace to="/my-drawings" />
         </motion.div>
-        {/* <MotionConfig transition={{ duration: ? }}> TODO: add to set configuration options for all child motion components */}
         <MotionConfig>
           <motion.div
             _dragY={y}
