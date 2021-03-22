@@ -13,11 +13,6 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      //   height: 380,
-      //   transform: 'translateZ(0px)',
-      //   flexGrow: 1,
-    },
     speedDial: {
       position: 'absolute',
       bottom: theme.spacing(1),
@@ -47,8 +42,8 @@ export default function SpeedDialTooltipOpen(): JSX.Element {
   };
 
   return (
-    <div className={classes.root}>
-      <Backdrop open={open} />
+    <div>
+      {/* <Backdrop open={open} /> */}
       <SpeedDial
         ariaLabel="SpeedDial tooltip"
         className={classes.speedDial}
