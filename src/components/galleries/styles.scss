@@ -52,10 +52,6 @@
 
   .d-card:nth-child(odd) {
     padding-left: 0;
-
-    .speedDial-container .MuiSpeedDial-root {
-      // margin-right: 25px;
-    }
   }
 
   .d-card:nth-child(even) {
@@ -208,10 +204,6 @@
 
     .d-card-content-container.open {
       padding: 0;
-    }
-
-    .speedDial-container .MuiSpeedDial-root {
-      // margin: 0 !important;
     }
   }
 }

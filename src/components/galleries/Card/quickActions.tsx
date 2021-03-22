@@ -24,16 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-/* TODO:
-        * Options:
-        ? Share (pi-share-alt),
-        ? info (pi-info / pi-info-circle),
-        ? fork (if others' drawing),
-        ? open in new window (pi-external-link),
-        ? download image (pi-download)
-        ? copy image link (pi-link)
-        ? add to favorites (pi-star (status favorite) / pi-star-o)
-        */
 const actions = [
   { icon: <InfoOutlinedIcon />, name: 'Info' },
   { icon: <GitForkIcon size={24} />, name: 'Fork' },
@@ -76,7 +66,7 @@ export default function SpeedDialTooltipOpen({
         onOpen={handleOpen}
         open={open}
       >
-        {actions.map((action, i) => (
+        {actions.map((action) => (
           <SpeedDialAction
             icon={action.icon}
             key={action.name}
