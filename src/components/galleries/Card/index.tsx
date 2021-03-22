@@ -3,7 +3,12 @@ import { memo, useRef, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Backdrop } from '@material-ui/core';
-import { motion, useMotionValue, useTransform } from 'framer-motion';
+import {
+  motion,
+  MotionConfig,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion';
 import { Button } from 'primereact/button';
 
 import { DrawingProps } from '../../../interfaces/DrawingProps';
@@ -83,50 +88,50 @@ const Card = memo(
           <Link replace to="/my-drawings" />
         </motion.div>
         {/* <MotionConfig transition={{ duration: ? }}> TODO: add to set configuration options for all child motion components */}
-        <motion.div
-          _dragY={y}
-          animate={isSelected ? openAnimation : closeAnimation}
-          className={`d-card-content-container ${isSelected && 'open'}`}
-          drag={isSelected ? 'y' : false}
-          dragConstraints={constraints}
-          onDragEnd={checkSwipeToDismiss}
-          ref={cardRef}
-          style={{ y }}
-          transition={isSelected ? openSpring : closeSpring}
-        >
+        <MotionConfig>
           <motion.div
+            _dragY={y}
             animate={isSelected ? openAnimation : closeAnimation}
-            className="d-card-content"
-            layout
-            transition={isSelected ? openSpring : closeSpring}
+            className={`d-card-content-container ${isSelected && 'open'}`}
+            drag={isSelected ? 'y' : false}
+            dragConstraints={constraints}
+            onDragEnd={checkSwipeToDismiss}
+            ref={cardRef}
+            style={{ y }}
           >
-            <Backdrop
-              open={isOpen}
-              style={{ zIndex: 1, position: 'absolute' }}
-            />
+            <motion.div
+              animate={isSelected ? openAnimation : closeAnimation}
+              className="d-card-content"
+              layout
+            >
+              <Backdrop
+                open={isOpen}
+                style={{ zIndex: 1, position: 'absolute' }}
+              />
 
-            <Image isSelected={isSelected} src={dataUrl} />
-            <Title isSelected={isSelected} title={drawingName} />
-            <ContentPlaceholder description={description} />
-            <span className="p-fluid d-flex justify-content-around mx-1 my-3">
-              <Button
-                className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
-                icon="pi pi-pencil"
-                label="Edit"
-                onClick={() => history.replace(`/edit/${_id}`)}
-              />
-              <Button
-                className="mx-1 p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
-                icon="pi pi-trash"
-                label="Delete"
-                onClick={() => {
-                  onDelete();
-                  history.replace('/my-drawings');
-                }}
-              />
-            </span>
+              <Image isSelected={isSelected} src={dataUrl} />
+              <Title isSelected={isSelected} title={drawingName} />
+              <ContentPlaceholder description={description} />
+              <span className="p-fluid d-flex justify-content-around mx-1 my-3">
+                <Button
+                  className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
+                  icon="pi pi-pencil"
+                  label="Edit"
+                  onClick={() => history.replace(`/edit/${_id}`)}
+                />
+                <Button
+                  className="mx-1 p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
+                  icon="pi pi-trash"
+                  label="Delete"
+                  onClick={() => {
+                    onDelete();
+                    history.replace('/my-drawings');
+                  }}
+                />
+              </span>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </MotionConfig>
         <div>
           {!isSelected && (
             <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
