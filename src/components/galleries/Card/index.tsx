@@ -125,32 +125,33 @@ const Card = memo(
             </span>
           </motion.div>
         </motion.div>
-        {/* <AnimateSharedLayout type="crossfade"> */}
         <div>
           {!isSelected && (
             <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
           )}
-          <AnimatePresence>
-            {!isSelected && (
-              <motion.div
-                animate={{ opacity: 1, scale: 1, transformOrigin: '50% 50% 0' }}
-                className="speedDial-container"
-                initial={{
-                  opacity: 0,
-                  scale: 0.7,
-                  transformOrigin: '50% 50% 0',
-                }}
-                // key="key"
-                // layout="position"
-                // layoutId="ID_"
-                transition={{ delay: 1, duration: 1 }}
-              >
-                <SpeedDialTooltipOpen />
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {!isSelected && (
+            <motion.div
+              animate={{
+                opacity: 1,
+                scale: 0.75,
+              }}
+              className="speedDial-container"
+              initial={{
+                opacity: 0,
+                scale: 0.2,
+                transformOrigin: '95%',
+              }}
+              transition={{
+                delay: 0.7,
+                type: 'spring',
+                stiffness: 150,
+                damping: 11,
+              }}
+            >
+              <SpeedDialTooltipOpen />
+            </motion.div>
+          )}
         </div>
-        {/* </AnimateSharedLayout> */}
       </li>
     );
   },

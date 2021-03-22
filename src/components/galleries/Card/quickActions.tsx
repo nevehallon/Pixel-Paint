@@ -1,7 +1,6 @@
-import React from 'react';
+import { useState } from 'react';
 
 import Backdrop from '@material-ui/core/Backdrop';
-import Button from '@material-ui/core/Button';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
@@ -21,8 +20,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     speedDial: {
       position: 'absolute',
-      bottom: theme.spacing(4),
-      right: theme.spacing(1),
+      bottom: theme.spacing(1),
+      right: theme.spacing(2),
     },
   })
 );
@@ -37,12 +36,7 @@ const actions = [
 
 export default function SpeedDialTooltipOpen(): JSX.Element {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  const [hidden, setHidden] = React.useState(false);
-
-  const handleVisibility = () => {
-    setHidden((prevHidden) => !prevHidden);
-  };
+  const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -54,13 +48,11 @@ export default function SpeedDialTooltipOpen(): JSX.Element {
 
   return (
     <div className={classes.root}>
-      {/* <Button onClick={handleVisibility}>Toggle Speed Dial</Button> */}
       <Backdrop open={open} />
       <SpeedDial
         ariaLabel="SpeedDial tooltip"
         className={classes.speedDial}
         direction="up"
-        hidden={hidden}
         icon={<SpeedDialIcon />}
         onClose={handleClose}
         onOpen={handleOpen}
