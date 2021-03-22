@@ -1,11 +1,6 @@
 import { motion } from 'framer-motion';
 
-import {
-  closeAnimation,
-  closeSpring,
-  openAnimation,
-  openSpring,
-} from './animations';
+import { closeAnimation, openAnimation } from './animations';
 
 export interface TitleProps {
   title: any;

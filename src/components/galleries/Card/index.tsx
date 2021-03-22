@@ -87,7 +87,7 @@ const Card = memo(
         >
           <Link replace to="/my-drawings" />
         </motion.div>
-        <MotionConfig>
+        <MotionConfig transition={isSelected ? openSpring : closeSpring}>
           <motion.div
             _dragY={y}
             animate={isSelected ? openAnimation : closeAnimation}
