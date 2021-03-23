@@ -11,6 +11,8 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import { GitForkIcon, LinkIcon } from '@primer/octicons-react';
 
+import { addFavorite } from '../../../services/userService';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     speedDial: {
@@ -30,8 +32,16 @@ const actions = [
   { icon: <ShareOutlined />, name: 'Share' },
   {
     icon: <BookmarkBorderIcon />,
-    name: 'Favorite',
-    handleAction: (drawingNumber: string | number) => drawingNumber,
+    name: 'Save to Favorites',
+    handleAction: async (drawingNumber: string | number) => {
+      try {
+        const response = await addFavorite(drawingNumber);
+        console.log(response);
+        // TODO: update favorites' state
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
   // { icon: <BookmarkIcon />, name: 'Favorite' },
   { icon: <GetAppRoundedIcon />, name: 'Download Image' },

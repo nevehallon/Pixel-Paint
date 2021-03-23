@@ -36,6 +36,36 @@ export async function logout(): Promise<void> {
   localStorage.removeItem(tokenKey);
 }
 
+export function getCurrentUserDetails(): { [x: string]: any } | null {
+  try {
+    return httpService.get(`${apiUrl}/users/me`);
+  } catch (error) {
+    return null;
+  }
+}
+export function addFavorite(
+  drawingNum: number | string
+): { [x: string]: any } | null {
+  try {
+    return httpService.patch(`${apiUrl}/users/add-favorite`, {
+      drawings: [drawingNum],
+    });
+  } catch (error) {
+    return null;
+  }
+}
+export function removeFavorite(
+  drawingNum: number | string
+): { [x: string]: any } | null {
+  try {
+    return httpService.patch(`${apiUrl}/users/delete-favorite`, {
+      drawings: [drawingNum],
+    });
+  } catch (error) {
+    return null;
+  }
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,
