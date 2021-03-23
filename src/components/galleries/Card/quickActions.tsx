@@ -28,7 +28,11 @@ const actions = [
   { icon: <InfoOutlinedIcon />, name: 'Info' },
   { icon: <GitForkIcon size={24} />, name: 'Fork' },
   { icon: <ShareOutlined />, name: 'Share' },
-  { icon: <BookmarkBorderIcon />, name: 'Favorite' },
+  {
+    icon: <BookmarkBorderIcon />,
+    name: 'Favorite',
+    handleAction: (drawingNumber: string | number) => drawingNumber,
+  },
   // { icon: <BookmarkIcon />, name: 'Favorite' },
   { icon: <GetAppRoundedIcon />, name: 'Download Image' },
   { icon: <LinkIcon size={24} />, name: 'Copy Image Link' },
@@ -39,10 +43,12 @@ export default function SpeedDialTooltipOpen({
   emitOpen,
   emitClose,
   id,
+  drawingNumber,
 }: {
   emitOpen: () => void;
   emitClose: () => void;
   id: string;
+  drawingNumber: string | number;
 }): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -72,7 +78,10 @@ export default function SpeedDialTooltipOpen({
           <SpeedDialAction
             icon={action.icon}
             key={action.name}
-            onClick={handleClose}
+            onClick={() => {
+              action.handleAction?.(drawingNumber);
+              handleClose();
+            }}
             tooltipOpen
             tooltipPlacement="left"
             tooltipTitle={action.name}

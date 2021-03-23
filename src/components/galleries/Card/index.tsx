@@ -35,7 +35,15 @@ interface Props extends DrawingProps {
 const dismissDistance = 150;
 
 const Card = memo(
-  ({ isSelected, onDelete, _id, drawingName, description, dataUrl }: Props) => {
+  ({
+    isSelected,
+    onDelete,
+    _id,
+    drawingName,
+    description,
+    dataUrl,
+    drawingNumber,
+  }: Props) => {
     const [isOpen, setOpen] = useState(false);
 
     const history = useHistory();
@@ -142,6 +150,7 @@ const Card = memo(
               }}
             >
               <SpeedDialTooltipOpen
+                drawingNumber={drawingNumber}
                 emitClose={() => setOpen(false)}
                 emitOpen={() => setOpen(true)}
                 id={_id}
