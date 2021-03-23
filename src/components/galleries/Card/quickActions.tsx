@@ -29,7 +29,7 @@ const actions = [
   { icon: <GitForkIcon size={24} />, name: 'Fork' },
   { icon: <ShareOutlined />, name: 'Share' },
   { icon: <BookmarkBorderIcon />, name: 'Favorite' },
-  // { icon: <Bookmark />, name: 'Favorite' },
+  // { icon: <BookmarkIcon />, name: 'Favorite' },
   { icon: <GetAppRoundedIcon />, name: 'Download Image' },
   { icon: <LinkIcon size={24} />, name: 'Copy Image Link' },
   { icon: <OpenInNew />, name: 'Open in New Window' },
@@ -38,9 +38,11 @@ const actions = [
 export default function SpeedDialTooltipOpen({
   emitOpen,
   emitClose,
+  id,
 }: {
   emitOpen: () => void;
   emitClose: () => void;
+  id: string;
 }): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);

@@ -144,6 +144,7 @@ const Card = memo(
               <SpeedDialTooltipOpen
                 emitClose={() => setOpen(false)}
                 emitOpen={() => setOpen(true)}
+                id={_id}
               />
             </motion.div>
           )}

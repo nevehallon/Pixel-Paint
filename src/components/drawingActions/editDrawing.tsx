@@ -37,6 +37,7 @@ class EditDrawing extends DrawingForm {
       );
       const { drawingName, description, grid, _id } = this.mapToState(data);
 
+      // ? mapping out _id field from grid
       const savedGrid = grid.map(({ fill, touched }) => ({ fill, touched }));
 
       this.setState({
