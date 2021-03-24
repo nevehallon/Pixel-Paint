@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, createContext } from 'react';
 import { Link } from 'react-router-dom';
 
 // import DrawingCard from '../../common/drawingCard';
 import PageHeader from '../../common/pageHeader';
 import { deleteDrawing, getMyDrawings } from '../../services/drawingsService';
+import FavoritesContext from '../../services/favoritesContext';
 import {
   addFavorite,
   getCurrentUserDetails,
@@ -72,8 +73,6 @@ class MyDrawings extends Component {
     drawingNumber: string | number,
     isAdd = false
   ): Promise<void> => {
-    const { favorites } = this.state;
-
     try {
       const { data } = isAdd
         ? await addFavorite(drawingNumber)
@@ -100,16 +99,17 @@ class MyDrawings extends Component {
           <div className="row drawingListContainer">
             {drawings.length ? (
               // path={['/:id', '/']}
-              <List
-                drawings={drawings}
-                emitDelete={(id: string, i: number) =>
-                  this.handleDeleteDrawing(id, i)
-                }
-                emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
-                  this.handleFavorite(dNum, isAdd)
-                }
-                favorites={favorites}
-              />
+              <FavoritesContext.Provider value={favorites}>
+                <List
+                  drawings={drawings}
+                  emitDelete={(id: string, i: number) =>
+                    this.handleDeleteDrawing(id, i)
+                  }
+                  emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
+                    this.handleFavorite(dNum, isAdd)
+                  }
+                />
+              </FavoritesContext.Provider>
             ) : (
               <div className={`mx-auto ${loading ? 'text-info' : ''}`}>
                 {loading ? 'LOADING' : 'No drawings yet'}...

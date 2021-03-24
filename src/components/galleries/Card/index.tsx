@@ -44,7 +44,6 @@ const Card = memo(
     description,
     dataUrl,
     drawingNumber,
-    favorites,
   }: Props) => {
     const [isOpen, setOpen] = useState(false);
 
@@ -136,7 +135,7 @@ const Card = memo(
             <motion.div
               animate={{
                 opacity: 1,
-                scale: 0.75,
+                scale: isOpen ? 0.85 : 0.75,
               }}
               className="speedDial-container"
               initial={{
@@ -156,7 +155,6 @@ const Card = memo(
                 emitClose={() => setOpen(false)}
                 emitFavoriteAction={onFavoriteAction}
                 emitOpen={() => setOpen(true)}
-                favorites={favorites}
                 id={_id}
               />
             </motion.div>

@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { OpenInNew, ShareOutlined } from '@material-ui/icons';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
-import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import GetAppRoundedIcon from '@material-ui/icons/GetAppRounded';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import { GitForkIcon, LinkIcon } from '@primer/octicons-react';
+import {
+  BookmarkIcon,
+  BookmarkSlashFillIcon,
+  GitForkIcon,
+  LinkIcon,
+} from '@primer/octicons-react';
+
+import FavoritesContext from '../../../services/favoritesContext';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,17 +35,16 @@ export default function SpeedDialTooltipOpen({
   emitFavoriteAction,
   id,
   drawingNumber,
-  favorites,
 }: {
   emitOpen: () => void;
   emitClose: () => void;
   emitFavoriteAction: (isAdd: boolean) => void;
   id: string;
   drawingNumber: string | number;
-  favorites: any[];
 }): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const favorites = useContext(FavoritesContext);
 
   const handleOpen = () => {
     emitOpen();
@@ -58,9 +62,9 @@ export default function SpeedDialTooltipOpen({
     { icon: <ShareOutlined />, name: 'Share' },
     {
       icon: !favorites.includes(drawingNumber) ? (
-        <BookmarkBorderIcon />
+        <BookmarkIcon size={24} />
       ) : (
-        <BookmarkIcon />
+        <BookmarkSlashFillIcon size={24} />
       ),
       name: !favorites.includes(drawingNumber)
         ? 'Save to Favorites'
