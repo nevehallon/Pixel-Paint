@@ -77,8 +77,8 @@ class DrawingForm extends Form {
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
-    drawingName: Joi.string().min(2).max(255).required().label('drawingName'),
-    description: Joi.string().min(2).max(1024).required().label('description'),
+    drawingName: Joi.string().min(2).max(255).required().label('Drawing Name'),
+    description: Joi.string().min(2).max(1024).required().label('Description'),
     grid: Joi.array().min(1).max(1225).required().label('canvas'),
     dataUrl: Joi.string().required().label('src'),
   };

@@ -6,6 +6,7 @@ import Joi from 'joi';
 import { Button } from 'primereact/button';
 
 import { Input } from '.';
+import { GenericObjectProps } from '../interfaces/genericObjectProps';
 
 class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
   schema!: { [key: string]: Joi.StringSchema | Joi.ArraySchema };
@@ -95,7 +96,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     name: string,
     label: string,
     type = 'text',
-    { ...rest }: { [x: string]: any } = { val: undefined }
+    { ...rest }: GenericObjectProps = { val: undefined }
   ): React.ReactNode => {
     const { formData, errors } = this.state;
     return (

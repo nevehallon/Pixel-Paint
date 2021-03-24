@@ -20,14 +20,16 @@ const Input = ({ name, label, error, ...rest }: InputProps): any => {
     </>
   );
 
+  const { feedback } = rest;
+
   return (
     <div className=" my-4 p-fluid">
       {rest.type === 'password' ? (
         <span className="p-float-label p-field">
           <Password
-            feedback={rest.feedback}
-            footer={rest.feedback && footer}
-            header={rest.feedback && header}
+            feedback={feedback}
+            footer={feedback && footer}
+            header={feedback && header}
             id={name}
             name={name}
             onInput={(e) => setValue((e.target as HTMLInputElement).value)}

@@ -4,7 +4,9 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 import { DrawingForm, DrawingState, PageHeader } from '../../common';
+import { GenericObjectProps } from '../../interfaces/genericObjectProps';
 import { createDrawing, initialGrid } from '../../services/drawingsService';
+import InputFeedback from './inputTextFeedback';
 
 class CreateDrawing extends DrawingForm {
   state: DrawingState = {
@@ -66,8 +68,20 @@ class CreateDrawing extends DrawingForm {
               >
                 <div className="p-card-content m-3">
                   {this.renderSizePicker()}
-                  {this.renderInput('drawingName', 'Name')}
-                  {this.renderInput('description', 'description')}
+                  {/* {this.renderInput('drawingName', 'Name', undefined, {
+                    maxlength: 30,
+                  })} */}
+                  <InputFeedback
+                    renderInput={(rest: GenericObjectProps) =>
+                      this.renderInput('drawingName', 'Name', undefined, {
+                        maxlength: 30,
+                        ...rest,
+                      })
+                    }
+                  />
+                  {this.renderInput('description', 'Description', undefined, {
+                    maxlength: 225,
+                  })}
                   {this.renderButton('Create Drawing')}
                 </div>
               </form>

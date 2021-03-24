@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { OpenInNew, ShareOutlined } from '@material-ui/icons';
@@ -69,8 +70,13 @@ export default function SpeedDialTooltipOpen({
       name: !favorites.includes(drawingNumber)
         ? 'Save to Favorites'
         : 'Remove from Favorites',
-      handleAction: async () =>
-        emitFavoriteAction(!favorites.includes(drawingNumber)),
+      handleAction: () => {
+        emitFavoriteAction(!favorites.includes(drawingNumber));
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        !favorites.includes(drawingNumber)
+          ? toast.success('Saved to Favorites', { position: 'top-center' })
+          : toast.dark('Removed from Favorites', { position: 'top-center' });
+      },
     },
     { icon: <GetAppRoundedIcon />, name: 'Download Image' },
     { icon: <LinkIcon size={24} />, name: 'Copy Image Link' },

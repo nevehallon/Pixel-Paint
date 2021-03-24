@@ -81,9 +81,8 @@ class MyDrawings extends Component {
       this.setState({
         favorites: data.favorites,
       });
-      console.log(data.favorites);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 
