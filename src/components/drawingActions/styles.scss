@@ -1,0 +1,14 @@
+.input-container {
+    position: relative;
+
+    .motion-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: space-between;
+
+        &,
+        input {
+            font-weight: 800;
+        }
+    }
+}

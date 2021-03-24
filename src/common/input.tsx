@@ -23,7 +23,7 @@ const Input = ({ name, label, error, ...rest }: InputProps): any => {
   const { feedback } = rest;
 
   return (
-    <div className=" my-4 p-fluid">
+    <div className="my-4 p-fluid">
       {rest.type === 'password' ? (
         <span className="p-float-label p-field">
           <Password
@@ -48,7 +48,9 @@ const Input = ({ name, label, error, ...rest }: InputProps): any => {
             /* prettier-ignore */
             {...rest}
           />
-          <label htmlFor={name}>{label}</label>
+          <label htmlFor={name} style={{ width: '90%' }}>
+            {label}
+          </label>
         </span>
       )}
       {error && <span className="text-danger">{error}</span>}

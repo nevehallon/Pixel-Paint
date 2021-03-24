@@ -68,20 +68,26 @@ class CreateDrawing extends DrawingForm {
               >
                 <div className="p-card-content m-3">
                   {this.renderSizePicker()}
-                  {/* {this.renderInput('drawingName', 'Name', undefined, {
-                    maxlength: 30,
-                  })} */}
                   <InputFeedback
+                    label="Name"
+                    maxLength={26}
                     renderInput={(rest: GenericObjectProps) =>
-                      this.renderInput('drawingName', 'Name', undefined, {
-                        maxlength: 30,
+                      this.renderInput('drawingName', '', undefined, {
+                        maxlength: 26,
                         ...rest,
                       })
                     }
                   />
-                  {this.renderInput('description', 'Description', undefined, {
-                    maxlength: 225,
-                  })}
+                  <InputFeedback
+                    label="Description"
+                    maxLength={225}
+                    renderInput={(rest: GenericObjectProps) =>
+                      this.renderInput('description', '', undefined, {
+                        maxlength: 225,
+                        ...rest,
+                      })
+                    }
+                  />
                   {this.renderButton('Create Drawing')}
                 </div>
               </form>
