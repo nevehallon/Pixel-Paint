@@ -38,11 +38,13 @@ const Card = memo(
   ({
     isSelected,
     onDelete,
+    onFavoriteAction,
     _id,
     drawingName,
     description,
     dataUrl,
     drawingNumber,
+    favorites,
   }: Props) => {
     const [isOpen, setOpen] = useState(false);
 
@@ -52,7 +54,7 @@ const Card = memo(
     const output = [0, isSelected ? 1 : 0, 0];
     const opacity = useTransform(y, input, output);
 
-    // We'll use the opened card element to calculate the scroll constraints
+    // use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
 
@@ -152,7 +154,9 @@ const Card = memo(
               <SpeedDialTooltipOpen
                 drawingNumber={drawingNumber}
                 emitClose={() => setOpen(false)}
+                emitFavoriteAction={onFavoriteAction}
                 emitOpen={() => setOpen(true)}
+                favorites={favorites}
                 id={_id}
               />
             </motion.div>

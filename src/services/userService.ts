@@ -1,9 +1,11 @@
 import { toast } from 'react-toastify';
 
+import { AxiosResponse } from 'axios';
 import jwtDecode from 'jwt-decode';
 
 import { apiUrl } from '../config.json';
 import { LoginArgs } from '../interfaces/loginArgs';
+import { UserDetails } from '../interfaces/UserDetails';
 import httpService from './httpService';
 
 const tokenKey = 'localData';
@@ -36,34 +38,22 @@ export async function logout(): Promise<void> {
   localStorage.removeItem(tokenKey);
 }
 
-export function getCurrentUserDetails(): { [x: string]: any } | null {
-  try {
-    return httpService.get(`${apiUrl}/users/me`);
-  } catch (error) {
-    return null;
-  }
+export function getCurrentUserDetails(): Promise<AxiosResponse<UserDetails>> {
+  return httpService.get(`${apiUrl}/users/me`);
 }
 export function addFavorite(
   drawingNum: number | string
-): { [x: string]: any } | null {
-  try {
-    return httpService.patch(`${apiUrl}/users/add-favorite`, {
-      drawings: [drawingNum],
-    });
-  } catch (error) {
-    return null;
-  }
+): Promise<AxiosResponse<UserDetails>> {
+  return httpService.patch(`${apiUrl}/users/add-favorite`, {
+    favorites: [drawingNum],
+  });
 }
 export function removeFavorite(
   drawingNum: number | string
-): { [x: string]: any } | null {
-  try {
-    return httpService.patch(`${apiUrl}/users/delete-favorite`, {
-      drawings: [drawingNum],
-    });
-  } catch (error) {
-    return null;
-  }
+): Promise<AxiosResponse<UserDetails>> {
+  return httpService.patch(`${apiUrl}/users/delete-favorite`, {
+    favorites: [drawingNum],
+  });
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

@@ -4,18 +4,26 @@ import { Link } from 'react-router-dom';
 // import DrawingCard from '../../common/drawingCard';
 import PageHeader from '../../common/pageHeader';
 import { deleteDrawing, getMyDrawings } from '../../services/drawingsService';
+import {
+  addFavorite,
+  getCurrentUserDetails,
+  removeFavorite,
+} from '../../services/userService';
 import { List } from './CardList';
 
 import './styles.scss';
 
-interface MyDrawingsProps {
+interface MyDrawingsState {
   drawings: any[];
-  [x: string]: any;
+  favorites: any[];
+  loading: boolean;
+  // [x: string]: any;
 }
 
 class MyDrawings extends Component {
-  state: MyDrawingsProps = {
+  state: MyDrawingsState = {
     drawings: [],
+    favorites: [],
     loading: true,
   };
 
@@ -33,9 +41,13 @@ class MyDrawings extends Component {
     try {
       const { data } = await getMyDrawings();
 
+      const {
+        data: { favorites },
+      } = await getCurrentUserDetails();
+
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       data.length
-        ? this.setState({ loading: false, drawings: data })
+        ? this.setState({ loading: false, drawings: data, favorites })
         : this.setState({ loading: false, drawings: [] });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -56,8 +68,28 @@ class MyDrawings extends Component {
     }
   };
 
+  handleFavorite = async (
+    drawingNumber: string | number,
+    isAdd = false
+  ): Promise<void> => {
+    const { favorites } = this.state;
+
+    try {
+      const { data } = isAdd
+        ? await addFavorite(drawingNumber)
+        : await removeFavorite(drawingNumber);
+
+      this.setState({
+        favorites: data.favorites,
+      });
+      console.log(data.favorites);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render(): React.ReactNode {
-    const { drawings, loading } = this.state;
+    const { drawings, loading, favorites } = this.state;
 
     return (
       <div className="container">
@@ -70,9 +102,13 @@ class MyDrawings extends Component {
               // path={['/:id', '/']}
               <List
                 drawings={drawings}
-                emitDelete={(drawing: string, i: number) =>
-                  this.handleDeleteDrawing(drawing, i)
+                emitDelete={(id: string, i: number) =>
+                  this.handleDeleteDrawing(id, i)
                 }
+                emitFavoriteAction={(dNum: string | number, isAdd: boolean) =>
+                  this.handleFavorite(dNum, isAdd)
+                }
+                favorites={favorites}
               />
             ) : (
               <div className={`mx-auto ${loading ? 'text-info' : ''}`}>
