@@ -1,8 +1,10 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 
 import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
+import { InputTextarea } from 'primereact/inputtextarea';
 import { Password } from 'primereact/password';
 
 import { InputProps } from '../interfaces/InputProps';
@@ -38,6 +40,20 @@ const Input = ({ name, label, error, ...rest }: InputProps): any => {
             {...rest}
           />
           <label htmlFor={name}>{label}</label>
+        </span>
+      ) : rest.type === 'textarea' ? (
+        <span className="p-float-label p-field">
+          <InputTextarea
+            autoResize
+            id={name}
+            name={name}
+            rows={1}
+            /* prettier-ignore */
+            {...rest}
+          />
+          <label htmlFor={name} style={{ width: '90%' }}>
+            {label}
+          </label>
         </span>
       ) : (
         <span className="p-float-label p-field">

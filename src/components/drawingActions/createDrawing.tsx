@@ -81,7 +81,7 @@ class CreateDrawing extends DrawingForm {
                     label="Description"
                     maxLength={225}
                     renderInput={(rest: GenericObjectProps) =>
-                      this.renderInput('description', '', undefined, {
+                      this.renderInput('description', '', 'textarea', {
                         ...rest,
                       })
                     }
