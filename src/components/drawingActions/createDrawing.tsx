@@ -73,7 +73,6 @@ class CreateDrawing extends DrawingForm {
                     maxLength={26}
                     renderInput={(rest: GenericObjectProps) =>
                       this.renderInput('drawingName', '', undefined, {
-                        maxlength: 26,
                         ...rest,
                       })
                     }
@@ -83,7 +82,6 @@ class CreateDrawing extends DrawingForm {
                     maxLength={225}
                     renderInput={(rest: GenericObjectProps) =>
                       this.renderInput('description', '', undefined, {
-                        maxlength: 225,
                         ...rest,
                       })
                     }

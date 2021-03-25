@@ -26,8 +26,6 @@ const InputFeedback = ({
       transition: {
         type: 'spring',
         velocity: mapRemainingToSpringVelocity(charactersRemaining),
-        // stiffness: 700,
-        // damping: 80,
       },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,6 +57,7 @@ const InputFeedback = ({
         onInput: (e: any) => setValue(e.target.value),
         value,
         label: feedbackElement,
+        maxLength,
       })}
     </div>
   );
