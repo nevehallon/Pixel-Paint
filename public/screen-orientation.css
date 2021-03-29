@@ -1,0 +1,23 @@
+@media only screen and (orientation: landscape) {
+  body {
+    display: grid;
+    height: 100vh;
+  }
+  #turn {
+    justify-self: center;
+    align-self: center;
+    display: block;
+    filter: invert(1);
+  }
+  #root {
+    display: none;
+  }
+}
+@media only screen and (orientation: portrait) {
+  #turn {
+    display: none;
+  }
+  #root {
+    display: block;
+  }
+}
