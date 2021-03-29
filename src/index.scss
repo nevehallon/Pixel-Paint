@@ -36,7 +36,6 @@ footer {
 }
 
 .row {
-  max-width: 100vmin;
   padding: 0;
   margin: 0 auto;
 }
@@ -143,11 +142,6 @@ footer {
   }
 }
 
-.form-control {
-  background: unset;
-  padding: unset;
-} // TODO: remove
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -163,4 +157,29 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px rgb(23, 33, 47) inset;
   box-shadow: 0 0 0px 1000px rgb(23, 33, 47) inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+@media screen and (max-aspect-ratio: 13/9) {
+  /*Portrait Mode*/
+  row,
+  .contain,
+  .form-container {
+    width: 100vh;
+    height: 100vh;
+    max-width: 75vh;
+    max-height: 75vh;
+  }
+}
+
+@media screen and (min-aspect-ratio: 13/9) {
+  /* landscape styles here */
+  row,
+  .paintGrid,
+  .contain,
+  .form-container {
+    width: 42vmax;
+    height: 42vmax;
+    max-width: 42vmax;
+    max-height: 42vmax;
+  }
 }
