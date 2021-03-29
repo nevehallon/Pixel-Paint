@@ -45,13 +45,30 @@
     rel="stylesheet"
     href="screen-orientation.css"
   >
+  <style>
+    /* style the elements with CSS */
+    #pleaserotate-graphic {
+      fill: #fff;
+    }
+
+    #pleaserotate-backdrop {
+      color: #fff;
+      background-color: #000;
+    }
+  </style>
+
+  <script>
+    PleaseRotateOptions = {
+      forcePortrait: true,
+      allowClickBypass: false,
+      subMessage: "",
+    };
+  </script>
+  <script src="pleaserotate.js"></script>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="turn">
-    Please rotate your device!
-  </div>
   <div id="root"></div>
   <!--
       This HTML file is a template.
