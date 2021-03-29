@@ -19,6 +19,7 @@ import 'primereact/resources/themes/vela-orange/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './index.scss';
+import './screen-orientation.scss';
 
 PrimeReact.ripple = true;
 
