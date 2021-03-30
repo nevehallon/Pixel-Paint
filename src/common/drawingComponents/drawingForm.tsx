@@ -298,7 +298,7 @@ class DrawingForm extends Form {
     return (
       <ScrollPanel
         className="sp contain mx-auto p-card"
-        style={{ width: '100%', height: '58px' }}
+        style={{ height: '58px' }}
       >
         <div className="tools p-2">
           <div className="leftContents d-flex align-items-center justify-content-start">

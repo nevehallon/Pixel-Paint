@@ -62,8 +62,6 @@ footer {
 .paintGrid {
   width: 100vmin;
   height: 100vmin;
-  max-height: 75vh;
-  max-width: 75vh;
   min-height: 42vh;
   min-width: 42vh;
   margin: 0 auto;
@@ -96,11 +94,6 @@ footer {
 .p-card,
 .d-card {
   min-width: 24vh;
-}
-
-.contain {
-  max-width: 75vh;
-  min-width: 38vh;
 }
 
 .sp.p-scrollpanel {
@@ -159,27 +152,47 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-@media screen and (max-aspect-ratio: 13/9) {
-  /*Portrait Mode*/
-  row,
-  .contain,
-  .form-container {
-    width: 100vh;
-    height: 100vh;
-    max-width: 75vh;
-    max-height: 75vh;
-  }
+.contain,
+row,
+.paintGrid {
+  max-height: 550px;
+  max-width: 550px;
+  width: 95vw;
+  height: 95vw;
+  margin: 0 auto;
 }
 
-@media screen and (min-aspect-ratio: 13/9) {
-  /* landscape styles here */
-  row,
-  .paintGrid,
-  .contain,
-  .form-container {
-    width: 42vmax;
-    height: 42vmax;
-    max-width: 42vmax;
-    max-height: 42vmax;
-  }
-}
+// @media screen and (max-aspect-ratio: 13/9) {
+//   /*Portrait Mode*/
+//   .contain,
+//   row,
+//   .paintGrid {
+//     max-height: 550px;
+//     max-width: 550px;
+//     width: 95vw;
+//     height: 95vw;
+//     margin: 0 auto;
+//   }
+// }
+// @media screen and (screen-orientation: portrait) {
+//   .contain,
+//   row,
+//   .paintGrid {
+//     max-height: 75vh;
+//     max-width: 75vh;
+//     width: 95vw;
+//     height: 95vw;
+//     min-width: 38vh;
+//   }
+// }
+// @media screen and (min-aspect-ratio: 13/9) {
+//   /* landscape styles here */
+//   row,
+//   .paintGrid,
+//   .contain,
+//   .form-container {
+//     max-width: 42vmax;
+//     max-height: 42vmax;
+//     min-width: 38vh;
+//   }
+// }
