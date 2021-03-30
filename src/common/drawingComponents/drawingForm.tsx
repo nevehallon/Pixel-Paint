@@ -133,7 +133,6 @@ class DrawingForm extends Form {
   };
 
   handleNumberChange = (e: inputNumberEvent): void => {
-    console.log('called');
     const newNumber = +e.value;
     if (newNumber < 15 || newNumber > 35) return;
     const newGrid = Array(newNumber ** 2)
