@@ -9,7 +9,9 @@ import Joi from 'joi';
 
 import { DrawingForm, PageHeader } from '../../common';
 import { Drawing } from '../../interfaces/Drawing';
+import { GenericObjectProps } from '../../interfaces/genericObjectProps';
 import { editDrawing, getDrawing } from '../../services/drawingsService';
+import InputFeedback from './inputTextFeedback';
 
 class EditDrawing extends DrawingForm {
   state = {
@@ -106,8 +108,24 @@ class EditDrawing extends DrawingForm {
               >
                 <div className="p-card-content m-3">
                   {this.renderSizePicker()}
-                  {this.renderInput('drawingName', 'Name')}
-                  {this.renderInput('description', 'description')}
+                  <InputFeedback
+                    label="Name"
+                    maxLength={26}
+                    renderInput={(rest: GenericObjectProps) =>
+                      this.renderInput('drawingName', '', undefined, {
+                        ...rest,
+                      })
+                    }
+                  />
+                  <InputFeedback
+                    label="Description"
+                    maxLength={225}
+                    renderInput={(rest: GenericObjectProps) =>
+                      this.renderInput('description', '', 'textarea', {
+                        ...rest,
+                      })
+                    }
+                  />
 
                   <div className="text-center mx-5 my-3">
                     <Link

@@ -54,7 +54,12 @@ const InputFeedback = ({
   return (
     <div className="input-container">
       {renderInput({
-        onInput: (e: any) => setValue(e.target.value),
+        onInput: (e: any) =>
+          setValue(
+            e.target.value.length > maxLength
+              ? value.substring(0, maxLength)
+              : e.target.value
+          ),
         value,
         label: feedbackElement,
         maxLength,
