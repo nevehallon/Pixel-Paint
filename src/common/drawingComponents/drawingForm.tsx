@@ -13,8 +13,6 @@ import { Badge } from 'primereact/badge';
 import { Subject } from 'rxjs/internal/Subject';
 import { debounceTime, take } from 'rxjs/operators';
 
-import { toast } from 'react-toastify';
-
 import { initialGrid } from '../../services/drawingsService';
 import GlobalListener from '../../services/globalListener';
 import PaintCanvas from './paintCanvas';
@@ -135,6 +133,7 @@ class DrawingForm extends Form {
   };
 
   handleNumberChange = (e: inputNumberEvent): void => {
+    console.log('called');
     const newNumber = +e.value;
     if (newNumber < 15 || newNumber > 35) return;
     const newGrid = Array(newNumber ** 2)
@@ -156,7 +155,6 @@ class DrawingForm extends Form {
 
   handleUndo = (): void => {
     const { canvasStateTimeline, currentStateIndex, grid } = this.state;
-    // console.log({ canvasStateTimeline, currentStateIndex });
     if (currentStateIndex < 1) return;
     const size = Math.sqrt(grid.length);
     const newIdex = currentStateIndex - 1;
@@ -251,10 +249,10 @@ class DrawingForm extends Form {
               incrementButtonClassName=" p-button-outlined p-button-info"
               incrementButtonIcon="pi pi-plus"
               name="gridSize"
-              {...inputProps}
-              onValueChange={(e) => this.handleNumberChange(e)}
+              onChange={(e) => this.handleNumberChange(e)}
               showButtons
               suffix={`x${root}`}
+              {...inputProps}
             />
           </div>
         </div>
@@ -280,8 +278,6 @@ class DrawingForm extends Form {
   renderTools(): JSX.Element {
     const onChange$ = new Subject();
     const handleSearch = (rgb: { [key: string]: any }) => {
-      // console.log(rgb);
-
       onChange$.next(rgb);
     };
     onChange$.pipe(debounceTime(100), take(1)).subscribe((rgb: any) => {
