@@ -75,9 +75,9 @@ class DrawingForm extends Form {
   };
 
   schema: { [key: string]: Joi.StringSchema | Joi.ArraySchema } = {
-    drawingName: Joi.string().min(2).max(255).required().label('Drawing Name'),
-    description: Joi.string().min(2).max(1024).required().label('Description'),
-    grid: Joi.array().min(1).max(1225).required().label('canvas'),
+    drawingName: Joi.string().min(2).max(26).required().label('Drawing Name'),
+    description: Joi.string().min(2).max(225).required().label('Description'),
+    grid: Joi.array().min(225).max(1225).required().label('canvas'),
     dataUrl: Joi.string().required().label('src'),
   };
 
@@ -199,7 +199,7 @@ class DrawingForm extends Form {
     });
   };
 
-  handleGridOff = (hideGrid: boolean /* , convert = false */): void => {
+  handleGridOff = (hideGrid: boolean): void => {
     const { grid, gateKeep } = this.state;
     if (hideGrid) {
       this.setState({
