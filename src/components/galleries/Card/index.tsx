@@ -151,6 +151,7 @@ const Card = memo(
               }}
             >
               <SpeedDialTooltipOpen
+                dataUrl={dataUrl}
                 drawingNumber={drawingNumber}
                 emitClose={() => setOpen(false)}
                 emitFavoriteAction={onFavoriteAction}

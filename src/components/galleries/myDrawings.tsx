@@ -1,4 +1,4 @@
-import React, { Component, createContext } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 // import DrawingCard from '../../common/drawingCard';

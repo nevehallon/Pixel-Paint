@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
+import useClipboard from 'react-use-clipboard';
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { OpenInNew, ShareOutlined } from '@material-ui/icons';
@@ -11,6 +12,7 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import {
   BookmarkIcon,
   BookmarkSlashFillIcon,
+  ClippyIcon,
   GitForkIcon,
   LinkIcon,
 } from '@primer/octicons-react';
@@ -36,16 +38,19 @@ export default function SpeedDialTooltipOpen({
   emitFavoriteAction,
   id,
   drawingNumber,
+  dataUrl,
 }: {
   emitOpen: () => void;
   emitClose: () => void;
   emitFavoriteAction: (isAdd: boolean) => void;
   id: string;
   drawingNumber: string | number;
+  dataUrl: string;
 }): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const favorites = useContext(FavoritesContext);
+  const [isCopied, setCopied] = useClipboard(dataUrl);
 
   const handleOpen = () => {
     emitOpen();
@@ -79,8 +84,36 @@ export default function SpeedDialTooltipOpen({
       },
     },
     { icon: <GetAppRoundedIcon />, name: 'Download Image' },
-    { icon: <LinkIcon size={24} />, name: 'Copy Image Link' },
-    { icon: <OpenInNew />, name: 'Open in New Window' },
+    {
+      icon: <LinkIcon size={24} />,
+      name: 'Copy Image Link',
+      handleAction: () => {
+        setCopied();
+        toast.success(
+          <span>
+            <ClippyIcon className="mr-5" size={24} /> Copied to Clipboard!
+          </span>,
+          { position: 'top-center' }
+        );
+      },
+    },
+    {
+      icon: <OpenInNew />,
+      name: 'Open in New Window',
+      handleAction: () => {
+        const image = new Image();
+        const div = document.createElement('div');
+        div.setAttribute(
+          'style',
+          'height:100%;display:grid;justify-content:center;align-content:center;'
+        );
+        image.src = dataUrl;
+        div.appendChild(image);
+
+        const w = window.open('');
+        w?.document.write(div.outerHTML);
+      },
+    },
   ];
 
   return (
