@@ -46,6 +46,7 @@ export default function SpeedDialTooltipOpen({
   id,
   drawingNumber,
   dataUrl,
+  history,
 }: {
   emitOpen: () => void;
   emitClose: () => void;
@@ -53,6 +54,7 @@ export default function SpeedDialTooltipOpen({
   id: string;
   drawingNumber: string | number;
   dataUrl: string;
+  history: any;
 }): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -70,9 +72,18 @@ export default function SpeedDialTooltipOpen({
   };
 
   const actions = [
-    { icon: <InfoOutlinedIcon />, name: 'Info' },
+    {
+      icon: <InfoOutlinedIcon />,
+      name: 'Info',
+      handleAction: () => {
+        history.push(`my-drawings/${id}`);
+      },
+    },
     { icon: <GitForkIcon size={24} />, name: 'Fork' },
-    { icon: <ShareOutlined />, name: 'Share' },
+    {
+      icon: <ShareOutlined />,
+      name: 'Share',
+    },
     {
       icon: !favorites.includes(drawingNumber) ? (
         <BookmarkIcon size={24} />

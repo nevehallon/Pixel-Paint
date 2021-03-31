@@ -156,6 +156,7 @@ const Card = memo(
                 emitClose={() => setOpen(false)}
                 emitFavoriteAction={onFavoriteAction}
                 emitOpen={() => setOpen(true)}
+                history={history}
                 id={_id}
               />
             </motion.div>
