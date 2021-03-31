@@ -30,9 +30,9 @@ interface Props extends DrawingProps {
   [key: string]: any;
 }
 
-// Distance in pixels a user has to scroll a card down before we recognize
+// Distance in pixels a user has to scroll a card down before recognizing
 // a swipe-to dismiss action.
-const dismissDistance = 125;
+const dismissDistance = 100;
 
 const Card = memo(
   ({
