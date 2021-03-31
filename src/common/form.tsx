@@ -27,11 +27,11 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
       this.setState({ dataUrl });
     }
 
-    const errors = this.validate(true);
+    const errors = this.validate();
 
     this.setState({ errors: errors || {} });
 
-    if (errors !== null && errors.grid) {
+    if (errors !== null && errors?.grid) {
       toast.error('Canvas can not be blank', {
         position: 'top-center',
         autoClose: 2500,
@@ -52,7 +52,7 @@ class Form extends Component<{ [x: string]: any }, { [x: string]: any }> {
     return error ? error.details[0].message : null;
   };
 
-  validate = (isSubmit = false): any => {
+  validate = (): any => {
     const {
       state: { formData },
       schema,

@@ -42,12 +42,15 @@ class EditDrawing extends DrawingForm {
       // ? mapping out _id field from grid
       const savedGrid = grid.map(({ fill, touched }) => ({ fill, touched }));
 
-      this.setState({
-        formData: { drawingName, description, _id },
-        grid: savedGrid,
-        canvasStateTimeline: [savedGrid],
-        isInitial: false,
-      });
+      this.setState(
+        {
+          formData: { drawingName, description, _id },
+          grid: savedGrid,
+          canvasStateTimeline: [savedGrid],
+          isInitial: false,
+        },
+        () => console.log(this.state)
+      );
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
@@ -55,6 +58,7 @@ class EditDrawing extends DrawingForm {
   }
 
   mapToState = (drawing: Drawing): Drawing => {
+    // TODO: remove, redundant code
     const { drawingName, description, grid, _id }: Drawing = drawing;
     return { drawingName, description, grid, _id };
   };
@@ -73,76 +77,83 @@ class EditDrawing extends DrawingForm {
   };
 
   render(): React.ReactNode {
-    const { grid } = this.state;
+    const {
+      grid,
+      formData: { drawingName, description, _id },
+    } = this.state;
     return (
-      <div>
-        <PageHeader titleText="Edit drawing" />
-        <div className="row text-center">
-          <div className="col-12">
-            <p>Edit your drawing</p>
+      _id && (
+        <div>
+          <PageHeader titleText="Edit drawing" />
+          <div className="row text-center">
+            <div className="col-12">
+              <p>Edit your drawing</p>
+            </div>
+            {grid.length ? (
+              this.renderPaintCanvas()
+            ) : (
+              <div className="m-auto text-info">LOADING...</div>
+            )}
           </div>
-          {grid.length ? (
-            this.renderPaintCanvas()
-          ) : (
-            <div className="m-auto text-info">LOADING...</div>
-          )}
-        </div>
-        {this.renderTools()}
-        <div className="container">
-          <div className="row">
-            <div className=" m-auto">
-              <form
-                className="p-card"
-                noValidate
-                onSubmit={(e) => {
-                  if (this.state.isInitial) {
-                    e.preventDefault();
-                    toast.error('Canvas can not be blank', {
-                      position: 'top-center',
-                      autoClose: 2500,
-                    });
-                    return;
-                  }
-                  this.handleSubmit(e);
-                }}
-              >
-                <div className="p-card-content m-3">
-                  {this.renderSizePicker()}
-                  <InputFeedback
-                    label="Name"
-                    maxLength={26}
-                    renderInput={(rest: GenericObjectProps) =>
-                      this.renderInput('drawingName', '', undefined, {
-                        ...rest,
-                      })
+          {this.renderTools()}
+          <div className="container">
+            <div className="row">
+              <div className=" m-auto">
+                <form
+                  className="p-card"
+                  noValidate
+                  onSubmit={(e) => {
+                    if (this.state.isInitial) {
+                      e.preventDefault();
+                      toast.error('Canvas can not be blank', {
+                        position: 'top-center',
+                        autoClose: 2500,
+                      });
+                      return;
                     }
-                  />
-                  <InputFeedback
-                    label="Description"
-                    maxLength={225}
-                    renderInput={(rest: GenericObjectProps) =>
-                      this.renderInput('description', '', 'textarea', {
-                        ...rest,
-                      })
-                    }
-                  />
+                    this.handleSubmit(e);
+                  }}
+                >
+                  <div className="p-card-content m-3">
+                    {this.renderSizePicker()}
+                    <InputFeedback
+                      currentValue={drawingName}
+                      label="Name"
+                      maxLength={26}
+                      renderInput={(rest: GenericObjectProps) =>
+                        this.renderInput('drawingName', '', undefined, {
+                          ...rest,
+                        })
+                      }
+                    />
+                    <InputFeedback
+                      currentValue={description}
+                      label="Description"
+                      maxLength={225}
+                      renderInput={(rest: GenericObjectProps) =>
+                        this.renderInput('description', '', 'textarea', {
+                          ...rest,
+                        })
+                      }
+                    />
 
-                  <div className="text-center mx-5 my-3">
-                    <Link
-                      className="btn btn-block btn-danger"
-                      to="/my-drawings"
-                    >
-                      Cancel
-                    </Link>
+                    <div className="text-center mx-5 my-3">
+                      <Link
+                        className="btn btn-block btn-danger"
+                        to="/my-drawings"
+                      >
+                        Cancel
+                      </Link>
+                    </div>
+
+                    {this.renderButton('Update Drawing')}
                   </div>
-
-                  {this.renderButton('Update Drawing')}
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )
     );
   }
 }

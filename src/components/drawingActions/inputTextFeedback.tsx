@@ -13,8 +13,9 @@ const InputFeedback = ({
   renderInput,
   maxLength,
   label,
+  currentValue,
 }: GenericObjectProps): JSX.Element => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(currentValue || '');
   const charactersRemaining = maxLength - value.length;
   const controls = useAnimation();
 

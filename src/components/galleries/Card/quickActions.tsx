@@ -17,6 +17,7 @@ import {
   LinkIcon,
 } from '@primer/octicons-react';
 
+import { createDrawing, getDrawing } from '../../../services/drawingsService';
 import FavoritesContext from '../../../services/favoritesContext';
 
 const download = (dataurl: string, filename: string) => {
@@ -79,7 +80,37 @@ export default function SpeedDialTooltipOpen({
         history.push(`my-drawings/${id}`);
       },
     },
-    { icon: <GitForkIcon size={24} />, name: 'Fork' },
+    {
+      icon: <GitForkIcon size={24} />,
+      name: 'Fork',
+      handleAction: async () => {
+        try {
+          const {
+            data: { grid, dataUrl: imageSrc, drawingName, description },
+          }: any = await getDrawing(id);
+          const data = {
+            drawingName: `${drawingName.substring(0, 14)}...(forked)`,
+            description: `${description.substring(0, 213)}...(forked)`,
+            grid,
+            dataUrl: imageSrc,
+          };
+
+          const {
+            data: { _id },
+          } = await createDrawing(data);
+          console.log(_id, id);
+
+          toast.success('Drawing Forked!', {
+            position: 'top-center',
+            autoClose: 2500,
+          });
+
+          history.replace(`/edit/${_id}`);
+        } catch (error) {
+          console.error(error);
+        }
+      },
+    },
     {
       icon: <ShareOutlined />,
       name: 'Share',
