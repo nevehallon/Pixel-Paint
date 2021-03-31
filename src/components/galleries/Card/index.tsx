@@ -46,7 +46,6 @@ const Card = memo(
     drawingNumber,
   }: Props) => {
     const [isOpen, setOpen] = useState(false);
-    const [delay, setDelay] = useState(0.7);
 
     const history = useHistory();
     const y = useMotionValue(0);
@@ -145,7 +144,7 @@ const Card = memo(
                 transformOrigin: '95%',
               }}
               transition={{
-                delay,
+                delay: isOpen ? 0 : 0.7,
                 type: 'spring',
                 stiffness: 150,
                 damping: 11,
@@ -153,15 +152,9 @@ const Card = memo(
             >
               <SpeedDialTooltipOpen
                 drawingNumber={drawingNumber}
-                emitClose={() => {
-                  setDelay(0.7);
-                  setOpen(false);
-                }}
+                emitClose={() => setOpen(false)}
                 emitFavoriteAction={onFavoriteAction}
-                emitOpen={() => {
-                  setDelay(0);
-                  setOpen(true);
-                }}
+                emitOpen={() => setOpen(true)}
                 id={_id}
               />
             </motion.div>
