@@ -19,6 +19,13 @@ import {
 
 import FavoritesContext from '../../../services/favoritesContext';
 
+const download = (dataurl: string, filename: string) => {
+  const a = document.createElement('a');
+  a.href = dataurl;
+  a.setAttribute('download', filename);
+  a.click();
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     speedDial: {
@@ -83,7 +90,13 @@ export default function SpeedDialTooltipOpen({
           : toast.dark('Removed from Favorites', { position: 'top-center' });
       },
     },
-    { icon: <GetAppRoundedIcon />, name: 'Download Image' },
+    {
+      icon: <GetAppRoundedIcon />,
+      name: 'Download Image',
+      handleAction: () => {
+        download(dataUrl, `${id}.png`);
+      },
+    },
     {
       icon: <LinkIcon size={24} />,
       name: 'Copy Image Link',
