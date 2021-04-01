@@ -42,15 +42,12 @@ class EditDrawing extends DrawingForm {
       // ? mapping out _id field from grid
       const savedGrid = grid.map(({ fill, touched }) => ({ fill, touched }));
 
-      this.setState(
-        {
-          formData: { drawingName, description, _id },
-          grid: savedGrid,
-          canvasStateTimeline: [savedGrid],
-          isInitial: false,
-        },
-        () => console.log(this.state)
-      );
+      this.setState({
+        formData: { drawingName, description, _id },
+        grid: savedGrid,
+        canvasStateTimeline: [savedGrid],
+        isInitial: false,
+      });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
