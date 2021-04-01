@@ -89,8 +89,8 @@ export default function SpeedDialTooltipOpen({
             data: { grid, dataUrl: imageSrc, drawingName, description },
           }: any = await getDrawing(id);
           const data = {
-            drawingName: `${drawingName.substring(0, 14)}...(forked)`,
-            description: `${description.substring(0, 213)}...(forked)`,
+            drawingName: `${drawingName.substring(0, 15)}...(forked)`,
+            description: `${description.substring(0, 214)}...(forked)`,
             grid,
             dataUrl: imageSrc,
           };
@@ -98,7 +98,6 @@ export default function SpeedDialTooltipOpen({
           const {
             data: { _id },
           } = await createDrawing(data);
-          console.log(_id, id);
 
           toast.success('Drawing Forked!', {
             position: 'top-center',
