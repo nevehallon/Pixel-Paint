@@ -9,7 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 
 // eslint-disable-next-line import/no-named-as-default
-import Demo from './Demo';
+import Demo from './Share';
 
 const Transition = forwardRef((
   // eslint-disable-next-line react/require-default-props

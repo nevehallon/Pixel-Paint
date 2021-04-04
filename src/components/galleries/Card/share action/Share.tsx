@@ -52,17 +52,17 @@ import {
   WorkplaceShareButton,
 } from 'react-share';
 
-import './Demo.css';
+import './Share.css';
 
-const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
+const Share = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
   // const shareUrl = 'http://github.com';
   const title = 'PaintHub';
 
   return (
-    <div className="Demo__container">
-      <div className="Demo__some-network">
+    <div className="Share__container">
+      <div className="Share__some-network">
         <FacebookShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           quote={title}
           url={shareUrl}
         >
@@ -71,7 +71,7 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
 
         <div>
           <FacebookShareCount
-            className="Demo__some-network__share-count"
+            className="Share__some-network__share-count"
             url={shareUrl}
           >
             {(count) => count}
@@ -79,43 +79,43 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <FacebookMessengerShareButton
           appId="521270401588372"
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           url={shareUrl}
         >
           <FacebookMessengerIcon round size={32} />
         </FacebookMessengerShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <TwitterShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
           <TwitterIcon round size={32} />
         </TwitterShareButton>
 
-        <div className="Demo__some-network__share-count">&nbsp;</div>
+        <div className="Share__some-network__share-count">&nbsp;</div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <TelegramShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
           <TelegramIcon round size={32} />
         </TelegramShareButton>
 
-        <div className="Demo__some-network__share-count">&nbsp;</div>
+        <div className="Share__some-network__share-count">&nbsp;</div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <WhatsappShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           separator=":: "
           title={title}
           url={shareUrl}
@@ -123,21 +123,21 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
           <WhatsappIcon round size={32} />
         </WhatsappShareButton>
 
-        <div className="Demo__some-network__share-count">&nbsp;</div>
+        <div className="Share__some-network__share-count">&nbsp;</div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <LinkedinShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           url={shareUrl}
         >
           <LinkedinIcon round size={32} />
         </LinkedinShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <PinterestShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           media={`${String(window.location)}/`} // ${/* exampleImage */}
           url={String(window.location)}
         >
@@ -146,15 +146,15 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
 
         <div>
           <PinterestShareCount
-            className="Demo__some-network__share-count"
+            className="Share__some-network__share-count"
             url={shareUrl}
           />
         </div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <VKShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           image={`${String(window.location)}/`} // ${/* exampleImage */}
           url={shareUrl}
         >
@@ -163,15 +163,15 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
 
         <div>
           <VKShareCount
-            className="Demo__some-network__share-count"
+            className="Share__some-network__share-count"
             url={shareUrl}
           />
         </div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <OKShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           image={`${String(window.location)}/`} // ${/* exampleImage */}
           url={shareUrl}
         >
@@ -180,15 +180,15 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
 
         <div>
           <OKShareCount
-            className="Demo__some-network__share-count"
+            className="Share__some-network__share-count"
             url={shareUrl}
           />
         </div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <RedditShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
           windowHeight={460}
@@ -199,15 +199,15 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
 
         <div>
           <RedditShareCount
-            className="Demo__some-network__share-count"
+            className="Share__some-network__share-count"
             url={shareUrl}
           />
         </div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <TumblrShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
@@ -216,15 +216,15 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
 
         <div>
           <TumblrShareCount
-            className="Demo__some-network__share-count"
+            className="Share__some-network__share-count"
             url={shareUrl}
           />
         </div>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <LivejournalShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           description={shareUrl}
           title={title}
           url={shareUrl}
@@ -233,9 +233,9 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </LivejournalShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <MailruShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
@@ -243,19 +243,19 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </MailruShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <EmailShareButton
           body="body"
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           subject={title}
           url={shareUrl}
         >
           <EmailIcon round size={32} />
         </EmailShareButton>
       </div>
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <ViberShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
@@ -263,9 +263,9 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </ViberShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <WorkplaceShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           quote={title}
           url={shareUrl}
         >
@@ -273,9 +273,9 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </WorkplaceShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <LineShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
@@ -283,9 +283,9 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </LineShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <WeiboShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           image={`${String(window.location)}/`} // ${/* exampleImage */}
           title={title}
           url={shareUrl}
@@ -294,9 +294,9 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </WeiboShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <PocketShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
@@ -304,9 +304,9 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </PocketShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <InstapaperShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
         >
@@ -314,9 +314,9 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
         </InstapaperShareButton>
       </div>
 
-      <div className="Demo__some-network">
+      <div className="Share__some-network">
         <HatenaShareButton
-          className="Demo__some-network__share-button"
+          className="Share__some-network__share-button"
           title={title}
           url={shareUrl}
           windowHeight={460}
@@ -327,7 +327,7 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
 
         <div>
           <HatenaShareCount
-            className="Demo__some-network__share-count"
+            className="Share__some-network__share-count"
             url={shareUrl}
           />
         </div>
@@ -336,4 +336,4 @@ const Demo = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
   );
 };
 
-export default Demo;
+export default Share;
