@@ -19,6 +19,7 @@ import {
 
 import { createDrawing, getDrawing } from '../../../services/drawingsService';
 import FavoritesContext from '../../../services/favoritesContext';
+import { getCurrentUser } from '../../../services/userService';
 // import AlertDialogSlide from './share action/shareDialog'; // TODO: SHARE
 
 const download = (dataurl: string, filename: string) => {
@@ -49,6 +50,7 @@ export default function SpeedDialTooltipOpen({
   drawingNumber,
   dataUrl,
   history,
+  basePath,
 }: {
   emitOpen: () => void;
   emitClose: () => void;
@@ -57,6 +59,7 @@ export default function SpeedDialTooltipOpen({
   drawingNumber: string | number;
   dataUrl: string;
   history: any;
+  basePath: string;
 }): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -79,7 +82,7 @@ export default function SpeedDialTooltipOpen({
       icon: <InfoOutlinedIcon />,
       name: 'Info',
       handleAction: () => {
-        history.push(`my-drawings/${id}`);
+        history.push(`${basePath}/${id}`);
       },
     },
     {
@@ -87,6 +90,22 @@ export default function SpeedDialTooltipOpen({
       name: 'Fork',
       handleAction: async () => {
         try {
+          const { painter } = (await getCurrentUser()) as any;
+
+          if (!painter) {
+            toast.error(
+              <p className="text-center">
+                Sorry, you need a `painter` account to fork a drawing. <br />
+                Feel free to create your own and start creating!
+              </p>,
+              {
+                position: 'top-center',
+                autoClose: 4000,
+              }
+            );
+            return;
+          }
+
           const {
             data: { grid, dataUrl: imageSrc, drawingName, description },
           }: any = await getDrawing(id);

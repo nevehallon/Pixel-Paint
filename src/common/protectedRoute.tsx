@@ -20,7 +20,7 @@ const ProtectedRoute = ({
           toast.error(
             <p className="text-center">
               Sorry, you need a `painter` account to access this page. <br />
-              Feel free to one on the home page.
+              Feel free to create your own and start creating!
             </p>,
             {
               position: 'top-center',

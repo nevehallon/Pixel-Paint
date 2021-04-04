@@ -3,5 +3,5 @@ export interface DrawingProps {
   drawingName: string;
   description: string;
   dataUrl: string;
-  onDelete: () => Promise<void>;
+  onDelete: (() => Promise<void>) | void;
 }

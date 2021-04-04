@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import ProtectedRoute from './common/protectedRoute';
 import CreateDrawing from './components/drawingActions/createDrawing';
 import EditDrawing from './components/drawingActions/editDrawing';
-import MyDrawings from './components/galleries/myDrawings';
+import { MyDrawings, MyFavorites } from './components/galleries';
 import Footer from './components/layout/footer';
 import Navbar from './components/layout/nav-bar';
 import About from './components/pages/about';
@@ -51,6 +51,7 @@ class App extends Component {
               painter="true"
               path="/my-drawings"
             />
+            <Route component={MyFavorites} path="/my-favorites" />
             <Route component={Signup} path="/sign-up" />
             <Route component={PainterSignup} path="/painter-sign-up" />
             <Route component={Signin} path="/sign-in" />

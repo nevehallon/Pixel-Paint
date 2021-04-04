@@ -38,9 +38,24 @@ export async function logout(): Promise<void> {
   localStorage.removeItem(tokenKey);
 }
 
+export function getDrawingsFromAllUsers(
+  drawingNumList: any[]
+): Promise<AxiosResponse<any>> {
+  return httpService.get(
+    `${apiUrl}/users/drawings?numbers=${drawingNumList.toString()}`
+  );
+}
+
+export function getUserDetailsByUserId(
+  userId: string
+): Promise<AxiosResponse<UserDetails>> {
+  return httpService.get(`${apiUrl}/users/${userId}`);
+}
+
 export function getCurrentUserDetails(): Promise<AxiosResponse<UserDetails>> {
   return httpService.get(`${apiUrl}/users/me`);
 }
+
 export function addFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {
@@ -48,6 +63,7 @@ export function addFavorite(
     favorites: [drawingNum],
   });
 }
+
 export function removeFavorite(
   drawingNum: number | string
 ): Promise<AxiosResponse<UserDetails>> {

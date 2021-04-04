@@ -44,6 +44,7 @@ const Card = memo(
     description,
     dataUrl,
     drawingNumber,
+    painterInfo,
   }: Props) => {
     const [isOpen, setOpen] = useState(false);
 
@@ -56,6 +57,8 @@ const Card = memo(
     // use the opened card element to calculate the scroll constraints
     const cardRef = useRef(null);
     const constraints = useScrollConstraints(cardRef, isSelected);
+
+    const basePath = onDelete ? 'my-drawings' : 'my-favorites';
 
     function checkSwipeToDismiss() {
       const yValue = y.get();
@@ -81,7 +84,7 @@ const Card = memo(
           style={{ opacity, pointerEvents: isSelected ? 'auto' : 'none' }}
           transition={{ duration: 0.2, delay: 0.1 }}
         >
-          <Link replace to="/my-drawings" />
+          <Link replace to={`/${basePath}`} />
         </motion.div>
         <MotionConfig transition={isSelected ? openSpring : closeSpring}>
           <motion.div
@@ -106,30 +109,35 @@ const Card = memo(
 
               <Image isSelected={isSelected} src={dataUrl} />
               <Title isSelected={isSelected} title={drawingName} />
-              <ContentPlaceholder description={description} />
-              <span className="p-fluid d-flex justify-content-around mx-1 my-3">
-                <Button
-                  className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
-                  icon="pi pi-pencil"
-                  label="Edit"
-                  onClick={() => history.replace(`/edit/${_id}`)}
-                />
-                <Button
-                  className="mx-1 p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
-                  icon="pi pi-trash"
-                  label="Delete"
-                  onClick={() => {
-                    onDelete();
-                    history.replace('/my-drawings');
-                  }}
-                />
-              </span>
+              <ContentPlaceholder
+                description={description}
+                painterInfo={onDelete ? '' : painterInfo}
+              />
+              {onDelete && (
+                <span className="p-fluid d-flex justify-content-around mx-1 my-3">
+                  <Button
+                    className="mx-1 p-button-rounded p-button-text p-button-lg d-inline-block"
+                    icon="pi pi-pencil"
+                    label="Edit"
+                    onClick={() => history.replace(`/edit/${_id}`)}
+                  />
+                  <Button
+                    className="mx-1 p-button-rounded p-button-text p-button-danger p-button-lg d-inline-block"
+                    icon="pi pi-trash"
+                    label="Delete"
+                    onClick={() => {
+                      onDelete();
+                      history.replace('/my-drawings');
+                    }}
+                  />
+                </span>
+              )}
             </motion.div>
           </motion.div>
         </MotionConfig>
         <div>
           {!isSelected && (
-            <Link className="d-card-open-link" to={`my-drawings/${_id}`} />
+            <Link className="d-card-open-link" to={`${basePath}/${_id}`} />
           )}
           {!isSelected && (
             <motion.div
@@ -151,6 +159,7 @@ const Card = memo(
               }}
             >
               <SpeedDialTooltipOpen
+                basePath={basePath}
                 dataUrl={dataUrl}
                 drawingNumber={drawingNumber}
                 emitClose={() => setOpen(false)}
