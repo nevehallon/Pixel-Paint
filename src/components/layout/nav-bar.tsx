@@ -14,19 +14,22 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
         event.originalEvent.preventDefault();
         history.push('/');
       },
-      template: (item: MenuItem, options: any) => (
-        <a
-          aria-haspopup="false"
-          className={options.className}
-          href="/"
-          onClick={options.onClick}
-          role="menuitem"
-          tabIndex={0}
-          target={item.target}
-        >
-          PixelPaint <i className="fas fa-paint-brush" /> App
-        </a>
-      ),
+      template: (item: MenuItem, options: any) => {
+        const { target } = item;
+        return (
+          <a
+            aria-haspopup="false"
+            className={options.className}
+            href="/"
+            onClick={options.onClick}
+            role="menuitem"
+            tabIndex={0}
+            target={target}
+          >
+            PixelPaint <i className="fas fa-paint-brush" /> App
+          </a>
+        );
+      },
     },
     {
       label: 'Home',
@@ -52,6 +55,11 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
           label: 'My Drawings',
           icon: 'pi pi-fw pi-images',
           command: () => history.push('/my-drawings'),
+        },
+        {
+          label: 'My favorites',
+          icon: 'pi pi-fw pi-star',
+          command: () => history.push('/my-favorites'),
         },
       ],
     },
