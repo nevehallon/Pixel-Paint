@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Pixel-Paint/static/css/main.d7386666.chunk.css",
-    "main.js": "/Pixel-Paint/static/js/main.6ca21a44.chunk.js",
-    "main.js.map": "/Pixel-Paint/static/js/main.6ca21a44.chunk.js.map",
+    "main.js": "/Pixel-Paint/static/js/main.ed586222.chunk.js",
+    "main.js.map": "/Pixel-Paint/static/js/main.ed586222.chunk.js.map",
     "runtime-main.js": "/Pixel-Paint/static/js/runtime-main.fdb0dd57.js",
     "runtime-main.js.map": "/Pixel-Paint/static/js/runtime-main.fdb0dd57.js.map",
     "static/css/2.5d0623f3.chunk.css": "/Pixel-Paint/static/css/2.5d0623f3.chunk.css",
@@ -25,6 +25,6 @@
     "static/css/2.5d0623f3.chunk.css",
     "static/js/2.478171f5.chunk.js",
     "static/css/main.d7386666.chunk.css",
-    "static/js/main.6ca21a44.chunk.js"
+    "static/js/main.ed586222.chunk.js"
   ]
 }
