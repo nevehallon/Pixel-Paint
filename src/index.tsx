@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
 import PrimeReact from 'primereact/api';
 
@@ -25,13 +25,14 @@ PrimeReact.ripple = true;
 
 render(
   <StrictMode>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <Switch>
-        <Route component={PublicImages} path="/public-images/:data" />
-
-        <App />
+        <Route component={PublicImages} path="/public-images" />
+        <Route path="/*">
+          <App />
+        </Route>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
   document.getElementById('root')
 );

@@ -1,9 +1,13 @@
 import { useLocation } from 'react-router-dom';
 
-function PublicImages(): JSX.Element {
-  const { pathname } = useLocation();
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
-  const src = pathname.replace('/public-images/', '');
+function PublicImages(): JSX.Element {
+  const query = useQuery();
+
+  const src = query.get('data');
 
   return (
     <div
@@ -14,7 +18,7 @@ function PublicImages(): JSX.Element {
         alignContent: 'center',
       }}
     >
-      <img alt="drawing" src={src} />
+      <img alt="drawing" src={src as string} />
     </div>
   );
 }
