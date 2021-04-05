@@ -1,5 +1,6 @@
 {
   "name": "pixel-art",
+  "homepage": "https://nevehallon.github.io/Pixel-Paint",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -63,6 +64,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/reactcss": "^1.2.3",
     "better-docs": "^2.3.2",
+    "gh-pages": "^3.1.0",
     "immer": "^8.0.4"
   },
   "resolutions": {
@@ -75,7 +77,9 @@
     "eject": "react-scripts eject",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix",
-    "docs": "jsdoc -c jsdoc.config.json"
+    "docs": "jsdoc -c jsdoc.config.json",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"

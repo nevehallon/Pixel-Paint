@@ -1,10 +1,11 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import PrimeReact from 'primereact/api';
 
 import App from './App';
+import PublicImages from './common/publicImages';
 import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -24,8 +25,12 @@ PrimeReact.ripple = true;
 
 render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <Switch>
+        <Route component={PublicImages} path="/public-images/:data" />
+
+        <App />
+      </Switch>
     </BrowserRouter>
   </StrictMode>,
   document.getElementById('root')
