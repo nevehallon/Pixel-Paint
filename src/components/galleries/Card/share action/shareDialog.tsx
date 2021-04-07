@@ -47,7 +47,11 @@ const AlertDialogSlide = ({
       >
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
-          <Demo shareUrl={dataUrl} />
+          <Demo
+            shareUrl={`https://nevehallon.github.io/Pixel-Paint/#/public-images/?data=${encodeURIComponent(
+              dataUrl
+            )}`}
+          />
           {/* <DialogContentText id="alert-dialog-slide-description">
             Let Google help apps determine location. This means sending
             anonymous location data to Google, even when no apps are running.

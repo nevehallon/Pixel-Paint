@@ -52,7 +52,7 @@ import {
   WorkplaceShareButton,
 } from 'react-share';
 
-import './Share.css';
+import './share.css';
 
 const Share = ({ shareUrl }: { shareUrl: string }): JSX.Element => {
   // const shareUrl = 'http://github.com';

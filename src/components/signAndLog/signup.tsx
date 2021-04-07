@@ -70,7 +70,7 @@ class Signup extends Form {
 
     return (
       <div className="container sub-main">
-        <PageHeader titleText="Signup for PixelPaint App" />
+        <PageHeader titleText="Signup for PixelHub" />
         <div className="row text-center">
           <div className="col-12">
             <p>You can open a new account for free</p>

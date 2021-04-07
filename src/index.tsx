@@ -25,10 +25,10 @@ PrimeReact.ripple = true;
 
 render(
   <StrictMode>
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <Switch>
         <Route component={PublicImages} path="/public-images" />
-        <Route path="/*">
+        <Route path="*">
           <App />
         </Route>
       </Switch>

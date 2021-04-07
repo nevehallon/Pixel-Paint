@@ -20,7 +20,7 @@ import {
 import { createDrawing, getDrawing } from '../../../services/drawingsService';
 import FavoritesContext from '../../../services/favoritesContext';
 import { getCurrentUser } from '../../../services/userService';
-// import AlertDialogSlide from './share action/shareDialog'; // TODO: SHARE
+import AlertDialogSlide from './share action/shareDialog'; // TODO: SHARE
 
 const download = (dataurl: string, filename: string) => {
   const a = document.createElement('a');
@@ -63,7 +63,7 @@ export default function SpeedDialTooltipOpen({
 }): JSX.Element {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  // const [openDialog, setOpenDialog] = useState(false);// TODO: SHARE
+  const [openDialog, setOpenDialog] = useState(false); // TODO: SHARE
   const favorites = useContext(FavoritesContext);
   const [isCopied, setCopied] = useClipboard(dataUrl);
 
@@ -131,13 +131,13 @@ export default function SpeedDialTooltipOpen({
         }
       },
     },
-    // {
-    //   icon: <ShareOutlined />,
-    //   name: 'Share',
-    //   handleAction: () => {
-    //     setOpenDialog(true);
-    //   },
-    // },
+    {
+      icon: <ShareOutlined />,
+      name: 'Share',
+      handleAction: () => {
+        setOpenDialog(true);
+      },
+    },
     // TODO: SHARE
     {
       icon: !favorites.includes(drawingNumber) ? (
@@ -220,7 +220,7 @@ export default function SpeedDialTooltipOpen({
           />
         ))}
       </SpeedDial>
-      {/* {openDialog && (
+      {openDialog && (
         <AlertDialogSlide
           dataUrl={dataUrl}
           emitClose={() => setOpenDialog(false)}
@@ -228,8 +228,7 @@ export default function SpeedDialTooltipOpen({
         />
       )}
 
-    // TODO: SHARE
-      */}
+      {/* // TODO: SHARE */}
     </div>
   );
 }

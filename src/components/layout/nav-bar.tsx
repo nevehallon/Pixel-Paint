@@ -26,7 +26,7 @@ const Navbar = ({ user }: { [key: string]: any } | any): any => {
             tabIndex={0}
             target={target}
           >
-            PixelPaint <i className="fas fa-paint-brush" /> App
+            PixelHub <i className="fas fa-paint-brush" /> App
           </a>
         );
       },

@@ -4,7 +4,7 @@ import PageHeader from '../../common/pageHeader';
 
 const About = (): any => (
   <div className="container">
-    <PageHeader titleText="About PixelPaint App" />
+    <PageHeader titleText="About PixelHub" />
     {/*           ${(<i className="fas fa-paint-brush"></i>)}  */}
     <div className="row">
       <div className="col-12">

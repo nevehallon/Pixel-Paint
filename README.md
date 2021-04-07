@@ -1,4 +1,4 @@
-# Pixel Paint App
+# PixelHub
 
 This app allows users to sign up, sign in, and create their very own pixel art.
 
