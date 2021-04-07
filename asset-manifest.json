@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/Pixel-Paint/static/css/main.d7386666.chunk.css",
-    "main.js": "/Pixel-Paint/static/js/main.fffcb666.chunk.js",
-    "main.js.map": "/Pixel-Paint/static/js/main.fffcb666.chunk.js.map",
-    "runtime-main.js": "/Pixel-Paint/static/js/runtime-main.fdb0dd57.js",
-    "runtime-main.js.map": "/Pixel-Paint/static/js/runtime-main.fdb0dd57.js.map",
+    "main.css": "/Pixel-Paint/static/css/main.b1452b3d.chunk.css",
+    "main.js": "/Pixel-Paint/static/js/main.aef34d7b.chunk.js",
+    "main.js.map": "/Pixel-Paint/static/js/main.aef34d7b.chunk.js.map",
+    "runtime-main.js": "/Pixel-Paint/static/js/runtime-main.43e21ca9.js",
+    "runtime-main.js.map": "/Pixel-Paint/static/js/runtime-main.43e21ca9.js.map",
     "static/css/2.5d0623f3.chunk.css": "/Pixel-Paint/static/css/2.5d0623f3.chunk.css",
-    "static/js/2.079946e2.chunk.js": "/Pixel-Paint/static/js/2.079946e2.chunk.js",
-    "static/js/2.079946e2.chunk.js.map": "/Pixel-Paint/static/js/2.079946e2.chunk.js.map",
-    "static/js/3.db6f2128.chunk.js": "/Pixel-Paint/static/js/3.db6f2128.chunk.js",
-    "static/js/3.db6f2128.chunk.js.map": "/Pixel-Paint/static/js/3.db6f2128.chunk.js.map",
+    "static/js/2.d88bb692.chunk.js": "/Pixel-Paint/static/js/2.d88bb692.chunk.js",
+    "static/js/2.d88bb692.chunk.js.map": "/Pixel-Paint/static/js/2.d88bb692.chunk.js.map",
+    "static/js/3.1b89cffc.chunk.js": "/Pixel-Paint/static/js/3.1b89cffc.chunk.js",
+    "static/js/3.1b89cffc.chunk.js.map": "/Pixel-Paint/static/js/3.1b89cffc.chunk.js.map",
     "index.html": "/Pixel-Paint/index.html",
     "static/css/2.5d0623f3.chunk.css.map": "/Pixel-Paint/static/css/2.5d0623f3.chunk.css.map",
-    "static/css/main.d7386666.chunk.css.map": "/Pixel-Paint/static/css/main.d7386666.chunk.css.map",
-    "static/js/2.079946e2.chunk.js.LICENSE.txt": "/Pixel-Paint/static/js/2.079946e2.chunk.js.LICENSE.txt",
+    "static/css/main.b1452b3d.chunk.css.map": "/Pixel-Paint/static/css/main.b1452b3d.chunk.css.map",
+    "static/js/2.d88bb692.chunk.js.LICENSE.txt": "/Pixel-Paint/static/js/2.d88bb692.chunk.js.LICENSE.txt",
     "static/media/primereact.min.css": "/Pixel-Paint/static/media/color.6441e63a.png",
     "static/media/index.scss": "/Pixel-Paint/static/media/cursor.d517777b.svg",
     "static/media/all.css": "/Pixel-Paint/static/media/fa-solid-900.efbd5d20.eot",
@@ -21,10 +21,10 @@
     "static/media/index.css": "/Pixel-Paint/static/media/roboto-vietnamese-400-normal.52cebac0.woff2"
   },
   "entrypoints": [
-    "static/js/runtime-main.fdb0dd57.js",
+    "static/js/runtime-main.43e21ca9.js",
     "static/css/2.5d0623f3.chunk.css",
-    "static/js/2.079946e2.chunk.js",
-    "static/css/main.d7386666.chunk.css",
-    "static/js/main.fffcb666.chunk.js"
+    "static/js/2.d88bb692.chunk.js",
+    "static/css/main.b1452b3d.chunk.css",
+    "static/js/main.aef34d7b.chunk.js"
   ]
 }
