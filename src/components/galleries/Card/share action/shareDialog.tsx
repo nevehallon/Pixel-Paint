@@ -48,7 +48,7 @@ const AlertDialogSlide = ({
         <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
         <DialogContent>
           <Demo
-            shareUrl={`https://nevehallon.github.io/Pixel-Paint/#/public-images/?data=${encodeURIComponent(
+            shareUrl={`https://pixel-image-server.vercel.app/serveImage?data=${encodeURIComponent(
               dataUrl
             )}`}
           />
